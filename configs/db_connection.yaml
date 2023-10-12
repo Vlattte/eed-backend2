@@ -1,0 +1,7 @@
+connect_params: 
+  user: "postgres"  # пароль, который указали при установке PostgreSQL
+  database: "eed_backend_2"
+  password: "Admin"
+  host: "localhost"
+  port: 5432
+

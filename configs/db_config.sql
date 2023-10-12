@@ -38,12 +38,12 @@ CREATE TABLE block_cables (
 	CONSTRAINT block_cables_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE elements {
+CREATE TABLE elements (
 	id serial, -- --> element_id
 	type_id integer, 
 	original_src text UNIQUE, -- --> ОТНОСИТЕЛЬНЫЙ путь до фотографии елемента
 	CONSTRAINT element_to_type_pkey PRIMARY KEY (id)
-}
+);
 
 CREATE TABLE element_conditions (
 	id serial, -- --> condition_id
@@ -55,7 +55,7 @@ CREATE TABLE element_condition_positions (
 	id serial, -- --> condition_position_id
 	condition_id integer, -- --> element_conditions 
 	angle integer, -- --> градусы
-	order integer, -- --> порядок переключения состояний
+	condition_order integer, -- --> порядок переключения состояний
 	src text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
 	CONSTRAINT element_condition_positions_pkey PRIMARY KEY (id)
 );
@@ -94,7 +94,7 @@ CREATE TABLE stages (
 	id serial, -- --> stage_id
 	map_id integer,
 	title text, -- --> ПР: ЭТАП 1. Воткнуть антену
-	order integer, -- --> порядковый номер этапа
+	stage_order integer, -- --> порядковый номер этапа
 	CONSTRAINT stages_pkey PRIMARY KEY (id)
 );
 
@@ -103,7 +103,7 @@ CREATE TABLE group_steps (
 	group_id integer, -- --> group_id
 	action_id integer,
 	stage_id integer, -- --> идентификатор группы steps, В РАМКАХ КОТОРОГО должны происходить действия
-	order integer, -- --> порядковый номер шаг, или: -1 если порядок неважен
+	steps_order integer, -- --> порядковый номер шаг, или: -1 если порядок неважен
 	CONSTRAINT group_steps_pkey PRIMARY KEY (id)
 );
 
@@ -111,7 +111,7 @@ CREATE TABLE step_to_group (
 	id serial,
 	group_id integer,
 	step_id integer,
-	order integer, -- --> порядковый номер шаг, или: -1 если порядок неважен
+	step_order integer, -- --> порядковый номер шаг, или: -1 если порядок неважен
 	CONSTRAINT step_to_group_pkey PRIMARY KEY (id)
 );
 
@@ -125,8 +125,8 @@ CREATE TABLE actions (
 	id serial, -- --> step_id
 	stage_id integer, -- --> идентификатор stage, ПОСЛЕ КОТОРОГО должны происходить действия
 	condition_id integer, -- --> condition_id из element_conditions
-	order integer, -- --> порядковый номер шаг, или: -1 если порядок неважен
-	CONSTRAINT steps_pkey PRIMARY KEY (id)
+	action_order integer, -- --> порядковый номер шаг, или: -1 если порядок неважен
+	CONSTRAINT actions_pkey PRIMARY KEY (id)
 );
 
 
@@ -145,7 +145,7 @@ CREATE TABLE actions (
 -- ТАБЛИЦЫ ДЛЯ ХРАНЕНИЯ СОСТОЯНИЙ:
 ----------------------------------
 
-CREATE TABLE user (
+CREATE TABLE user_data (
 	id serial, -- --> user_id
 	login text,
 	role integer,
@@ -153,20 +153,20 @@ CREATE TABLE user (
 	CONSTRAINT user_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLES sessions (
+CREATE TABLE sessions (
 	id serial, -- --> session_id
 	user_id integer,
 	session_hash text,
 	CONSTRAINT sessions_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE session_info {
+CREATE TABLE session_info (
 	id serial,
 	session_id integer,
 	apparat_id integer,
-	TODO: ...
+	-- TODO: ...
 	CONSTRAINT session_info_pkey PRIMARY KEY (id)
-}
+);
 
 
 
