@@ -1,22 +1,22 @@
-import asyncio
+# connection
 import websockets
-import comparer
+import asyncio
+
+# data structures
 import json
 
-import asyncio
-import itertools
-import json
-
-import websockets
+# handlers
+import scripts.requestHandler as req
 
 
 async def handler(websocket):
 
-    message = await websocket.recv()
+    # message = await websocket.recv()
+    message = json.dumps("{\"hui\": 47}")
     print("message: ")
     print(message)
-    event = json.loads(message)
-    return_json = comparer.Comparer(event)
+    # request = json.loads(message)
+    return_json = req.request_handler(message)
     await websocket.send(json.dumps(return_json, ensure_ascii=False))
 
 
