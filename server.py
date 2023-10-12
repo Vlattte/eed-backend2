@@ -6,7 +6,7 @@ import asyncio
 import json
 
 # handlers
-import scripts.requestHandler as req
+import scripts.request_handler as req
 
 
 async def handler(websocket):

@@ -20,7 +20,7 @@ CREATE TABLE apparat_blocks (
 
 CREATE TABLE block_elements (
 	id serial,
-	condition_id integer,
+	condition_group_id integer,
 	block_id integer,
 	x double precision, -- --> координата x относительно оригинальной width apparat_blocks в процентах
 	y double precision, -- --> координата y относительно оригинальной height apparat_blocks в процентах
@@ -31,7 +31,7 @@ CREATE TABLE block_elements (
 
 CREATE TABLE block_cables (
 	id serial,
-	condition_id integer,
+	condition_group_id integer,
 	start_element_id integer, -- --> block_elements -> head_cable
 	end_element_id integer, -- --> block_elements -> head_cable
 	-- src text, -- --> ОТНОСИТЕЛЬНЫЙ путь до фотографии кабеля
@@ -45,15 +45,15 @@ CREATE TABLE elements (
 	CONSTRAINT element_to_type_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE element_conditions (
-	id serial, -- --> condition_id
+CREATE TABLE element_group_condition(
+	id serial, -- --> condition_group_id
 	element_id integer, -- --> block_elements -> rotator
 	CONSTRAINT element_conditions_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE element_condition_positions (
 	id serial, -- --> condition_position_id
-	condition_id integer, -- --> element_conditions 
+	condition_group_id integer, -- --> element_group_condition 
 	angle integer, -- --> градусы
 	condition_order integer, -- --> порядок переключения состояний
 	src text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
@@ -86,13 +86,13 @@ CREATE TABLE map_elements_init (
 	id serial,
 	map_id integer,
 	element_id integer,
-	init_condition_id integer, -- --> condition_id из element_conditions
+	init_condition_id integer, -- --> condition_group_id из element_conditions
 	CONSTRAINT map_elements_init_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE stages ( 
 	id serial, -- --> stage_id
-	map_id integer,
+	map_id integer, -- --> идентификатор карты
 	title text, -- --> ПР: ЭТАП 1. Воткнуть антену
 	stage_order integer, -- --> порядковый номер этапа
 	CONSTRAINT stages_pkey PRIMARY KEY (id)
@@ -117,14 +117,14 @@ CREATE TABLE step_to_group (
 
 CREATE TABLE steps (
 	id serial, -- --> step_id
-	condition_id integer, -- --> condition_id из element_conditions
+	condition_group_id integer, -- --> condition_group_id из element_conditions
 	CONSTRAINT steps_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE actions (
 	id serial, -- --> step_id
 	stage_id integer, -- --> идентификатор stage, ПОСЛЕ КОТОРОГО должны происходить действия
-	condition_id integer, -- --> condition_id из element_conditions
+	condition_group_id integer, -- --> condition_group_id из element_conditions
 	action_order integer, -- --> порядковый номер шаг, или: -1 если порядок неважен
 	CONSTRAINT actions_pkey PRIMARY KEY (id)
 );
@@ -157,15 +157,25 @@ CREATE TABLE sessions (
 	id serial, -- --> session_id
 	user_id integer,
 	session_hash text,
+	session_exercise_id integer, -- --> используется, если работаем с упражнениями, иначе -1
 	CONSTRAINT sessions_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE session_info (
-	id serial,
-	session_id integer,
-	apparat_id integer,
-	-- TODO: ...
-	CONSTRAINT session_info_pkey PRIMARY KEY (id)
+
+CREATE TABLE exercises_status(
+	id serial, -- --> session_exercise_id
+	map_id integer,
+	stage_id integer,
+	group_steps_id integer,
+  steps_id integer,
+	CONSTRAINT exercises_status_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE mistakes(
+	id serial, -- --> mistakes_id
+	condition_group_id integer,
+	condition_order integer,
+	CONSTRAINT mistakes_pkey PRIMARY KEY (id)
 );
 
 
