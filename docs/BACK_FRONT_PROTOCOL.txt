@@ -1,0 +1,360 @@
+# Принципы взаимодействия клиента и сервера.
+
+
+
+## АВТОРИЗАЦИЯ
+
+front->back:
+{
+    "login": string,
+    "password": string
+}
+
+back->front
+{
+    "status": bool,
+    "session_hash": string,
+    "apparats": [
+        "apparat_id": integer,
+        "maps": [
+            "map_id": integer
+        ]
+    ]
+}
+
+
+
+## ПРОХОЖДЕНИЕ НОРМАТИВОВ
+
+### ВЫБОР УПРАЖНЕНИЙ (ПЕРВАЯ ЗАГРУЗКА АППАРАТУРЫ)
+
+front->back:
+{
+    "session_hash": string,
+    "apparat_id": integer,
+    "map_id": integer,
+    "is_training": bool
+}
+
+back->front
+{
+    "annotation": string, // текст шага
+	"next_actions": [ // массив следующих действий
+		{
+			"block_id": integer, // id аппаратуры
+            "elements": [
+                "element_id": integer, // id элемента, который нужно подсветить
+            ]
+		}
+	],
+    "blocks": [
+        {
+            "block_id": integer,
+            "src": text, -- --> ОТНОСИТЕЛЬНЫЙ путь до фотографии блока,
+            "transform": {
+                "width": integer, -- --> оригинальный размер фотографии блока в пикселях
+                "height": integer, -- --> оригинальный размер фотографии блока в пикселях
+            },
+            "elements": [
+                {
+                    "element_id": integer,
+                    "transform": {
+                        "x": double precision, -- --> координата x относительно оригинальной width apparat_blocks в процентах
+                        "y": double precision, -- --> координата y относительно оригинальной height apparat_blocks в процентах
+                        "width": double precision, -- --> ширина относительно оригинальной width apparat_blocks в процентах
+                        "height": double precision, -- --> высота относительно оригинальной height apparat_blocks в процентах
+                    },
+                    "position": {
+                        "angle": integer, -- --> градусы
+                        "src": text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+
+
+### ШАГ
+
+front->back:
+{
+    "session_hash": string,
+    "element_id": integer
+}
+
+
+back->front:
+{
+    "validation": bool, // флаг, определяющий правильность действия студента
+    "annotation": string, // текст шага, если аннотация не изменилась -> ""
+    "stage_change": bool, // флаг смены stage (этапа)
+    "selected_element": {
+        "element_id": integer, // id элемента, который нужно подсветить
+        "position": {
+            "angle": integer, -- --> градусы
+            "src": text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
+        }
+    },
+    "actions": [ // массив ответных действий
+		{
+			"block_id": integer, // id аппаратуры
+            "elements": [
+                {
+                    "element_id": integer, // id элемента, должного совершить ответное действие
+                    "position": {
+                        "angle": integer, -- --> градусы
+                        "src": text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
+                    },
+                }
+            ],
+            "cables": [
+                {
+                    "start_element_id": integer, -- --> block_elements -> head_cable
+                    "end_element_id": integer, -- --> block_elements -> head_cable
+                }
+            ]
+		}
+	],
+	"steps": [ // массив следующих действий
+		{
+			"block_id": integer, // id аппаратуры
+            "elements": [
+                {
+                    "element_id": integer, // id элемента, который нужно подсветить
+                }
+            ]
+		}
+	],
+    "finish": bool // Завершена ли попытка
+}
+
+---
+
+## РЕДАКТОР АППАРАТУРЫ
+
+### НАЗВАНИЕ АППАРАТУРЫ
+
+front->back
+{
+    "session_hash": string,
+    "apparat_name": string,
+    "operation": "addApparat",
+}
+
+back->front
+{
+    "apparat_id": integer,
+    "status": bool, // нет ли такое имя аппаратуры в БД: true - если добавление успешно, иначе - false
+    "elements": [
+        {
+            "id": integer,
+            "type": string,
+            "original_src": text, // берём отсюда width и height
+            "conditions": [
+                {
+                    "condition_id": integer,
+                    "is_new_condition": bool, // пустой ли выбранный массив состояний, редактировать доступные шаблоны нельзя, но можно добавлять
+                    "condition_positions": [
+                        {
+                            "condition_position_id": integer,
+                            "angle": integer, -- --> градусы
+                            "order": integer, -- --> порядок переключения состояний
+                            "src": text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+    "error": string
+}
+
+### ДОБАВЛЕНИЕ БЛОКА
+
+front->back:
+{
+    "session_hash": string,
+    "apparat_id": integer,
+    "block_name": string,
+    "operation": "addBlock",
+    "width": integer,
+	"height": integer,
+    "src": string
+}
+
+back->front:
+{
+    "block_id": integer,
+    "status": bool, // нет ли такого имя блока в БД: true - если добавление успешно, иначе - false
+    "error": string
+}
+
+### ДОБАВЛЕНИЕ ЭЛЕМЕНТА ИЛИ КАБЕЛЯ НА БЛОК
+
+front->back:
+{
+    "session_hash": string,
+    "apparat_id": integer,
+    "block_id": integer,
+    "element": {
+        "element_id": integer,
+        "x": double, // всё - относительно оригинального размера блока
+	    "y": double, // всё - относительно оригинального размера блока
+        "width": double, // всё - относительно оригинального размера блока
+        "height": double, // всё - относительно оригинального размера блока
+        "src": string
+    },
+    "operation": "addElementToBlock"
+}
+
+back->front
+{
+    "status": bool, // true - если добавление успешно, иначе - false
+    "error": string
+}
+
+### ДОБАВЛЕНИЕ CONDISION
+
+front->back:
+{
+    "session_hash": string,
+    "operation": "addCondision",
+    "element_id": integer,
+}
+
+back->front
+{
+    "condision_id": integer,
+    "status": bool, // true - если добавление успешно, иначе - false
+    "error": string
+}
+
+### ДОБАВЛЕНИЕ СОСТОЯНИЙ ЭЛЕМЕНТА
+
+front->back:
+{
+    "session_hash": string,
+    "element_id": integer,
+    "conditions": [
+        {
+            "condision_id": integer,
+            "positions": [
+                "position": {
+                    "angle": integer, -- --> градусы
+                    "src": text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
+                },
+                "order": integer,
+                "src": string,
+            ]
+        }
+    ],
+    "operation": "addCondisionPositions",
+}
+
+back->front
+{
+    "status": bool, // true - если добавление успешно, иначе - false
+    "error": string
+}
+
+### ДОБАВЛЕНИЕ ЭЛЕМЕНТА В НАБОР
+
+front->back:
+{
+    "session_hash": string,
+    "element" {
+        "type": string,
+        "src": string
+    }
+}
+
+back->front
+{
+    "element_id": int,
+    "status": bool, // нет ли такого имя блока в БД: true - если добавление успешно, иначе - false
+    "error": string
+}
+
+
+---
+---
+
+#### ПРЕДЫДУЩАЯ ВЕРСИЯ КЛИЕНТ-СЕРВЕРНОГО ВЗАИМОДЕЙСТВИЯ:
+
+front->back: (первое действие)
+{
+
+	"session_id": string, // уникальный хэш-ключ студента, присваемый при авторизации (идентифицирует пользователя)
+	"is_training": bool,
+	"ex_id": integer // id норматива
+}
+
+front->back: (все остальные действия)
+{
+
+	"session_id": string, // уникальный хэш-ключ студента, присваемый при авторизации (идентифицирует пользователя)
+	"apparat_id": integer, // id аппаратуры
+	"id": integer, // id выбранного элемента
+	"draggable": bool, // флаг возможности перемещения объекта (определяет наличие полей: current_value / left, top)
+	"current_value": string, // состояние выбранного элемента
+	"left": double, // относительное положение элемента от левого края картинки аппаратуры
+	"top": double // относительное положение элемента от верхнего края картинки аппаратуры
+}
+
+
+back->front:
+
+РЕЖИМ ТРЕННИРОВКИ:
+{
+
+	"validation": bool, // флаг, определяющий правильность действия студента
+	"has_action": bool, // флаг, определяющий наличие ответных действий (array_actions) со стороны аппаратуры
+	"annotation": string, // текст шага
+	"count_action": unsigned integer, // количество ответных действий
+	"array_actions": [ // массив ответных действий
+		{
+			"apparat_id": integer, // id аппаратуры
+			"action_id": integer, // id элемента, должного именить своё состояние
+			"action_value": string // необходимое состояние action-элемента
+		}, ...
+	],
+	"count_next": unsigned integer, // количество следующих действий
+	"next_actions": [ // массив следующих действий
+		{
+			"apparat_id": integer, // id аппаратуры
+			"next_id": integer, // id элемента, должного именить своё состояние
+			"draggable": bool, // флаг возможности перемещения объекта (определяет наличие полей: current_value / left, top)
+			"current_value": string, // состояние выбранного элемента
+			"left": double, // относительное положение элемента от левого края картинки аппаратуры
+			"top": double // относительное положение элемента от верхнего края картинки аппаратуры
+		}, ...
+	],
+	"finish": bool // Завершена ли попытка
+}
+
+РЕЖИМ ТЕСТИРОВАНИЯ:
+{
+
+	"validation": bool, // флаг, определяющий правильность действия студента
+	"has_action": bool, // флаг, определяющий наличие ответных действий (array_actions) со стороны аппаратуры
+	"annotation": string, // текст шага
+	"count_action": unsigned integer, // количество ответных действий
+	"array_actions": [ // массив ответных действий
+		{
+			"apparat_id": integer, // id аппаратуры
+			"action_id": integer, // id элемента, должного именить своё состояние
+			"action_value": string // необходимое состояние action-элемента
+		}, ...
+	],
+	"finish": bool, // Завершена ли попытка
+	"failed": bool // Выбрасывание ошибки в случае, если пользователь сделал слишком много неправильных действий и стоит вывести сообщение об этом
+
+}
+
+РЕЖИМ СОЗДАНИЯ АППАРАТУРЫ:
+{
+
+
+}
