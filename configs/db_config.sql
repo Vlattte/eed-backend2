@@ -38,12 +38,12 @@ CREATE TABLE block_cables (
 	CONSTRAINT block_cables_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE elements {
+CREATE TABLE elements (
 	id serial, -- --> element_id
 	type_id integer, 
 	original_src text UNIQUE, -- --> ОТНОСИТЕЛЬНЫЙ путь до фотографии елемента
 	CONSTRAINT element_to_type_pkey PRIMARY KEY (id)
-}
+)
 
 CREATE TABLE element_conditions (
 	id serial, -- --> condition_id
@@ -160,13 +160,13 @@ CREATE TABLES sessions (
 	CONSTRAINT sessions_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE session_info {
+CREATE TABLE session_info (
 	id serial,
 	session_id integer,
 	apparat_id integer,
 	TODO: ...
 	CONSTRAINT session_info_pkey PRIMARY KEY (id)
-}
+)
 
 
 
