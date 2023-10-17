@@ -4,7 +4,7 @@
     exam
 """
 
-# import db_connection
+import scripts.dbconnection as db
 
 def choose_exercise_type(message_dict):
     """ define exercise type """

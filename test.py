@@ -1,5 +1,5 @@
-from scripts import db_connection as db
+from scripts import dbconnection as db
 
-connection  = db.db_connection()
+connection  = db.DbConnection()
 
 connection.add_elements('apparats', id=1, name='app_test')

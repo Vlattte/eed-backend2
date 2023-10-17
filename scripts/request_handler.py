@@ -4,14 +4,13 @@
 import json
 
 # handlers
-from exercise import choose_exercise_type
-from equipment_creator import choose_equipment_operation
+from scripts.exercise import choose_exercise_type
+from scripts.equipment_creator import choose_equipment_operation
 
 
-
-def request_handler(message):
+def request_handler(message_dict):
     """ decide which module will handle message """
-    message_dict = json.loads(message)
+    # message_dict = json.dumps(message_dict)
 
     # is request == authorization
     # NOT USED

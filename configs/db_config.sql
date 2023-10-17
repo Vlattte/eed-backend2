@@ -145,9 +145,11 @@ CREATE TABLE actions (
 -- ТАБЛИЦЫ ДЛЯ ХРАНЕНИЯ СОСТОЯНИЙ:
 ----------------------------------
 
+-- таблица нужна, чтобы не создавать при каждом соединении нового пользователя
+-- просто по session_hash получаем id нужного пользователя по полученному session_hash
 CREATE TABLE user_data (
 	id serial, -- --> user_id
-	login text,
+	login text UNIQUE,
 	role integer,
 	password text,
 	CONSTRAINT user_pkey PRIMARY KEY (id)
