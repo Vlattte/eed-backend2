@@ -7,10 +7,11 @@ import scripts.dbconnection as db
 def choose_equipment_operation(message_dict):
     """ define equipment operation """
     if message_dict["operation"] == "connect":          # connection establishing
-        answer_json = establish_connection(message_dict["session_hash"])
-        return answer_json
+        connection_status = establish_connection(message_dict["session_hash"])
+        return connection_status
     elif message_dict["operation"] == "addApparat":     # add equipment name
-        add_equipment_name(message_dict)
+        adding_equipment_status = add_equipment_name(message_dict)
+        return adding_equipment_status
     elif message_dict["operation"] == "addBlock":       # add block
         add_block(message_dict)
 
@@ -65,13 +66,6 @@ def check_connection(session_hash):
     return -1
 
 
-def find_equipment(equipment_name):
-    """ tries to find equipment by name in table "apparats" """
-    db_con_var = db.DbConnection()
-    status = db_con_var.get_data(table_name="apparats", name=equipment_name)
-    return status
-
-
 #   message from front:
 # "session_hash": string,
 # "apparat_name": string,
@@ -79,10 +73,36 @@ def find_equipment(equipment_name):
 # "operation": "addApparat"
 def add_equipment_name(message_dict):
     """ save equipment name and equipment description from current session hash """
-    equipment_added = find_equipment(message_dict["apparat_name"])
+    # проверка наличия оборудования с таким именем в базе
+    is_equipment_in_base = find_equipment(message_dict["apparat_name"])
+    status = False
+    equipment_id = -1
 
-    back_answer = f"{'status': '{equipment_added}'}".format(equipment_added=equipment_added)
+    if not is_equipment_in_base:
+        db_con_var = db.DbConnection()
+        # TODO:: придумать как ипользовать session_hash
+        equipment_names = db_con_var.add_element_and_get_id(table_name="apparats",
+                                                         # session_hash=message_dict["session_hash"],
+                                                         name=message_dict["apparat_name"],
+                                                         apparat_description=message_dict["apparat_description"])
+        equipment_id = equipment_names[0]
+        status = True
+
+
+
+    back_answer = {"status": status, "equipment_id": equipment_id, "error": "no-error"}
     return back_answer
+
+
+
+def find_equipment(equipment_name):
+    """ tries to find equipment by name in table "apparats" """
+    db_con_var = db.DbConnection()
+    where_statement = f"name='{equipment_name}'".format(equipment_name=equipment_name)
+    equipment_names = db_con_var.get_data_with_where_statement(table_name="apparats", name=equipment_name,
+                                                               where_statement=where_statement)
+    is_equipment_added = len(equipment_names) > 0
+    return is_equipment_added
 
 
 def add_block(message_dict):

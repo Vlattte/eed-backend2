@@ -116,9 +116,9 @@ class DbConnection:
 
     def get_data_request(self, table_name, **kwargs):
         """
-        получает имя таблицы и выбранные колонки
+            получает имя таблицы и выбранные колонки
 
-        возвращает кортеж с данными из таблицы
+            возвращает кортеж с данными из таблицы
         """
         # TODO:: сделать функцию для вызова в ней всех запросов, чтобы не дублировать код
         # создаем список из столбцов и их значений и формирование запроса к БД
@@ -128,12 +128,7 @@ class DbConnection:
         request_string = f"""
                         SELECT {columns_string} FROM {table_name}                       
                         """
-        # добавление в таблицу значений
-        cursor = self.connection.cursor()
-        cursor.execute(request_string)
-        return_data = cursor.fetchall()
-        cursor.close()
-        self.connection.commit()
+        return_data = self.send_request(request_string)
         return return_data
 
 

@@ -2,9 +2,11 @@
 -- ТАБЛИЦЫ ДЛЯ ХРАНЕНИЯ АППАРАТУРЫ:
 ----------------------------------
 
+
 CREATE TABLE apparats (
 	id serial, -- --> apparat_id
 	name text UNIQUE,
+    apparat_description text,
 	CONSTRAINT apparats_pkey PRIMARY KEY (id)
 );
 
