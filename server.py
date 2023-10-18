@@ -10,27 +10,23 @@ import scripts.request_handler as req
 
 
 async def handler(websocket):
-
     # message = await websocket.recv()
     message = json.dumps("{\"operation\": \"connect\", \"session_hash\": \"47\" }")
-    print("message: ")
-    print(message)
     # request = json.loads(message)
     return_json = req.request_handler(message)
-    await websocket.send(json.dumps(return_json, ensure_ascii=False))
+    await websocket.send(json.dumps(return_json, ensure_ascii=False), max_size=1000000)
+
 
 def test_handler():
     message = json.loads("{\"operation\": \"connect\", \"session_hash\": \"47\" }")
-    print("message: ")
-    print(message)
-    # request = json.loads(message)
-    return_json = req.request_handler(message)
+    answer_json = req.request_handler(message)
+    return answer_json
 
 
 async def main():
     print("SERVER ON")
     test_handler()
-    # async with websockets.serve(handler, "", 8083):
+    # async with websockets.serve(handler, "", 8083, max_size=1000000):
     #     await asyncio.Future()
 
 if __name__ == "__main__":

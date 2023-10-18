@@ -23,4 +23,5 @@ def request_handler(message_dict):
 
     # if request == equipment_creator
     if "operation" in message_dict:
-        choose_equipment_operation(message_dict)
+        answer = choose_equipment_operation(message_dict)
+        return json.dumps(answer)

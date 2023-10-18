@@ -48,6 +48,44 @@ class DbConnection:
         cursor.close()
         self.connection.commit()
 
+    def add_element_and_get_id(self, table_name, **kwargs):
+        """
+                Получает имя таблицы, записывает в него значения и возвращает id добавленной строки
+                kwargs - словарь, где ключи - названия полей, значения в них - то, что нужно добавить
+        """
+        # TODO:: добавить проверку на ошибку и возвращать статус
+        # создаем список из столбцов и их значений
+        columns = self.columns_from_kwargs(**kwargs)
+        values = self.values_from_kwargs(**kwargs)
+
+        # формирование запроса к БД
+        columns_string = ', '.join(map(str, columns))
+        values_string = ', '.join(map(str, values))
+        request_string = f"""
+                            INSERT INTO {table_name} ({columns_string}) 
+                            VALUES({values_string}) returning id                  
+                          """
+
+        request_id = self.send_request(request_string)
+        return request_id[0]
+
+    def get_data_with_where_statement(self, table_name, where_statement, **kwargs):
+        """
+            получает имя таблицы и выбранные колонки
+            where_statement: полный where запрос (example: "id = 47")
+            :return: кортеж с данными из таблицы
+        """
+        # создаем список из столбцов и их значений
+        columns = self.columns_from_kwargs(**kwargs)
+        columns_string = ', '.join(map(str, columns))
+
+        request_string = f"""
+                            SELECT {columns_string} FROM {table_name}             
+                            WHERE {where_statement}          
+                          """
+        chosen_data = self.send_request(request_string)
+        return chosen_data
+
     def columns_from_kwargs(self, **kwargs):
         """ получает kwargs(именнованые аргументы) и возвращает массив столбцов """
         columns = []
@@ -67,22 +105,7 @@ class DbConnection:
 
         return values
 
-    def get_data_with_where(self, table_name, where_statement, **kwargs):
-        """
-                получает имя таблицы и выбранные колонки
-
-                возвращает словарь с данными из таблицы
-                """
-        # TODO:: сделать функцию для вызова в ней всех запросов, чтобы не дублировать код
-        # создаем список из столбцов и их значений и формирование запроса к БД
-        columns = self.columns_from_kwargs(**kwargs)
-        columns_string = ', '.join(map(str, columns))
-
-        # fixme:: сделать не только для студента
-        request_string = f"""
-                                SELECT '{columns_string}' FROM {table_name}  
-                                WHERE {where_statement} = 'student'                     
-                                """
+    def send_request(self, request_string):
         # добавление в таблицу значений
         cursor = self.connection.cursor()
         cursor.execute(request_string)
@@ -91,12 +114,11 @@ class DbConnection:
         self.connection.commit()
         return return_data
 
-
     def get_data_request(self, table_name, **kwargs):
         """
         получает имя таблицы и выбранные колонки
 
-        возвращает словарь с данными из таблицы
+        возвращает кортеж с данными из таблицы
         """
         # TODO:: сделать функцию для вызова в ней всех запросов, чтобы не дублировать код
         # создаем список из столбцов и их значений и формирование запроса к БД
