@@ -13,7 +13,11 @@ def choose_equipment_operation(message_dict):
         adding_equipment_status = add_equipment_name(message_dict)
         return adding_equipment_status
     elif message_dict["operation"] == "addBlock":       # add block
-        add_block(message_dict)
+        adding_block_status = add_block(message_dict)
+        return adding_block_status
+    else:
+        print("UNKNOWN OPERATION")
+        return {"error": "unknown-operation"}
 
 
 # для таблицы "sessions" нужен id пользователя (user_id) =>
@@ -66,11 +70,6 @@ def check_connection(session_hash):
     return -1
 
 
-#   message from front:
-# "session_hash": string,
-# "apparat_name": string,
-# "apparat_description": string,
-# "operation": "addApparat"
 def add_equipment_name(message_dict):
     """ save equipment name and equipment description from current session hash """
     # проверка наличия оборудования с таким именем в базе
@@ -88,8 +87,6 @@ def add_equipment_name(message_dict):
         equipment_id = equipment_names[0]
         status = True
 
-
-
     back_answer = {"status": status, "equipment_id": equipment_id, "error": "no-error"}
     return back_answer
 
@@ -105,9 +102,42 @@ def find_equipment(equipment_name):
     return is_equipment_added
 
 
+# "session_hash": string,
+# "apparat_id": integer,
+# "block_name": string,
+# "operation": "addBlock",
+# "width": integer,
+# "height": integer,
+# "src": string
 def add_block(message_dict):
-    """ add block """
+    """ add block to equipment """
+    block_id = -1
+    status = False
+    # проверка наличия оборудования с таким именем в базе
+    is_block_in_base = find_block(message_dict["block_name"])
 
-    return
+    if not is_block_in_base:
+        db_con_var = db.DbConnection()
+        block_names = db_con_var.add_element_and_get_id(table_name="apparat_blocks",
+                                                        # session_hash=message_dict["session_hash"],
+                                                        apparat_id=message_dict["apparat_id"],
+                                                        name=message_dict["block_name"],
+                                                        width=message_dict["width"],
+                                                        height=message_dict["height"],
+                                                        src=message_dict["src"])
+        block_id = block_names[0]
+        status = True
 
+    back_answer = {"status": status, "block_id": block_id, "error": "no-error"}
+    return back_answer
+
+
+def find_block(block_name):
+    """ tries to find block by name in table "apparat_blocks" """
+    db_con_var = db.DbConnection()
+    where_statement = f"name='{block_name}'".format(block_name=block_name)
+    blocks_names = db_con_var.get_data_with_where_statement(table_name="apparat_blocks", name=block_name,
+                                                            where_statement=where_statement)
+    is_block_added = len(blocks_names) > 0
+    return is_block_added
 
