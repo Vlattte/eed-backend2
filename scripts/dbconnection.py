@@ -124,6 +124,8 @@ class DbConnection:
         # создаем список из столбцов и их значений и формирование запроса к БД
         columns = self.columns_from_kwargs(**kwargs)
         columns_string = ', '.join(map(str, columns))
+        if "all" in kwargs:
+            columns_string = '*'
 
         request_string = f"""
                         SELECT {columns_string} FROM {table_name}                       

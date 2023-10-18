@@ -3,6 +3,9 @@
 # database
 import scripts.dbconnection as db
 
+# elements scripts
+import scripts.elements_handler as elements_handler
+
 
 def choose_equipment_operation(message_dict):
     """ define equipment operation """
@@ -15,6 +18,12 @@ def choose_equipment_operation(message_dict):
     elif message_dict["operation"] == "addBlock":       # add block
         adding_block_status = add_block(message_dict)
         return adding_block_status
+    elif message_dict["operation"] == "loadElements":
+        loading_elements_status = elements_handler.load_elements(message_dict)
+        return loading_elements_status
+    elif message_dict["operation"] == "addElement":
+        adding_elements_status = elements_handler.add_element(message_dict)
+        return adding_elements_status
     else:
         print("UNKNOWN OPERATION")
         return {"error": "unknown-operation"}
@@ -91,7 +100,6 @@ def add_equipment_name(message_dict):
     return back_answer
 
 
-
 def find_equipment(equipment_name):
     """ tries to find equipment by name in table "apparats" """
     db_con_var = db.DbConnection()
@@ -102,13 +110,6 @@ def find_equipment(equipment_name):
     return is_equipment_added
 
 
-# "session_hash": string,
-# "apparat_id": integer,
-# "block_name": string,
-# "operation": "addBlock",
-# "width": integer,
-# "height": integer,
-# "src": string
 def add_block(message_dict):
     """ add block to equipment """
     block_id = -1
@@ -140,4 +141,5 @@ def find_block(block_name):
                                                             where_statement=where_statement)
     is_block_added = len(blocks_names) > 0
     return is_block_added
+
 

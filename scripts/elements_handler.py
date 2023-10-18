@@ -1,0 +1,119 @@
+""" manage elements functions (add elements, send elements, the same with cables) """
+
+# database
+import scripts.dbconnection as db
+
+
+# "session_hash": string,
+# "operation": "loadElements"
+
+#       return::
+# "status": bool,
+# "error": string,
+# "elements": [
+#     {
+#         "id": integer,
+#         "type": string,
+#         "original_src": text, // берём отсюда width и height
+#         "conditions": [
+#             {
+#                 "condition_id": integer,
+# vvv пустой ли выбранный массив состояний, редактировать доступные шаблоны нельзя, но можно добавлять vvv
+#                 "is_new_condition": bool,
+#                 "condition_positions": [
+#                     {
+#                         "condition_position_id": integer,
+#                         "angle": integer, -- --> градусы
+#                         "order": integer, -- --> порядок переключения состояний
+#                         "src": text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
+#                     }
+#                 ]
+#             }
+#         ]
+#     }
+# ]
+def load_elements(message_dict):
+    """ gets elements from db and sends to equipment creator """
+    status = False
+    error = "no-error"
+
+    # проверяем, есть ли вообще елементы в таблице "block_elements"
+    db_con_var = db.DbConnection()
+    elements = db_con_var.get_data_request(table_name="block_elements", all="*")
+    if len(elements) == 0:
+        error = "no-elements-in-database"
+
+    back_answer = {"status": status, "error": error}
+    return back_answer
+
+
+# "session_hash": string,
+# "element" {
+#     "type": string,
+#     "name": string,
+#     "src": string
+# }
+def add_element(message_dict):
+    """ add element to db (table "elements") """
+    status = False
+    error = "no-error"
+    element_id = -1
+    # проверяем, есть ли уже такой елемент в таблице "elements"
+    is_element_in_base = find_element(message_dict["name"])
+    if not is_element_in_base:
+        # получаем id типа элемента
+        type_id = add_type(message_dict["type"])
+
+        db_con_var = db.DbConnection()
+        elements_names = db_con_var.add_element_and_get_id(table_name="elements",
+                                                           # session_hash=message_dict["session_hash"],
+                                                           name=message_dict["name"],
+                                                           type_id=type_id)
+        element_id = elements_names[0]
+        status = True
+
+    back_answer = {"status": status, "element_id": element_id, "error": error}
+    return back_answer
+
+
+def add_type(type_name):
+    # нужно сопоставить название типа с его номером, либо добавить его, если такого нет
+    type_ids = find_param_id_by_name("types", type_name)
+    type_id = type_ids[0]
+    if len(type_ids) == 0:
+        db_con_var = db.DbConnection()
+        type_id = db_con_var.add_element_and_get_id(table_name="types", name=type_name)
+
+    return type_id
+
+def find_param_id_by_name(table_name, param_name):
+    """ tries to find any param by name in table "table_name" """
+    db_con_var = db.DbConnection()
+    where_statement = f"name='{param_name}'".format(param_name=param_name)
+    param_names = db_con_var.get_data_with_where_statement(table_name=table_name, id="id",
+                                                           where_statement=where_statement)
+
+    param_id = -1  # значит такого нет и нужно добавить в БД
+    if len(param_names) > 0:
+        param_id = param_names[0]
+    return param_id
+
+
+def find_element(element_name):
+    """ tries to find block by name in table "apparat_blocks" """
+    db_con_var = db.DbConnection()
+    where_statement = f"name='{element_name}'".format(element_name=element_name)
+    element_names = db_con_var.get_data_with_where_statement(table_name="elements", name=element_name,
+                                                            where_statement=where_statement)
+    is_element_added = len(element_names) > 0
+    return is_element_added
+
+def find_type_name(type_name):
+    """ tries to find type by name in table "types" """
+    db_con_var = db.DbConnection()
+    where_statement = f"name='{type_name}'".format(type_name=type_name)
+    type_names = db_con_var.get_data_with_where_statement(table_name="types", name=type_name,
+                                                          where_statement=where_statement)
+    is_type_added = len(type_names) > 0
+    return is_type_added
+
