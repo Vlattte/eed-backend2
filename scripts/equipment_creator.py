@@ -6,6 +6,8 @@ import scripts.dbconnection as db
 # elements scripts
 import scripts.elements_handler as elements_handler
 
+# operations with image
+import scripts.image_operations as img_ops
 
 def choose_equipment_operation(message_dict):
     """ define equipment operation """
@@ -36,7 +38,7 @@ def choose_equipment_operation(message_dict):
 #       и сохраняем данные по соединению в "sessions"
 def establish_connection(session_hash):
     """ save new session_hash """
-    #fixme:: сложная и нагруженная функция
+    #FIXME:: сложная и нагруженная функция
     #TODO:: удалять session hash отовсюду, когда чел выходит
     db_con_var = db.DbConnection()
     user_id = check_connection(session_hash)
@@ -118,6 +120,12 @@ def add_block(message_dict):
     is_block_in_base = find_block(message_dict["block_name"])
 
     if not is_block_in_base:
+        # FIXME: необходимо, чтобы фронт передавал строку с изображением, необходимо потестить как работает сохранение 
+        # процессинг изображения
+        image = img_ops.binary_2_image(message_dict["image_string"])
+        message_dict["width"], message_dict["height"] = img_ops.get_image_params(image)
+        img_ops.save(image, message_dict["srс"])
+
         db_con_var = db.DbConnection()
         block_names = db_con_var.add_element_and_get_id(table_name="apparat_blocks",
                                                         # session_hash=message_dict["session_hash"],
