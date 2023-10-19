@@ -6,6 +6,10 @@ import psycopg2
 import yaml
 
 
+# FIXME: поменять columns_from_kwargs, values_from_kwargs на columns_values_from_kwargs, так как проходиться по значениям словаря, 
+# минуя ключи - не очень корректно 
+
+
 class DbConnection:
     """
     Создание подключения к базе данных
@@ -51,6 +55,7 @@ class DbConnection:
     def add_element_and_get_id(self, table_name, **kwargs):
         """
                 Получает имя таблицы, записывает в него значения и возвращает id добавленной строки
+
                 kwargs - словарь, где ключи - названия полей, значения в них - то, что нужно добавить
         """
         # TODO:: добавить проверку на ошибку и возвращать статус
@@ -72,6 +77,7 @@ class DbConnection:
     def get_data_with_where_statement(self, table_name, where_statement, **kwargs):
         """
             получает имя таблицы и выбранные колонки
+
             where_statement: полный where запрос (example: "id = 47")
             :return: кортеж с данными из таблицы
         """
@@ -86,6 +92,7 @@ class DbConnection:
         chosen_data = self.send_request(request_string)
         return chosen_data
 
+    # FIXME: по хорошему мы к значениям можем обращаться только по ключам
     def columns_from_kwargs(self, **kwargs):
         """ получает kwargs(именнованые аргументы) и возвращает массив столбцов """
         columns = []
@@ -93,7 +100,8 @@ class DbConnection:
             columns.append(col)
 
         return columns
-
+    
+    # FIXME: по хорошему мы к значениям можем обращаться только по ключам
     def values_from_kwargs(self, **kwargs):
         """ получает kwargs(именнованые аргументы) и возвращает массив значений """
         values = []
@@ -104,6 +112,15 @@ class DbConnection:
             values.append(value)
 
         return values
+    
+    def columns_values_from_kwargs(self, **kwargs):
+        """ получает kwargs(именнованые аргументы) и возвращает список столбцов, список значений"""
+        columns, values = [], []
+        for col, value in kwargs.items():
+            columns.append(col)
+            values.append(value)
+
+        return columns, values
 
     def send_request(self, request_string):
         # добавление в таблицу значений
