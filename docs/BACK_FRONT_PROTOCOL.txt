@@ -215,18 +215,18 @@ back->front
     "error": string
 }
 
-### ДОБАВЛЕНИЕ CONDISION
+### ДОБАВЛЕНИЕ condition
 
 front->back:
 {
     "session_hash": string,
-    "operation": "addCondision",
+    "operation": "addcondition",
     "element_id": integer,
 }
 
 back->front
 {
-    "condision_id": integer,
+    "condition_id": integer,
     "status": bool, // true - если добавление успешно, иначе - false
     "error": string
 }
@@ -239,7 +239,7 @@ front->back:
     "element_id": integer,
     "conditions": [
         {
-            "condision_id": integer,
+            "condition_id": integer,
             "positions": [
                 "position": {
                     "angle": integer, -- --> градусы
@@ -250,7 +250,7 @@ front->back:
             ]
         }
     ],
-    "operation": "addCondisionPositions",
+    "operation": "addconditionPositions",
 }
 
 back->front
