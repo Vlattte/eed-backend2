@@ -42,7 +42,6 @@ CREATE TABLE block_cables (
 
 CREATE TABLE elements (
 	id serial, -- --> element_id
-	name text,
 	type_id integer, 
 	original_src text UNIQUE, -- --> ОТНОСИТЕЛЬНЫЙ путь до фотографии елемента
 	CONSTRAINT element_to_type_pkey PRIMARY KEY (id)

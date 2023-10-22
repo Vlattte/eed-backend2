@@ -33,42 +33,39 @@ import scripts.dbconnection as db
 #     }
 # ]
 def load_elements(message_dict):
-    """ gets elements from db and sends to equipment creator """
+    """ получает элементы из БД и отправляет их в редактор оборудования """
     status = False
     error = "no-error"
 
-    # проверяем, есть ли вообще елементы в таблице "block_elements"
     db_con_var = db.DbConnection()
     elements = db_con_var.get_data_request(table_name="block_elements", all="*")
+
+    # проверяем, есть ли вообще елементы в таблице "block_elements"
     if len(elements) == 0:
         error = "no-elements-in-database"
 
-    back_answer = {"status": status, "error": error}
+    back_answer = {"status": status, "error": error, "elements": elements}
     return back_answer
 
 
-# "session_hash": string,
-# "element" {
-#     "type": string,
-#     "name": string,
-#     "src": string
-# }
+# ДОБАВЛЕНИЕ ЭЛЕМЕНТА В НАБОР
 def add_element(message_dict):
-    """ add element to db (table "elements") """
+    """ добавление элементов в БД (таблица "elements") """
     status = False
     error = "no-error"
     element_id = -1
-    # проверяем, есть ли уже такой елемент в таблице "elements"
-    is_element_in_base = find_element(message_dict["name"])
+
+    # получаем id типа элемента по его названию
+    type_id = add_type(message_dict["element"]["type"])
+    # проверяем, есть ли уже такой елемент в таблице "elements" по id типа
+    is_element_in_base = find_element(type_id)
     if not is_element_in_base:
-        # получаем id типа элемента
-        type_id = add_type(message_dict["type"])
+
 
         db_con_var = db.DbConnection()
         elements_names = db_con_var.add_element_and_get_id(table_name="elements",
-                                                           # session_hash=message_dict["session_hash"],
-                                                           name=message_dict["name"],
-                                                           type_id=type_id)
+                                                           type_id=type_id,
+                                                           original_src=message_dict["element"]["src"])
         element_id = elements_names[0]
         status = True
 
@@ -77,16 +74,19 @@ def add_element(message_dict):
 
 
 def add_type(type_name):
+    """ добавление нового типа в таблицу "types" """
     # нужно сопоставить название типа с его номером, либо добавить его, если такого нет
-    type_ids = find_param_id_by_name("types", type_name)
-    type_id = type_ids[0]
-    if len(type_ids) == 0:
+    type_ids = find_id_by_name("types", type_name)
+    type_id = -1
+    if type_ids == -1:
         db_con_var = db.DbConnection()
         type_id = db_con_var.add_element_and_get_id(table_name="types", name=type_name)
+    type_id = type_ids[0]
 
     return type_id
 
-def find_param_id_by_name(table_name, param_name):
+
+def find_id_by_name(table_name, param_name):
     """ tries to find any param by name in table "table_name" """
     db_con_var = db.DbConnection()
     where_statement = f"name='{param_name}'".format(param_name=param_name)
@@ -99,14 +99,15 @@ def find_param_id_by_name(table_name, param_name):
     return param_id
 
 
-def find_element(element_name):
+def find_element(type_id):
     """ tries to find block by name in table "apparat_blocks" """
     db_con_var = db.DbConnection()
-    where_statement = f"name='{element_name}'".format(element_name=element_name)
-    element_names = db_con_var.get_data_with_where_statement(table_name="elements", name=element_name,
-                                                            where_statement=where_statement)
+    where_statement = f"type_id='{type_id}'".format(type_id=type_id)
+    element_names = db_con_var.get_data_with_where_statement(table_name="elements", type_id=type_id,
+                                                             where_statement=where_statement)
     is_element_added = len(element_names) > 0
     return is_element_added
+
 
 def find_type_name(type_name):
     """ tries to find type by name in table "types" """

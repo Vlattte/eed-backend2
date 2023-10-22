@@ -18,8 +18,9 @@ async def handler(websocket):
 
 
 def test_handler():
-    message = json.loads("{\"operation\": \"addElement\", \"session_hash\": \"47\", \"name\": \"bubuka\", "
-                         "\"type\": \"lever\", \"apparat_id\": \"2\", \"width\": 44, \"height\": 4, \"src\":  \"ubububububububububu\"}")
+    message = json.loads("{\"operation\": \"addElement\", \"session_hash\": \"47\", "
+                         "\"element\": {\"type\": \"lever\", \"src\":  \"ubububububububububu\"}, "
+                         "\"apparat_id\": \"2\", \"width\": 44, \"height\": 4}")
     answer_json = req.request_handler(message)
     print(answer_json)
     return answer_json
