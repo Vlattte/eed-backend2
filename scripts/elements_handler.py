@@ -36,9 +36,9 @@ def load_elements(message_dict):
     """ получает элементы из БД и отправляет их в редактор оборудования """
     status = False
     error = "no-error"
-
+    #TODO:: добавить conditions
     db_con_var = db.DbConnection()
-    elements = db_con_var.get_data_request(table_name="block_elements", all="*")
+    elements = db_con_var.get_data_request(table_name="elements", all="*")
 
     # проверяем, есть ли вообще елементы в таблице "block_elements"
     if len(elements) == 0:
@@ -52,7 +52,7 @@ def load_elements(message_dict):
 def add_element(message_dict):
     """ добавление элементов в БД (таблица "elements") """
     status = False
-    error = "no-error"
+    error = "element redefinition"
     element_id = -1
 
     # получаем id типа элемента по его названию
@@ -60,14 +60,13 @@ def add_element(message_dict):
     # проверяем, есть ли уже такой елемент в таблице "elements" по id типа
     is_element_in_base = find_element(type_id)
     if not is_element_in_base:
-
-
         db_con_var = db.DbConnection()
         elements_names = db_con_var.add_element_and_get_id(table_name="elements",
                                                            type_id=type_id,
                                                            original_src=message_dict["element"]["src"])
         element_id = elements_names[0]
         status = True
+        error = "no error"
 
     back_answer = {"status": status, "element_id": element_id, "error": error}
     return back_answer
@@ -77,10 +76,9 @@ def add_type(type_name):
     """ добавление нового типа в таблицу "types" """
     # нужно сопоставить название типа с его номером, либо добавить его, если такого нет
     type_ids = find_id_by_name("types", type_name)
-    type_id = -1
     if type_ids == -1:
         db_con_var = db.DbConnection()
-        type_id = db_con_var.add_element_and_get_id(table_name="types", name=type_name)
+        type_ids = db_con_var.add_element_and_get_id(table_name="types", name=type_name)
     type_id = type_ids[0]
 
     return type_id
