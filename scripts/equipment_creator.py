@@ -26,6 +26,9 @@ def choose_equipment_operation(message_dict):
     elif message_dict["operation"] == "addElement":
         adding_elements_status = elements_handler.add_element(message_dict)
         return adding_elements_status
+    elif message_dict["operation"] == "addCondition":
+        adding_condition_status = elements_handler.add_condition(message_dict)
+        return adding_condition_status
     else:
         print("UNKNOWN OPERATION")
         return {"error": "unknown-operation"}

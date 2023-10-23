@@ -48,6 +48,25 @@ def load_elements(message_dict):
     return back_answer
 
 
+# ДОБАВЛЕНИЕ CONDISION
+#front->back: {
+#   "session_hash": string,
+#   "operation": "addCondision",
+#   "element_id": integer
+def add_condition(message_dict):
+    """ добавление состояний в таблицу "element_group_condition" """
+    db_con_var = db.DbConnection()
+    condition_ids = db_con_var.add_element_and_get_id(table_name="element_group_condition",
+                                                      element_id=message_dict["element_id"])
+    # TODO:: убрать все обращения к нулевому элементу в бд скрипт,
+    #  на этом уровне астракции не понятно что происходит
+    condition_id = condition_ids[0]
+    status = True
+    error = "condition added"
+    back_answer = {"status": status, "condition_id": condition_id, "error": error}
+    return back_answer
+
+
 # ДОБАВЛЕНИЕ ЭЛЕМЕНТА В НАБОР
 def add_element(message_dict):
     """ добавление элементов в БД (таблица "elements") """
