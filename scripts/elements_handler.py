@@ -46,12 +46,15 @@ def load_elements(message_dict):
     db_con_var = db.DbConnection()
 
     mypath = "../eed-frontend/src/views/editor/control"
+    dirs = ["bolt", "btn", "jumper", "lever", "light", "rotator"]
+    i = 0
     elements = []
     directory = '../eed-frontend/src/views/editor/control'
     for filename in os.listdir(directory):
         path = os.path.join(directory, filename)
         for fil in os.listdir(path):
-            elements.append("control/" + fil)
+            elements.append("control/" + dirs[i] + "/" + fil)
+        i+=1
     # print(f)
     #
     #
