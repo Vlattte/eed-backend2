@@ -6,8 +6,8 @@ import scripts.dbconnection as db
 # обработчик изображений
 import scripts.image_operations as img
 
-from os import listdir
-from os.path import isfile, join
+import os
+import os.path
 
 
 # "session_hash": string,
@@ -44,9 +44,16 @@ def load_elements(message_dict):
     error = "no-error"
     #TODO:: добавить conditions
     db_con_var = db.DbConnection()
-    onlyfiles = {}
-    # mypath =
-    # onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+
+    mypath = "../eed-frontend/src/views/editor/control"
+    elements = []
+    directory = '../eed-frontend/src/views/editor/control'
+    for filename in os.listdir(directory):
+        path = os.path.join(directory, filename)
+        for fil in os.listdir(path):
+            elements.append("control/" + fil)
+    # print(f)
+    #
     #
     # тут лежит тип и изначальная фотка элемента
     # elements = db_con_var.get_data_request(table_name="elements", all="*")
@@ -59,7 +66,7 @@ def load_elements(message_dict):
     # if len(elements) == 0:
     #     error = "no-elements-in-database"
 
-    back_answer = {"status": status, "error": error, "elements": onlyfiles}
+    back_answer = {"status": status, "error": error, "elements": elements}
     return back_answer
 
 
