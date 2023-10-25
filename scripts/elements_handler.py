@@ -3,6 +3,9 @@
 # database
 import scripts.dbconnection as db
 
+# обработчик изображений
+import scripts.image_operations as img
+
 
 # "session_hash": string,
 # "operation": "loadElements"
@@ -46,8 +49,6 @@ def load_elements(message_dict):
         conditions = db_con_var.get_data_with_where_statement(table_name="element_group_condition", id="id",
                                                               where_statement=where_statement)
 
-
-
     # проверяем, есть ли вообще елементы в таблице "block_elements"
     if len(elements) == 0:
         error = "no-elements-in-database"
@@ -57,7 +58,7 @@ def load_elements(message_dict):
 
 
 # ДОБАВЛЕНИЕ CONDISION
-#front->back: {
+# front->back: {
 #   "session_hash": string,
 #   "operation": "addCondision",
 #   "element_id": integer
@@ -124,6 +125,7 @@ def add_element(message_dict):
     is_element_in_base = find_element(type_id)
     if not is_element_in_base:
         db_con_var = db.DbConnection()
+        img.binary_2_image(message_dict["element"]["src"])
         elements_names = db_con_var.add_element_and_get_id(table_name="elements",
                                                            type_id=type_id,
                                                            original_src=message_dict["element"]["src"])
