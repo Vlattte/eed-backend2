@@ -1,5 +1,6 @@
 from PIL import Image
 import io
+import pybase64
 
 def binary_2_image(str_data):
     """
@@ -9,7 +10,11 @@ def binary_2_image(str_data):
     возвращает изображение (PIL.[Png/Jpeg]ImagePlugin.[Png/Jpeg]ImageFile )
     """
     # преобразуем строку в бинарную строку 
+    comma_idx = str_data.rfind(',')
+    str_data = str_data[comma_idx + 1:]
+
     binary_data = str_data.encode('raw_unicode_escape')
+    binary_data = pybase64.b64decode((binary_data))
 
     # Преобразование бинарных данных в объект BytesIO
     image_bytes = io.BytesIO(binary_data)
@@ -18,7 +23,7 @@ def binary_2_image(str_data):
     image = Image.open(image_bytes)
 
     # Закрываем объект BytesIO
-    image_bytes.close()
+    # image_bytes.close()
 
     return image
 
