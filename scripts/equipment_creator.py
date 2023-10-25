@@ -18,11 +18,6 @@ def choose_equipment_operation(message_dict):
         adding_equipment_status = add_equipment_name(message_dict)
         return adding_equipment_status
     elif message_dict["operation"] == "addBlock":       # add block
-
-        print('*')
-        print(message_dict)
-        print('*')
-
         adding_block_status = add_block(message_dict)
         return adding_block_status
     elif message_dict["operation"] == "loadElements":
@@ -134,10 +129,6 @@ def add_block(message_dict):
         # процессинг изображения
         image = img_ops.binary_2_image(message_dict["src"])
         message_dict["width"], message_dict["height"] = img_ops.get_image_params(image)
-        # img_ops.save_image(image, message_dict["srс"])
-        img_ops.save_image(image, f'./../eed-frontend/public/apparats/{message_dict["apparat_id"]}_{message_dict["block_name"]}.png')
-
-        print('Вставление фотки:', message_dict)
 
         db_con_var = db.DbConnection()
 
@@ -148,7 +139,11 @@ def add_block(message_dict):
                                                         width=message_dict["width"],
                                                         height=message_dict["height"],
                                                         src=message_dict["src"])
+        
         block_id = block_names[0]
+
+        img_ops.save_image(image, f'./../eed-frontend/public/apparats/{message_dict["apparat_id"]}_{block_id}.png')
+
         status = True
 
     back_answer = {"status": status, "block_id": block_id, "error": "no-error"}

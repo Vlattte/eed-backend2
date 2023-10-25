@@ -127,9 +127,6 @@ class DbConnection:
     def send_request(self, request_string):
         # добавление в таблицу значений
         cursor = self.connection.cursor()
-
-        print(request_string)
-
         cursor.execute(request_string)
         return_data = cursor.fetchall()
         cursor.close()
