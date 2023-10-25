@@ -12,6 +12,8 @@ import os.path
 
 # "session_hash": string,
 # "operation": "loadElements"
+# "apparat_id": integer
+# "block_id": integer
 
 #       return::
 # "status": bool,
@@ -54,7 +56,12 @@ def load_elements(message_dict):
         path = os.path.join(directory, filename)
         for fil in os.listdir(path):
             elements.append("control/" + dirs[i] + "/" + fil)
-        i+=1
+        i += 1
+
+    apparat_id = message_dict["apparat_id"]
+    block_id = message_dict["block_id"]
+    src = "apparats/{apparat_id}_{block_id}.png".format(apparat_id=apparat_id, block_id=block_id)
+
     # print(f)
     #
     #
@@ -69,7 +76,7 @@ def load_elements(message_dict):
     # if len(elements) == 0:
     #     error = "no-elements-in-database"
 
-    back_answer = {"status": status, "error": error, "elements": elements}
+    back_answer = {"status": status, "error": error, "elements": elements, "src": src}
     return back_answer
 
 
