@@ -60,7 +60,7 @@ def load_elements(message_dict):
 
     apparat_id = message_dict["apparat_id"]
     block_id = message_dict["block_id"]
-    src = "apparats/{apparat_id}_{block_id}".format(apparat_id=apparat_id, block_id=block_id)
+    src = "apparats/{apparat_id}_{block_id}.png".format(apparat_id=apparat_id, block_id=block_id)
 
     # print(f)
     #
