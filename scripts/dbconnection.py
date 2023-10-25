@@ -4,6 +4,7 @@
 
 import psycopg2
 import yaml
+from psycopg2 import Error
 
 
 # FIXME: поменять columns_from_kwargs, values_from_kwargs на columns_values_from_kwargs, так как проходиться по значениям словаря, 
@@ -18,14 +19,17 @@ class DbConnection:
     """
 
     def __new__(cls):
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(DbConnection, cls).__new__(cls)
+        try:
+            if not hasattr(cls, 'instance'):
+                cls.instance = super(DbConnection, cls).__new__(cls)
 
-            with open('./configs/db_connection.yaml', 'r') as config_file:
-                connect_params = yaml.safe_load(config_file)['connect_params']
+                with open('./configs/db_connection.yaml', 'r') as config_file:
+                    connect_params = yaml.safe_load(config_file)['connect_params']
 
-            cls.connection = psycopg2.connect(**connect_params)
-        return cls.instance
+                cls.connection = psycopg2.connect(**connect_params)
+            return cls.instance
+        except (Exception, Error) as error:
+            print("Ошибка подключения к PostgreSQL", error)
 
     def add_elements(self, table_name, **kwargs):
         """
