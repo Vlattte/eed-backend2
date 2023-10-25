@@ -1,6 +1,4 @@
-'''
-Подключение к базе данных из конфига db_connection.yaml
-'''
+""" Подключение к базе данных из конфига db_connection.yaml """
 
 import psycopg2
 import yaml

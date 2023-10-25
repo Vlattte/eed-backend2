@@ -1,3 +1,11 @@
+create database vuc;
+create user vuc with encrypted password '123456';
+
+GRANT ALL PRIVILEGES ON DATABASE vuc TO vuc;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO vuc;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO vuc;
+
+
 ----------------------------------
 -- ТАБЛИЦЫ ДЛЯ ХРАНЕНИЯ АППАРАТУРЫ:
 ----------------------------------
@@ -42,7 +50,7 @@ CREATE TABLE block_cables (
 
 CREATE TABLE elements (
 	id serial, -- --> element_id
-	type_id integer, 
+	type_id integer,
 	original_src text UNIQUE, -- --> ОТНОСИТЕЛЬНЫЙ путь до фотографии елемента
 	CONSTRAINT element_to_type_pkey PRIMARY KEY (id)
 );

@@ -103,7 +103,7 @@ def add_equipment_name(message_dict):
         equipment_id = equipment_names[0]
         status = True
 
-    back_answer = {"status": status, "equipment_id": equipment_id, "error": "no-error"}
+    back_answer = {"status": status, "apparat_id": equipment_id, "error": "no-error"}
     return back_answer
 
 

@@ -6,6 +6,9 @@ import scripts.dbconnection as db
 # обработчик изображений
 import scripts.image_operations as img
 
+from os import listdir
+from os.path import isfile, join
+
 
 # "session_hash": string,
 # "operation": "loadElements"
@@ -41,19 +44,22 @@ def load_elements(message_dict):
     error = "no-error"
     #TODO:: добавить conditions
     db_con_var = db.DbConnection()
-
+    onlyfiles = {}
+    # mypath =
+    # onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+    #
     # тут лежит тип и изначальная фотка элемента
-    elements = db_con_var.get_data_request(table_name="elements", all="*")
-    for element_id in elements["id"]:
-        where_statement = "element_id = {element_id}".format(element_id=element_id)
-        conditions = db_con_var.get_data_with_where_statement(table_name="element_group_condition", id="id",
-                                                              where_statement=where_statement)
+    # elements = db_con_var.get_data_request(table_name="elements", all="*")
+    # for element_id in elements["id"]:
+    #     where_statement = "element_id = {element_id}".format(element_id=element_id)
+    #     conditions = db_con_var.get_data_with_where_statement(table_name="element_group_condition", id="id",
+    #                                                           where_statement=where_statement)
 
-    # проверяем, есть ли вообще елементы в таблице "block_elements"
-    if len(elements) == 0:
-        error = "no-elements-in-database"
+    # # проверяем, есть ли вообще елементы в таблице "block_elements"
+    # if len(elements) == 0:
+    #     error = "no-elements-in-database"
 
-    back_answer = {"status": status, "error": error, "elements": elements}
+    back_answer = {"status": status, "error": error, "elements": onlyfiles}
     return back_answer
 
 
