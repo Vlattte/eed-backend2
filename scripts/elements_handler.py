@@ -78,18 +78,14 @@ def add_condition(message_dict):
 # ДОБАВЛЕНИЕ СОСТОЯНИЙ ЭЛЕМЕНТА
 # "session_hash": string,
 # "element_id": integer,
-# "conditions": [
-#     {
-#         "condition_id": integer,
-#         "positions": [
-#             "position": {
-#                 "angle": integer, -- --> градусы
-#                 "src": text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
-#             },
-#             "order": integer,
-#             "src": string,
-#         ]
-#     }
+# "condition_id": integer,
+# "positions": [
+#       "position": {
+#           "angle": integer, -- --> градусы
+#           "src": text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
+#       },
+#       "order": integer,
+#       "src": string,
 # ],
 # "operation": "addCondisionPositions",
 def add_positions_to_condition(message_dict):
@@ -101,6 +97,7 @@ def add_positions_to_condition(message_dict):
     positions = message_dict["conditions"]["positions"]
 
     db_con_var = db.DbConnection()
+    # проходимся по позициям
     for pos in positions:
         db_con_var.add_elements(table_name="element_condition_positions",
                                 condition_group_id=condition_id,

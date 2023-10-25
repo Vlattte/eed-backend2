@@ -12,9 +12,10 @@ import scripts.request_handler as req
 async def handler(websocket):
     message = await websocket.recv()
     # message = json.dumps("{\"operation\": \"addApparat\", \"session_hash\": \"47\", \"apparat_name\": \"P320-OO\" }")
-    request = json.loads(message)
-    return_json = req.request_handler(message)
-    await websocket.send(json.dumps(return_json, ensure_ascii=False), max_size=1000000)
+    request = dict(json.loads(message))
+    return_json = req.request_handler(request)
+    print(return_json)
+    await websocket.send(json.dumps(return_json, ensure_ascii=False))
 
 
 def test_handler():
