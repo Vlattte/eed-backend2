@@ -38,7 +38,15 @@ def load_elements(message_dict):
     error = "no-error"
     #TODO:: добавить conditions
     db_con_var = db.DbConnection()
+
+    # тут лежит тип и изначальная фотка элемента
     elements = db_con_var.get_data_request(table_name="elements", all="*")
+    for element_id in elements["id"]:
+        where_statement = "element_id = {element_id}"
+        conditions = db_con_var.get_data_with_where_statement(table_name="element_group_condition", id="id",
+                                                              where_statement=where_statement)
+
+
 
     # проверяем, есть ли вообще елементы в таблице "block_elements"
     if len(elements) == 0:
@@ -64,6 +72,45 @@ def add_condition(message_dict):
     status = True
     error = "condition added"
     back_answer = {"status": status, "condition_id": condition_id, "error": error}
+    return back_answer
+
+
+# ДОБАВЛЕНИЕ СОСТОЯНИЙ ЭЛЕМЕНТА
+# "session_hash": string,
+# "element_id": integer,
+# "conditions": [
+#     {
+#         "condition_id": integer,
+#         "positions": [
+#             "position": {
+#                 "angle": integer, -- --> градусы
+#                 "src": text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
+#             },
+#             "order": integer,
+#             "src": string,
+#         ]
+#     }
+# ],
+# "operation": "addCondisionPositions",
+def add_positions_to_condition(message_dict):
+    """добавление позиций элемента,который находится в определенном состоянии в таблицу"element_condition_positions" """
+    status = False
+    error = "condition position not added"
+
+    condition_id = message_dict["conditions"]["condition_id"]
+    positions = message_dict["conditions"]["positions"]
+
+    db_con_var = db.DbConnection()
+    for pos in positions:
+        db_con_var.add_elements(table_name="element_condition_positions",
+                                condition_group_id=condition_id,
+                                angle=pos["position"]["angle"],
+                                src=pos["position"]["angle"],
+                                condition_order=pos["order"])
+
+    status = True
+    error = "condition position successfully added"
+    back_answer = {"status": status, "error": error}
     return back_answer
 
 

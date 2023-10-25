@@ -29,6 +29,9 @@ def choose_equipment_operation(message_dict):
     elif message_dict["operation"] == "addCondition":
         adding_condition_status = elements_handler.add_condition(message_dict)
         return adding_condition_status
+    elif message_dict["operation"] == "addConditionPositions":
+        adding_positions_status = elements_handler.add_positions_to_condition(message_dict)
+        return adding_positions_status
     else:
         print("UNKNOWN OPERATION")
         return {"error": "unknown-operation"}
@@ -77,7 +80,7 @@ def check_connection(session_hash):
 
     where_statement = f"session_hash='{session_hash}'".format(session_hash=session_hash)
     user_ids_tuple = db_con_var.get_data_with_where_statement(table_name="sessions", user_id='user_id',
-                                                         where_statement=where_statement)
+                                                              where_statement=where_statement)
     if len(user_ids_tuple) > 0:
         user_id = user_ids_tuple[0][0]
         return user_id
@@ -95,9 +98,8 @@ def add_equipment_name(message_dict):
         db_con_var = db.DbConnection()
         # TODO:: придумать как ипользовать session_hash
         equipment_names = db_con_var.add_element_and_get_id(table_name="apparats",
-                                                         # session_hash=message_dict["session_hash"],
-                                                         name=message_dict["apparat_name"],
-                                                         apparat_description=message_dict["apparat_description"])
+                                                            name=message_dict["apparat_name"],
+                                                            apparat_description=message_dict["apparat_description"])
         equipment_id = equipment_names[0]
         status = True
 
@@ -127,11 +129,10 @@ def add_block(message_dict):
         # процессинг изображения
         image = img_ops.binary_2_image(message_dict["image_string"])
         message_dict["width"], message_dict["height"] = img_ops.get_image_params(image)
-        img_ops.save(image, message_dict["srс"])
+        img_ops.save_image(image, message_dict["srс"])
 
         db_con_var = db.DbConnection()
         block_names = db_con_var.add_element_and_get_id(table_name="apparat_blocks",
-                                                        # session_hash=message_dict["session_hash"],
                                                         apparat_id=message_dict["apparat_id"],
                                                         name=message_dict["block_name"],
                                                         width=message_dict["width"],
