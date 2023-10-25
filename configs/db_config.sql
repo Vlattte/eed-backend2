@@ -2,6 +2,8 @@
 -- ТАБЛИЦЫ ДЛЯ ХРАНЕНИЯ АППАРАТУРЫ:
 ----------------------------------
 
+create database vuc;
+create user vuc with encrypted password '123456';
 
 CREATE TABLE apparats (
 	id serial, -- --> apparat_id
@@ -205,3 +207,9 @@ CREATE TABLE rooms_users (
 -- 	user_count integer,
 -- 	CONSTRAINT rooms_users_pkey PRIMARY KEY (id)
 -- );
+
+
+
+GRANT ALL PRIVILEGES ON DATABASE vuc TO vuc;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO vuc;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO vuc;
