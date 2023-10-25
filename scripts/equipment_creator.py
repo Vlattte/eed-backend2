@@ -127,16 +127,16 @@ def add_block(message_dict):
     if not is_block_in_base:
         # FIXME: необходимо, чтобы фронт передавал строку с изображением, необходимо потестить как работает сохранение 
         # процессинг изображения
-        image = img_ops.binary_2_image(message_dict["image_string"])
-        message_dict["width"], message_dict["height"] = img_ops.get_image_params(image)
-        img_ops.save_image(image, message_dict["srс"])
+        # image = img_ops.binary_2_image(message_dict["image_string"])
+        # message_dict["width"], message_dict["height"] = img_ops.get_image_params(image)
+        # img_ops.save_image(image, message_dict["srс"])
 
         db_con_var = db.DbConnection()
         block_names = db_con_var.add_element_and_get_id(table_name="apparat_blocks",
                                                         apparat_id=message_dict["apparat_id"],
                                                         name=message_dict["block_name"],
-                                                        width=message_dict["width"],
-                                                        height=message_dict["height"],
+                                                        # width=message_dict["width"],
+                                                        # height=message_dict["height"],
                                                         src=message_dict["src"])
         block_id = block_names[0]
         status = True
