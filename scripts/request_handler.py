@@ -5,7 +5,11 @@ import json
 
 # handlers
 from scripts.exercise import choose_exercise_type
-from scripts.equipment_creator import choose_equipment_operation
+import scripts.equipment_creator as equipment_creator
+
+# elements scripts
+import scripts.elements_handler as elements_handler
+
 
 
 def request_handler(message_dict):
@@ -25,3 +29,31 @@ def request_handler(message_dict):
     if "operation" in message_dict:
         answer = choose_equipment_operation(message_dict)
         return json.dumps(answer)
+    
+def choose_equipment_operation(message_dict):
+    """ define equipment operation """
+    if message_dict["operation"] == "connect":          # connection establishing
+        connection_status = equipment_creator.establish_connection(message_dict["session_hash"])
+        return connection_status
+    elif message_dict["operation"] == "addApparat":     # add equipment name
+        adding_equipment_status =  equipment_creator.add_equipment_name(message_dict)
+        return adding_equipment_status
+    elif message_dict["operation"] == "addBlock":       # add block
+        adding_block_status =  equipment_creator.add_block(message_dict)
+        return adding_block_status
+    elif message_dict["operation"] == "loadElements":
+        loading_elements_status = elements_handler.load_elements(message_dict)
+        return loading_elements_status
+    elif message_dict["operation"] == "addElement":
+        adding_elements_status = elements_handler.add_element(message_dict)
+        return adding_elements_status
+    elif message_dict["operation"] == "addCondition":
+        adding_condition_status = elements_handler.add_condition(message_dict)
+        return adding_condition_status
+    elif message_dict["operation"] == "addConditionPositions":
+        adding_positions_status = elements_handler.add_positions_to_condition(message_dict)
+        return adding_positions_status
+    else:
+        print("UNKNOWN OPERATION")
+        return {"error": "unknown-operation"}
+

@@ -1,0 +1,42 @@
+front->back:
+{
+
+    "session_hash": string,
+    "apparat_id": integer, 
+    "block_id": integer, 
+    "operation": "loadElements"
+}
+
+back->front:
+{
+
+    "status": bool,
+    "error": string,
+        "buttons": [
+            {
+                "id": integer,
+                "original_src": text, // берём отсюда width и height
+                "conditions": [
+                    {
+                        "condition_id": integer,
+                        "is_new_condition": bool, // пустой ли выбранный массив состояний, редактировать доступные шаблоны нельзя, но можно добавлять
+                        "condition_positions": [
+                            {
+                                "condition_position_id": integer,
+                                "angle": integer, -- --> градусы
+                                "order": integer, -- --> порядок переключения состояний
+                                "src": text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "levers": [...],
+        "rotators": [...],
+        "cables": [...],
+        "bolts": [...],
+        "jumpers": [...],
+        "lights": [...], 
+        "arrows" [...]
+}
