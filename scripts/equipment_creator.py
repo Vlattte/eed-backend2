@@ -59,61 +59,48 @@ def check_connection(session_hash):
 def add_equipment_name(message_dict):
     """ save equipment name and equipment description from current session hash """
     # проверка наличия оборудования с таким именем в базе
-    is_equipment_in_base = find_equipment(message_dict["apparat_name"])
     status = False
-    equipment_id = -1
 
-    if not is_equipment_in_base:
-        db_con_var = db.DbConnection()
-        # TODO:: придумать как ипользовать session_hash
-        equipment_names = db_con_var.add_element_and_get_id(table_name="apparats",
-                                                            name=message_dict["apparat_name"],
-                                                            apparat_description=message_dict["apparat_description"])
-        equipment_id = equipment_names[0]
-        status = True
+    db_con_var = db.DbConnection()
+    # TODO:: придумать как ипользовать session_hash
+    equipment_names = db_con_var.add_element_and_get_id(table_name="apparats",
+                                                        name=message_dict["apparat_name"],
+                                                        apparat_description=message_dict["apparat_description"])
+    equipment_id = equipment_names[0]
+    status = True
 
     back_answer = {"status": status, "apparat_id": equipment_id, "error": "no-error"}
     return back_answer
 
 
-def find_equipment(equipment_name):
-    """ tries to find equipment by name in table "apparats" """
-    db_con_var = db.DbConnection()
-    where_statement = f"name='{equipment_name}'".format(equipment_name=equipment_name)
-    equipment_names = db_con_var.get_data_with_where_statement(table_name="apparats", name=equipment_name,
-                                                               where_statement=where_statement)
-    is_equipment_added = len(equipment_names) > 0
-    return is_equipment_added
-
-
 def add_block(message_dict):
     """ add block to equipment """
-    block_id = -1
     status = False
-    # проверка наличия оборудования с таким именем в базе
-    is_block_in_base = find_block(message_dict["block_name"])
 
-    if not is_block_in_base:
-        # процессинг изображения
-        image = img_ops.binary_2_image(message_dict["src"])
-        message_dict["width"], message_dict["height"] = img_ops.get_image_params(image)
+    # процессинг изображения
+    image = img_ops.binary_2_image(message_dict["src"])
+    message_dict["width"], message_dict["height"] = img_ops.get_image_params(image)
 
-        db_con_var = db.DbConnection()
+    db_con_var = db.DbConnection()
 
-        # запись блока в бд, получение id добавленного блока 
-        block_names = db_con_var.add_element_and_get_id(table_name="apparat_blocks",
-                                                        apparat_id=message_dict["apparat_id"],
-                                                        name=message_dict["block_name"],
-                                                        width=message_dict["width"],
-                                                        height=message_dict["height"],
-                                                        src=message_dict["src"])
-        
-        block_id = block_names[0]
+    # запись блока в бд, получение id добавленного блока 
+    block_names = db_con_var.add_element_and_get_id(table_name="apparat_blocks",
+                                                    apparat_id=message_dict["apparat_id"],
+                                                    name=message_dict["block_name"],
+                                                    width=message_dict["width"],
+                                                    height=message_dict["height"])
+    
+    block_id = block_names[0]
 
-        # сохранение изображения
-        img_ops.save_image(image, f'./../eed-frontend/public/apparats/{message_dict["apparat_id"]}_{block_id}.png')
+    # сохранение изображения
+    block_path = f'./../eed-frontend/public/apparats/{message_dict["apparat_id"]}_{block_id}.png'
+    img_ops.save_image(image, block_path)
+    where_statement = f"id={block_id}"
 
-        status = True
+    db_con_var.update_rows(table_name="apparat_blocks", where_statement=where_statement,
+                           src=block_path)
+
+    status = True
 
     back_answer = {"status": status, "block_id": block_id, "error": "no-error"}
     return back_answer
@@ -129,3 +116,11 @@ def find_block(block_name):
     return is_block_added
 
 
+def find_equipment(equipment_name):
+    """ tries to find equipment by name in table "apparats" """
+    db_con_var = db.DbConnection()
+    where_statement = f"name='{equipment_name}'".format(equipment_name=equipment_name)
+    equipment_names = db_con_var.get_data_with_where_statement(table_name="apparats", name=equipment_name,
+                                                               where_statement=where_statement)
+    is_equipment_added = len(equipment_names) > 0
+    return is_equipment_added

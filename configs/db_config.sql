@@ -7,7 +7,7 @@ create user vuc with encrypted password '123456';
 
 CREATE TABLE apparats (
 	id serial, -- --> apparat_id
-	name text UNIQUE,
+	name text,
     apparat_description text,
 	CONSTRAINT apparats_pkey PRIMARY KEY (id)
 );
@@ -45,7 +45,9 @@ CREATE TABLE block_cables (
 CREATE TABLE elements (
 	id serial, -- --> element_id
 	type_id integer,
-	original_src text UNIQUE, -- --> ОТНОСИТЕЛЬНЫЙ путь до фотографии елемента
+	original_src text, -- --> ОТНОСИТЕЛЬНЫЙ путь до фотографии елемента
+	width double precision, -- --> ширина относительно оригинальной width
+	height double precision, -- --> высота относительно оригинальной height
 	CONSTRAINT element_to_type_pkey PRIMARY KEY (id)
 );
 

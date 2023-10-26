@@ -54,6 +54,22 @@ class DbConnection:
         cursor.close()
         self.connection.commit()
 
+    def update_rows(self, table_name, where_statement, **kwargs):
+        """ обновляет данные в выбранной строке """
+        # создаем список из столбцов и их значений
+        columns = self.columns_from_kwargs(**kwargs)
+        values = self.values_from_kwargs(**kwargs)
+
+        query = [f'{column} = {value}'for column, value in zip(columns, values)]
+        query = ', '.join(query)
+
+        request_string = f"""
+                            UPDATE {table_name} SET {query} 
+                            WHERE {where_statement}                   
+                          """
+
+        self.send_request(request_string, is_return_data=False)
+
     def add_element_and_get_id(self, table_name, **kwargs):
         """
                 Получает имя таблицы, записывает в него значения и возвращает id добавленной строки
@@ -86,6 +102,8 @@ class DbConnection:
         # создаем список из столбцов и их значений
         columns = self.columns_from_kwargs(**kwargs)
         columns_string = ', '.join(map(str, columns))
+        if "all" in kwargs:
+            columns_string = '*'
 
         request_string = f"""
                             SELECT {columns_string} FROM {table_name}             
@@ -124,11 +142,13 @@ class DbConnection:
 
         return columns, values
 
-    def send_request(self, request_string):
+    def send_request(self, request_string, is_return_data=True):
         # добавление в таблицу значений
         cursor = self.connection.cursor()
         cursor.execute(request_string)
-        return_data = cursor.fetchall()
+        return_data = []
+        if is_return_data:
+            return_data = cursor.fetchall()
         cursor.close()
         self.connection.commit()
         return return_data

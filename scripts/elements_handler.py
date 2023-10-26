@@ -4,7 +4,7 @@
 import scripts.dbconnection as db
 
 # обработчик изображений
-import scripts.image_operations as img
+import scripts.image_operations as img_ops
 
 import os
 import os.path
@@ -16,30 +16,40 @@ import os.path
 # "block_id": integer
 
 #       return::
-# "status": bool,
-# "error": string,
-# "elements": [
-#     {
-#         "id": integer,
-#         "type": string,
-#         "original_src": text, // берём отсюда width и height
-#         "conditions": [
+# {
+#     "status": bool,
+#     "error": string,
+#     "src": string, # путь до фотки блока
+#     "elements": [
+#         "buttons": [
 #             {
-#                 "condition_id": integer,
-# vvv пустой ли выбранный массив состояний, редактировать доступные шаблоны нельзя, но можно добавлять vvv
-#                 "is_new_condition": bool,
-#                 "condition_positions": [
+#                 "id": integer,
+#                 "original_src": text, // берём отсюда width и height
+#                 "conditions": [
 #                     {
-#                         "condition_position_id": integer,
-#                         "angle": integer, -- --> градусы
-#                         "order": integer, -- --> порядок переключения состояний
-#                         "src": text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
+#                         "condition_id": integer,
+#                         "is_new_condition": bool, // пустой ли выбранный массив состояний, редактировать доступные шаблоны нельзя, но можно добавлять
+#                         "condition_positions": [
+#                             {
+#                                 "condition_position_id": integer,
+#                                 "angle": integer, -- --> градусы
+#                                 "order": integer, -- --> порядок переключения состояний
+#                                 "src": text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
+#                             }
+#                         ]
 #                     }
 #                 ]
 #             }
+#         ],
+#         "levers": [...],
+#         "rotators": [...],
+#         "cables": [...],
+#         "bolts": [...],
+#         "jumpers": [...],
+#         "lights": [...], 
+#         "arrows": [...]
 #         ]
-#     }
-# ]
+# }
 def load_elements(message_dict):
     """ получает элементы из БД и отправляет их в редактор оборудования """
     status = False
@@ -47,34 +57,42 @@ def load_elements(message_dict):
     #TODO:: добавить conditions
     db_con_var = db.DbConnection()
 
-    mypath = "../eed-frontend/src/views/editor/control"
-    dirs = ["bolt", "btn", "jumper", "lever", "light", "rotator"]
-    i = 0
     elements = []
     directory = '../eed-frontend/src/views/editor/control'
-    for filename in os.listdir(directory):
-        path = os.path.join(directory, filename)
-        for fil in os.listdir(path):
-            elements.append("control/" + dirs[i] + "/" + fil)
-        i += 1
+    dir_names = [dir_name for dir_name in os.listdir(directory)]
 
     apparat_id = message_dict["apparat_id"]
     block_id = message_dict["block_id"]
     src = f"apparats/{apparat_id}_{block_id}.png"
 
-    # print(f)
-    #
-    #
     # тут лежит тип и изначальная фотка элемента
-    # elements = db_con_var.get_data_request(table_name="elements", all="*")
-    # for element_id in elements["id"]:
-    #     where_statement = "element_id = {element_id}".format(element_id=element_id)
-    #     conditions = db_con_var.get_data_with_where_statement(table_name="element_group_condition", id="id",
-    #                                                           where_statement=where_statement)
+    elements = db_con_var.get_data_request(table_name="elements", all="*")
+    # здесь получаем группы состояний по каждому элементу
+    print("elements = ", elements)
+    for element_id in elements["id"]:
+        cur_element = {"is_new_condition": False, "condition_positions": []}
+       
+        where_statement = f"element_id = {element_id}"
+        condition_ids = db_con_var.get_data_with_where_statement(table_name="element_group_condition", id="id",
+                                                                 where_statement=where_statement)
+        # есть ли вообще позиции у элемента
+        if len(condition_ids) > 0:
+            cur_element["is_new_condition"] = True
 
-    # # проверяем, есть ли вообще елементы в таблице "block_elements"
-    # if len(elements) == 0:
-    #     error = "no-elements-in-database"
+        for cond_id in condition_ids:
+            where_statement = f"condition_group_id = {cond_id}"
+            element_positions = db_con_var.get_data_with_where_statement(table_name="element_condition_positions", all="*",
+                                                                         where_statement=where_statement)
+            print(element_positions)
+            # condition_positions = []
+            # position = []
+            # cur_element["condition_positions"].append(condition_positions)
+    
+
+    # проверяем, есть ли вообще елементы в таблице "block_elements"
+    if len(elements) == 0:
+        error = "no-elements-in-database"
+        status = False
 
     back_answer = {"status": status, "error": error, "elements": elements, "src": src}
     return back_answer
@@ -145,16 +163,27 @@ def add_element(message_dict):
     # получаем id типа элемента по его названию
     type_id = add_type(message_dict["element"]["type"])
     # проверяем, есть ли уже такой елемент в таблице "elements" по id типа
-    is_element_in_base = find_element(type_id)
-    if not is_element_in_base:
-        db_con_var = db.DbConnection()
-        img.binary_2_image(message_dict["element"]["src"])
-        elements_names = db_con_var.add_element_and_get_id(table_name="elements",
-                                                           type_id=type_id,
-                                                           original_src=message_dict["element"]["src"])
-        element_id = elements_names[0]
-        status = True
-        error = "no error"
+
+    db_con_var = db.DbConnection()
+    image = img_ops.binary_2_image(message_dict["element"]["src"])
+    width, height = img_ops.get_image_params(image)
+
+    elements_ids = db_con_var.add_element_and_get_id(table_name="elements",
+                                                     type_id=type_id,
+                                                     width=width,
+                                                     height=height)
+    element_id = elements_ids[0]
+
+    # сохранение изображения
+    element_path = f'./../eed-frontend/public/elements/{element_id}_{message_dict["element"]["type"]}.png'
+    img_ops.save_image(image, element_path)
+    where_statement = f"id={element_id}"
+
+    db_con_var.update_rows(table_name="elements", where_statement=where_statement,
+                           original_src=element_path)
+
+    status = True
+    error = "no error"
 
     back_answer = {"status": status, "element_id": element_id, "error": error}
     return back_answer

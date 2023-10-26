@@ -43,6 +43,7 @@ def choose_equipment_operation(message_dict):
         return adding_block_status
     elif message_dict["operation"] == "loadElements":
         loading_elements_status = elements_handler.load_elements(message_dict)
+        print(loading_elements_status)
         return loading_elements_status
     elif message_dict["operation"] == "addElement":
         adding_elements_status = elements_handler.add_element(message_dict)
