@@ -125,14 +125,13 @@ def add_block(message_dict):
     is_block_in_base = find_block(message_dict["block_name"])
 
     if not is_block_in_base:
-        # FIXME: необходимо, чтобы фронт передавал строку с изображением, необходимо потестить как работает сохранение 
         # процессинг изображения
         image = img_ops.binary_2_image(message_dict["src"])
         message_dict["width"], message_dict["height"] = img_ops.get_image_params(image)
 
         db_con_var = db.DbConnection()
 
-        
+        # запись блока в бд, получение id добавленного блока 
         block_names = db_con_var.add_element_and_get_id(table_name="apparat_blocks",
                                                         apparat_id=message_dict["apparat_id"],
                                                         name=message_dict["block_name"],
@@ -142,6 +141,7 @@ def add_block(message_dict):
         
         block_id = block_names[0]
 
+        # сохранение изображения
         img_ops.save_image(image, f'./../eed-frontend/public/apparats/{message_dict["apparat_id"]}_{block_id}.png')
 
         status = True

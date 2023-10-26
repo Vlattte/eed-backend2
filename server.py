@@ -29,7 +29,7 @@ def test_handler():
 async def main():
     print("SERVER ON")
     # test_handler()
-    async with websockets.serve(handler, "", 8083, max_size=1000000):
+    async with websockets.serve(handler, "", 8083, max_size=10_000_000):
         await asyncio.Future()
 
 if __name__ == "__main__":

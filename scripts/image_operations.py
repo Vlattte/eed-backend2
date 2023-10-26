@@ -22,9 +22,6 @@ def binary_2_image(str_data):
     # Открываем изображение с помощью Pillow
     image = Image.open(image_bytes)
 
-    # Закрываем объект BytesIO
-    # image_bytes.close()
-
     return image
 
 def get_image_params(image):
