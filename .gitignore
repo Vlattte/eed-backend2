@@ -161,3 +161,4 @@ cython_debug/
 
 # db connection config
 # db_connection.yaml
+.idea/

@@ -20,7 +20,7 @@ import os.path
 #     "status": bool,
 #     "error": string,
 #     "src": string, # путь до фотки блока
-#     "elements": [
+#     "elements": {
 #         "buttons": [
 #             {
 #                 "id": integer,
@@ -48,7 +48,7 @@ import os.path
 #         "jumpers": [...],
 #         "lights": [...], 
 #         "arrows": [...]
-#         ]
+#         }
 # }
 def load_elements(message_dict):
     """ получает элементы из БД и отправляет их в редактор оборудования """
@@ -57,7 +57,6 @@ def load_elements(message_dict):
     #TODO:: добавить conditions
     db_con_var = db.DbConnection()
 
-    elements = []
     directory = '../eed-frontend/src/views/editor/control'
     dir_names = [dir_name for dir_name in os.listdir(directory)]
 
@@ -65,17 +64,41 @@ def load_elements(message_dict):
     block_id = message_dict["block_id"]
     src = f"apparats/{apparat_id}_{block_id}.png"
 
+    # словарь со всеми элемементами, который будет отдаваться функцией
+    elements_dict = dict()
+
     # тут лежит тип и изначальная фотка элемента
     elements = db_con_var.get_data_request(table_name="elements", all="*")
+    print('*', elements, '*', sep='\n')
 
     # здесь получаем группы состояний по каждому элементу
-    print("elements = ", elements)
-    for element_id in elements["id"]:
+    # print("elements = ", elements)
+    for element_id, element_type_id, element_original_src in zip(elements["id"], elements['type_id'], elements['original_src']):
         cur_element = {"is_new_condition": False, "condition_positions": []}
        
         where_statement = f"element_id = {element_id}"
         condition_ids = db_con_var.get_data_with_where_statement(table_name="element_group_condition", id="id",
                                                                  where_statement=where_statement)
+        print("condition ids = ", condition_ids)
+        # получение condition_positions
+
+        # where_statement = f"element_id in ({condition_ids})"
+        # conditions = db_con_var.get_data_with_where_statement(table_name="element_group_condition", id="id",
+        #                                                          where_statement=where_statement)
+
+        # проверка типа
+        where_statement = f"id = {element_type_id}"
+        type_names = db_con_var.get_data_with_where_statement(table_name="types", name="name", 
+                                                        where_statement=where_statement)
+        type_name = type_names['name'][0]
+
+        # print(type_name)
+
+        if type_name not in elements_dict.keys():
+            elements_dict[type_name] = []
+        
+        cur_element_dict = {'id': element_id, 'original_src': element_original_src, 'conditions': ''}
+
         # есть ли вообще позиции у элемента
         if len(condition_ids) > 0:
             cur_element["is_new_condition"] = True
@@ -107,13 +130,20 @@ def load_elements(message_dict):
 def add_condition(message_dict):
     """ добавление состояний в таблицу "element_group_condition" """
     db_con_var = db.DbConnection()
-    condition_ids = db_con_var.add_element_and_get_id(table_name="element_group_condition",
-                                                      element_id=message_dict["element_id"])
+
+    condition_id = -1
+    status = False
+    error = f"element with id ({message_dict['element_id']}) doesn't exist"
+
+    if db_con_var.check_exist(table_name="elements", key="id", value=message_dict["element_id"]):
+        condition_id = db_con_var.add_values_and_get_id(table_name="element_group_condition",
+                                                        element_id=message_dict["element_id"])
+        status = True
+        error = "condition added"
+
     # TODO:: убрать все обращения к нулевому элементу в бд скрипт,
     #  на этом уровне астракции не понятно что происходит
-    condition_id = condition_ids[0]
-    status = True
-    error = "condition added"
+
     back_answer = {"status": status, "condition_id": condition_id, "error": error}
     return back_answer
 
@@ -134,22 +164,28 @@ def add_condition(message_dict):
 def add_positions_to_condition(message_dict):
     """добавление позиций элемента,который находится в определенном состоянии в таблицу"element_condition_positions" """
     status = False
-    error = "condition position not added"
-
-    condition_id = message_dict["conditions"]["condition_id"]
-    positions = message_dict["conditions"]["positions"]
+    error = "condition group with such id doesn't exist"
 
     db_con_var = db.DbConnection()
-    # проходимся по позициям
-    for pos in positions:
-        db_con_var.add_elements(table_name="element_condition_positions",
-                                condition_group_id=condition_id,
-                                angle=pos["position"]["angle"],
-                                src=pos["position"]["angle"],
-                                condition_order=pos["order"])
+    if db_con_var.check_exist(table_name="element_group_condition", key="id", value=message_dict["condition_id"]):
+        condition_id = message_dict["condition_id"]
+        positions = message_dict["positions"]
+        
+        status = True
+        error = "positions added"
+        
+        # проходимся по позициям
+        for pos in positions:
+            returned_id = db_con_var.add_values_and_get_id(table_name="element_condition_positions",
+                                                           condition_group_id=condition_id,
+                                                           angle=pos["position"]["angle"],
+                                                           src=pos["position"]["angle"],
+                                                           condition_order=pos["order"])
+            if returned_id == -1:
+                error = "one or more positions was previously added"
+            
+        
 
-    status = True
-    error = "condition position successfully added"
     back_answer = {"status": status, "error": error}
     return back_answer
 
@@ -169,11 +205,10 @@ def add_element(message_dict):
     image = img_ops.binary_2_image(message_dict["element"]["src"])
     width, height = img_ops.get_image_params(image)
 
-    elements_ids = db_con_var.add_element_and_get_id(table_name="elements",
-                                                     type_id=type_id,
-                                                     width=width,
-                                                     height=height)
-    element_id = elements_ids[0]
+    element_id = db_con_var.add_values_and_get_id(table_name="elements",
+                                                       type_id=type_id,
+                                                       width=width,
+                                                       height=height)
 
     # сохранение изображения
     element_path = f'./../eed-frontend/public/elements/{element_id}_{message_dict["element"]["type"]}.png'
@@ -193,11 +228,10 @@ def add_element(message_dict):
 def add_type(type_name):
     """ добавление нового типа в таблицу "types" """
     # нужно сопоставить название типа с его номером, либо добавить его, если такого нет
-    type_ids = find_id_by_name("types", type_name)
-    if type_ids == -1:
+    type_id = find_id_by_name("types", type_name)
+    if type_id == -1:
         db_con_var = db.DbConnection()
-        type_ids = db_con_var.add_element_and_get_id(table_name="types", name=type_name)
-    type_id = type_ids[0]
+        type_id = db_con_var.add_values_and_get_id(table_name="types", name=type_name)
 
     return type_id
 
@@ -206,12 +240,13 @@ def find_id_by_name(table_name, param_name):
     """ tries to find any param by name in table "table_name" """
     db_con_var = db.DbConnection()
     where_statement = f"name='{param_name}'".format(param_name=param_name)
-    param_names = db_con_var.get_data_with_where_statement(table_name=table_name, id="id",
-                                                           where_statement=where_statement)
-
+    param_dict = db_con_var.get_data_with_where_statement(table_name=table_name, id="id",
+                                                        where_statement=where_statement)
+   
     param_id = -1  # значит такого нет и нужно добавить в БД
-    if len(param_names) > 0:
-        param_id = param_names[0]
+    if len(param_dict["id"]) > 0:
+        param_id = param_dict["id"][0]
+
     return param_id
 
 

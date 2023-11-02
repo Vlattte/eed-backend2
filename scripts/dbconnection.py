@@ -29,28 +29,6 @@ class DbConnection:
         except (Exception, Error) as error:
             print("Ошибка подключения к PostgreSQL", error)
 
-    def add_elements(self, table_name, **kwargs):
-        """
-        Получает имя таблицы и записывает в него значения
-
-        kwargs - словарь, где ключи - названия полей, значения в них - то, что нужно добавить
-        """
-        # TODO:: добавить проверку на ошибку и возвращать статус
-        # создаем список из столбцов и их значений
-        columns = self.columns_from_kwargs(**kwargs)
-        values = self.values_from_kwargs(**kwargs)
-
-        # формирование запроса к БД
-        columns_string = ', '.join(map(str, columns))
-        values_string = ', '.join(map(str, values))
-
-        # добавление в таблицу значений
-        request_string = f"""
-                        INSERT INTO {table_name} ({columns_string})
-                        VALUES({values_string})
-                        """
-        self.send_request(request_string, is_return_data=False, is_return_column_names=False)
-
     def update_rows(self, table_name, where_statement, **kwargs):
         """ обновляет данные в выбранной строке """
         # создаем список из столбцов и их значений
@@ -67,7 +45,7 @@ class DbConnection:
 
         self.send_request(request_string, is_return_data=False, is_return_column_names=False)
 
-    def add_element_and_get_id(self, table_name, **kwargs):
+    def add_values_and_get_id(self, table_name, **kwargs):
         """
                 Получает имя таблицы, записывает в него значения и возвращает id добавленной строки
 
@@ -87,14 +65,14 @@ class DbConnection:
                           """
 
         request_id = self.send_request(request_string)
-        return request_id[0]
+        return request_id['id'][0]
 
     def get_data_with_where_statement(self, table_name, where_statement, **kwargs):
         """
             получает имя таблицы и выбранные колонки
 
             where_statement: полный where запрос (example: "id = 47")
-            :return: кортеж с данными из таблицы
+            :return: словарь с данными из таблицы
         """
         # создаем список из столбцов и их значений
         columns = self.columns_from_kwargs(**kwargs)
@@ -107,8 +85,6 @@ class DbConnection:
                             WHERE {where_statement}          
                           """
         chosen_data = self.send_request(request_string)
-
-
         return chosen_data
 
     # FIXME: по хорошему мы к значениям можем обращаться только по ключам
@@ -143,18 +119,29 @@ class DbConnection:
 
     def send_request(self, request_string, is_return_data=True, is_return_column_names=True):
         # добавление в таблицу значений
-        cursor = self.connection.cursor()
-        cursor.execute(request_string)
-        return_data = []
-        column_names = []
-        if is_return_data:
-            return_data = cursor.fetchall()
-            column_names = [column.name for column in cursor.description]
-            return_data = self.parse_returned_data(return_data, *column_names)
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(request_string)
+            column_names = []
+            if is_return_data:
+                return_data = cursor.fetchall()
+                column_names = [column.name for column in cursor.description]
+                return_data = self.parse_returned_data(return_data, *column_names)
 
-        cursor.close()
-        self.connection.commit()
-        return return_data
+            cursor.close()
+            self.connection.commit()
+            return return_data
+        
+        except Exception as E:
+            if type(E) == psycopg2.errors.UniqueViolation:
+                print('Попытка добавить одинаковую пару значений')
+                return_data = {}
+                return_data["id"] = [-1]
+                return_data["error"] = "attemption to add existing element"
+                cursor.close()
+                self.connection.commit()
+
+                return return_data        
 
     def get_data_request(self, table_name, **kwargs):
         """
@@ -200,3 +187,11 @@ class DbConnection:
                 return_data[column_name].append(column_value)
         
         return return_data
+
+    def check_exist(self, table_name, key, value):
+        where_statement = f"{key} = {value}"
+        
+        data = self.get_data_with_where_statement(table_name=table_name, id='id', where_statement=where_statement)
+        if len(data): 
+            return True
+        return False
