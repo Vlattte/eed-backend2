@@ -36,10 +36,10 @@ def choose_equipment_operation(message_dict):
         connection_status = equipment_creator.establish_connection(message_dict["session_hash"])
         return connection_status
     elif message_dict["operation"] == "addApparat":     # add equipment name
-        adding_equipment_status =  equipment_creator.add_equipment_name(message_dict)
+        adding_equipment_status = equipment_creator.add_equipment_name(message_dict)
         return adding_equipment_status
     elif message_dict["operation"] == "addBlock":       # add block
-        adding_block_status =  equipment_creator.add_block(message_dict)
+        adding_block_status = equipment_creator.add_block(message_dict)
         return adding_block_status
     elif message_dict["operation"] == "loadElements":
         loading_elements_status = elements_handler.load_elements(message_dict)

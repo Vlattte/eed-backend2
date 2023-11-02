@@ -4,7 +4,7 @@ import psycopg2
 import yaml
 from psycopg2 import Error
 
-
+# FIXME: поменять комментарии, так как возвращаются уже словари
 # FIXME: поменять columns_from_kwargs, values_from_kwargs на columns_values_from_kwargs, так как проходиться по значениям словаря, 
 # минуя ключи - не очень корректно 
 
@@ -45,14 +45,11 @@ class DbConnection:
         values_string = ', '.join(map(str, values))
 
         # добавление в таблицу значений
-        cursor = self.connection.cursor()
-        cursor.execute(f"""
+        request_string = f"""
                         INSERT INTO {table_name} ({columns_string})
                         VALUES({values_string})
                         """
-                       )
-        cursor.close()
-        self.connection.commit()
+        self.send_request(request_string, is_return_data=False, is_return_column_names=False)
 
     def update_rows(self, table_name, where_statement, **kwargs):
         """ обновляет данные в выбранной строке """
@@ -68,7 +65,7 @@ class DbConnection:
                             WHERE {where_statement}                   
                           """
 
-        self.send_request(request_string, is_return_data=False)
+        self.send_request(request_string, is_return_data=False, is_return_column_names=False)
 
     def add_element_and_get_id(self, table_name, **kwargs):
         """
@@ -142,7 +139,7 @@ class DbConnection:
 
         return columns, values
 
-    def send_request(self, request_string, is_return_data=True, is_return_column_names=False):
+    def send_request(self, request_string, is_return_data=True, is_return_column_names=True):
         # добавление в таблицу значений
         cursor = self.connection.cursor()
         cursor.execute(request_string)
@@ -177,8 +174,6 @@ class DbConnection:
                         """
         return_data = self.send_request(request_string)
         return return_data
-
-
 
     def del_user(self, table_name, user_session_hash):
         pass
