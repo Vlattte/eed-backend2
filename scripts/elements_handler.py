@@ -74,6 +74,8 @@ def load_elements(message_dict):
     # здесь получаем группы состояний по каждому элементу
     # print("elements = ", elements)
     for element_id, element_type_id, element_original_src in zip(elements["id"], elements['type_id'], elements['original_src']):
+        cur_element_dict = {}
+
         cur_element = {"is_new_condition": False, "condition_positions": []}
        
         where_statement = f"element_id = {element_id}"
@@ -97,7 +99,9 @@ def load_elements(message_dict):
         if type_name not in elements_dict.keys():
             elements_dict[type_name] = []
         
-        cur_element_dict = {'id': element_id, 'original_src': element_original_src, 'conditions': ''}
+        cur_element_dict['id'] = element_id, 
+        cur_element_dict['original_src'] = element_original_src
+        cur_element_dict['conditions'] = []
 
         # есть ли вообще позиции у элемента
         if len(condition_ids) > 0:
@@ -107,7 +111,7 @@ def load_elements(message_dict):
             where_statement = f"condition_group_id = {cond_id}"
             element_positions = db_con_var.get_data_with_where_statement(table_name="element_condition_positions", all="*",
                                                                          where_statement=where_statement)
-            print(element_positions)
+            print('element_positions: ', element_positions)
             # condition_positions = []
             # position = []
             # cur_element["condition_positions"].append(condition_positions)
@@ -241,10 +245,11 @@ def find_id_by_name(table_name, param_name):
     db_con_var = db.DbConnection()
     where_statement = f"name='{param_name}'".format(param_name=param_name)
     param_dict = db_con_var.get_data_with_where_statement(table_name=table_name, id="id",
-                                                        where_statement=where_statement)
+                                                          where_statement=where_statement)
    
     param_id = -1  # значит такого нет и нужно добавить в БД
-    if len(param_dict["id"]) > 0:
+    print(param_dict)
+    if len(param_dict.keys()) > 0:
         param_id = param_dict["id"][0]
 
     return param_id
