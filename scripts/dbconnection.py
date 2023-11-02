@@ -107,6 +107,8 @@ class DbConnection:
                             WHERE {where_statement}          
                           """
         chosen_data = self.send_request(request_string)
+
+
         return chosen_data
 
     # FIXME: по хорошему мы к значениям можем обращаться только по ключам
@@ -147,14 +149,12 @@ class DbConnection:
         column_names = []
         if is_return_data:
             return_data = cursor.fetchall()
-
-        if is_return_column_names:
             column_names = [column.name for column in cursor.description]
+            return_data = self.parse_returned_data(return_data, *column_names)
 
         cursor.close()
         self.connection.commit()
-
-        return return_data, column_names
+        return return_data
 
     def get_data_request(self, table_name, **kwargs):
         """
@@ -177,3 +177,26 @@ class DbConnection:
 
     def del_user(self, table_name, user_session_hash):
         pass
+
+    def parse_returned_data(self, data, *column_names):
+        """
+        Функция принимает на вход кортеж из строк таблицы. Каждый элемент кортежа содержит в себе массив с элементами строки
+        
+        Возвращает словарь, где ключи - названия столбцов, либо индексы (если не переданы названия колонок), элементы - списки со 
+        значениями в столбцах
+        """
+        return_data = dict()
+
+        if len(data) == 0:
+            return return_data
+        
+        if len(column_names) != len(data[0]):
+            column_names = [i for i in range(len(data[0]))]
+        
+        for row in data:
+            for column_name, column_value in zip(column_names, row):
+                if column_name not in return_data.keys():
+                    return_data[column_name] = []
+                return_data[column_name].append(column_value)
+        
+        return return_data

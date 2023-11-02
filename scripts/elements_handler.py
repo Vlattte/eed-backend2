@@ -67,6 +67,7 @@ def load_elements(message_dict):
 
     # тут лежит тип и изначальная фотка элемента
     elements = db_con_var.get_data_request(table_name="elements", all="*")
+
     # здесь получаем группы состояний по каждому элементу
     print("elements = ", elements)
     for element_id in elements["id"]:
@@ -232,24 +233,3 @@ def find_type_name(type_name):
                                                           where_statement=where_statement)
     is_type_added = len(type_names) > 0
     return is_type_added
-
-def parse_returned_data(data, *column_names):
-    """
-    Функция принимает на вход кортеж из строк таблицы. Каждый элемент кортежа содержит в себе массив с элементами строки
-    
-    Возвращает словарь, где ключи - названия столбцов, либо индексы (если не переданы названия колонок), элементы - списки со 
-    значениями в столбцах
-    """
-
-    return_data = dict()
-
-    if len(column_names) != len(data[0]):
-        column_names = [i for i in range(len(data[0]))]
-    
-    for row in data:
-        for column_name, column_value in zip(column_names, row):
-            if column_name not in return_data.keys():
-                return_data[column_name] = []
-            return_data[column_name].append(column_value)
-    
-    return return_data
