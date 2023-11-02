@@ -142,38 +142,22 @@ class DbConnection:
 
         return columns, values
 
-    def parse_returned_data(self, data, *column_names):
-        """
-        Функция принимает на вход кортеж из строк таблицы. Каждый элемент кортежа содержит в себе массив с элементами строки
-        
-        Возвращает словарь, где ключи - названия столбцов, либо индексы (если не переданы названия колонок), элементы - списки со 
-        значениями в столбцах
-        """
-
-        return_data = dict()
-
-        if len(column_names) != len(data[0]):
-            column_names = [i for i in range(len(data[0]))]
-        
-        for row in data:
-            for column_name, column_value in zip(column_names, row):
-                if column_name not in return_data.keys():
-                    return_data[column_name] = []
-                return_data[column_name].append(column_value)
-        
-        return return_data
-
-
-    def send_request(self, request_string, is_return_data=True):
+    def send_request(self, request_string, is_return_data=True, is_return_column_names=False):
         # добавление в таблицу значений
         cursor = self.connection.cursor()
         cursor.execute(request_string)
         return_data = []
+        column_names = []
         if is_return_data:
             return_data = cursor.fetchall()
+
+        if is_return_column_names:
+            column_names = [column.name for column in cursor.description]
+
         cursor.close()
         self.connection.commit()
-        return return_data
+
+        return return_data, column_names
 
     def get_data_request(self, table_name, **kwargs):
         """
