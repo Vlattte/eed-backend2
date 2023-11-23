@@ -61,75 +61,73 @@ def load_elements(message_dict):
 
     apparat_id = message_dict["apparat_id"]
     block_id = message_dict["block_id"]
-    src = f"apparats/{apparat_id}_{block_id}.png"
-
-    # словарь со всеми элемементами, который будет отдаваться функцией
-    elements_dict = dict()
+    apparat_src = f"apparats/{apparat_id}_{block_id}.png"
 
     # тут лежит тип и изначальная фотка элемента
     db_con_var = db.DbConnection()
     table_elements = db_con_var.get_data_request(table_name="elements", all="*")
-    type_match = db_con_var.get_data_request(table_name="types", all="*")
-    print("++", type_match, "++", sep="\n")
-    elements = {}
 
-    print('*', table_elements, '*', sep='\n')
+    # type_match = [{'id': 1, 'name': 'rotator'}, {'id': 2, 'name': 'lever'}, ..]
+    type_match = db_con_var.get_data_request(table_name="types", all="*")
+
+    # type_match_dict = {1: 'rotator', 2: 'lever'}
+    type_match_dict = {}
+    for type_match_i in type_match:
+        type_id = type_match_i['id']
+        type_name = type_match_i['name']
+        type_match_dict[type_id] = type_name
+
+    # elements = {'rotator': [], 'lever': []}
+    elements = {el["name"]: [] for el in type_match}
 
     # здесь получаем группы состояний по каждому элементу
-    for i in range(len(table_elements['id'])):
-        element_id = table_elements['id'][i]
-        type_id = table_elements['type_id'][i]
-        original_src = table_elements['original_src'][i]
-        width = table_elements['width'][i]
-        height = table_elements['height'][i]
+    for element in table_elements:
+        element_type = type_match_dict[element['type_id']]
 
-        element = {"id": element_id, "type_id": type_id}
-        condition = {"is_new_condition": False, "condition_positions": []}
-       
-        where_statement = f"element_id = {element_id}"
-        condition_ids = db_con_var.get_data_with_where_statement(table_name="element_group_condition", id="id",
-                                                                 where_statement=where_statement)
-        print("condition ids = ", condition_ids)
-        # получение condition_positions
+        # уберем type_id
+        element.pop("type_id", element["type_id"])
 
-        # where_statement = f"element_id in ({condition_ids})"
-        # conditions = db_con_var.get_data_with_where_statement(table_name="element_group_condition", id="id",
-        #                                                          where_statement=where_statement)
+        element["conditions"] = []
 
-        # проверка типа
-        where_statement = f"id = {type_id}"
-        type_names = db_con_var.get_data_with_where_statement(table_name="types", name="name", 
-                                                              where_statement=where_statement)
-        type_name = type_names['name'][0]
+        where_statement = f"element_id = {element['id']}"
+        condition_groups = db_con_var.get_data_with_where_statement(table_name="element_group_condition", id="id",
+                                                                    where_statement=where_statement)
 
-        if type_name not in elements_dict.keys():
-            elements_dict[type_name] = []
-        
-        element['id'] = element_id,
-        element['original_src'] = original_src
-        element['conditions'] = []
+        for condition in condition_groups:
+            condition['condition_id'] = condition.pop("id", condition["id"])
 
-        # есть ли вообще позиции у элемента
-        if len(condition_ids) > 0:
-            condition["is_new_condition"] = True
-
-        for cond_id in condition_ids:
-            where_statement = f"condition_group_id = {cond_id}"
-            element_positions = db_con_var.get_data_with_where_statement(table_name="element_condition_positions", all="*",
+            where_statement = f"condition_group_id = {condition['condition_id']}"
+            element_positions = db_con_var.get_data_with_where_statement(table_name="element_condition_positions",
+                                                                         all="*",
                                                                          where_statement=where_statement)
-            print('element_positions: ', element_positions)
-            # condition_positions = []
-            # position = []
-            # cur_element["condition_positions"].append(condition_positions)
+
+            condition["is_new_condition"] = False
+            if len(element_positions) > 0:
+                condition["is_new_condition"] = True
+
+            for pos in range(len(element_positions)):
+                element_positions[pos]["order"] = \
+                    element_positions[pos].pop("condition_order", element_positions[pos]["condition_order"])
+                element_positions[pos].pop("id", element_positions[pos]["id"])
+            print(element_positions)
+
+            condition['condition_positions'] = element_positions
+            element["conditions"].append(condition)
+
+        elements[element_type].append(element)
+
+
+    print("***")
+    print(elements)
+    print("***")
 
     # проверяем, есть ли вообще елементы в таблице "block_elements"
     if len(table_elements) == 0:
         error = "no-elements-in-database"
         status = False
 
-    back_answer = {"status": status, "error": error, "elements": table_elements, "src": src}
+    back_answer = {"status": status, "error": error, "src": apparat_src, "elements": elements}
     return back_answer
-
 
 # ДОБАВЛЕНИЕ CONDISION
 # front->back: {

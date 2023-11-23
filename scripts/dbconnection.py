@@ -172,20 +172,25 @@ class DbConnection:
         Возвращает словарь, где ключи - названия столбцов, либо индексы (если не переданы названия колонок), элементы - списки со 
         значениями в столбцах
         """
-        return_data = dict()
 
-        if len(data) == 0:
-            return return_data
-        
-        if len(column_names) != len(data[0]):
-            column_names = [i for i in range(len(data[0]))]
-        
-        for row in data:
-            for column_name, column_value in zip(column_names, row):
-                if column_name not in return_data.keys():
-                    return_data[column_name] = []
-                return_data[column_name].append(column_value)
-        
+        # перевод данных в формат {"column_name": column_values}
+
+        # return_data = dict()
+        #
+        # if len(data) == 0:
+        #     return return_data
+        #
+        # if len(column_names) != len(data[0]):
+        #     column_names = [i for i in range(len(data[0]))]
+        #
+        # for row in data:
+        #     for column_name, column_value in zip(column_names, row):
+        #         if column_name not in return_data.keys():
+        #             return_data[column_name] = []
+        #         return_data[column_name].append(column_value)
+
+        # перевод данных в формат [{"column_name": column_value_i}, {"column_name": column_value_i}, ...]
+        return_data = [{column_name: row[i] for i, column_name in enumerate(column_names)} for row in data]
         return return_data
 
     def check_exist(self, table_name, key, value):

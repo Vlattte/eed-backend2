@@ -1,0 +1,100 @@
+{
+    "status": false,
+    "error": "no-error",
+    "src": "apparats/1_2.png",
+    "elements": {
+        "penis": [
+            {
+                "id": 1,
+                "original_src": "./../eed-frontend/public/elements/1_penis.png",
+                "width": 46.0,
+                "height": 38.0,
+                "conditions": [
+                    {
+                        "condition_id": 1,
+                        "is_new_condition": true,
+                        "condition_positions": [
+                            {
+                                "condition_group_id": 1,
+                                "angle": 35,
+                                "src": "35",
+                                "order": 0
+                            },
+                            {
+                                "condition_group_id": 1,
+                                "angle": 47,
+                                "src": "47",
+                                "order": 1
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "original_src": "./../eed-frontend/public/elements/2_penis.png",
+                "width": 46.0,
+                "height": 38
+.0,
+                "conditions": [
+                    {
+                        "condition_id": 2,
+                        "is_new_condition": true,
+                        "condition_positions": [
+                            {
+                                "condition_group_id": 2,
+                                "angle": 3,
+                                "src": "3",
+                                "order": 0
+                            },
+                            {
+                                "condition_group_id": 2,
+                                "angle": 555,
+                                "src": "555",
+                                "order": 1
+                            }
+                        ]
+                    },
+                    {
+                        "condition_id": 3,
+                        "is_new_condition": true,
+                        "condition_positions": [
+                            {
+                                "condition_group_id": 3,
+                                "angle": 3,
+                                "src": "3", "or
+der": 0}, {"condition_group_id": 3, "angle": 55, "src": "55", "order": 1}, {"condition_group_id": 3, "angle": 99, "src": "99", "order": 2}]}]}, {"id": 3, "original_src": ".
+/../eed-frontend/public/elements/3_penis.png", "width": 46.0, "height": 38.0, "conditions": []}, {"id": 4, "original_src": "./../eed-frontend/public/elements/4_penis.png", "width": 46.0,"height": 38.0,"conditions": []
+                            },
+                            {
+                                "id": 13,
+                                "original_src": "./../eed-frontend/public/elements/13_penis.png",
+                                "width": 46.0,
+                                "height": 38.0,
+                                "conditions": []
+                            }
+                        ],
+                        "rotator": [
+                            {
+                                "id": 5,
+                                "original_src": "./../eed-frontend/public/elements/5_rotator.png",
+                                "width": 46.0,
+                                "height": 38.0,
+                                "conditions": [
+                                    {
+                                        "condition_id": 4, "is_new_condition": true, "condition_positions": [{"condition_group_id": 4, "angle": 3, "src": "3", "order": 0}, {"condition_group_id": 4, "angle": 55, "src": "55", "order": 1}, {"condition_group_id": 4, "angle": 99, "src": "99", "order": 2}]}]}, {"id": 6, "original_src": "./../eed-frontend/public/elements/6_rotator.png", "width": 46.0, "height": 38.0, "conditions": []
+                                    }
+                                ],
+                                "lever": [
+                                    {
+                                        "id": 7,
+                                        "original_src": "./../eed-frontend/public/elements/7_lever.png",
+                                        "width": 46.0,
+                                        "height": 38.0,
+                                        "conditions": []
+                                    },
+                                    {
+                                        "id": 8, "origin
+al_src": "./../eed-frontend/public/elements/8_lever.png", "width": 46.0, "height": 38.0, "conditions": []}, {"id": 9, "original_src": "./../eed-frontend/public/elements/9_l
+ever.png", "width": 46.0, "height": 38.0, "conditions": []}, {"id": 10, "original_src": "./../eed-frontend/public/elements/10_lever.png", "width": 46.0, "height": 38.0, "co
+nditions": []}, {"id": 11, "original_src": "./../eed-frontend/public/elements/11_lever.png", "width": 46.0, "height": 38.0, "conditions": []}, {"id": 12, "original_src": "./../eed-frontend/public/elements/12_lever.png", "width": 46.0, "height": 38.0, "conditions": []}]}}
