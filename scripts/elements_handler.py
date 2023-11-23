@@ -55,7 +55,6 @@ def load_elements(message_dict):
     status = False
     error = "no-error"
     #TODO:: добавить conditions
-    db_con_var = db.DbConnection()
 
     elements = []
     directory = '../eed-frontend/src/views/editor/control'
@@ -66,6 +65,7 @@ def load_elements(message_dict):
     src = f"apparats/{apparat_id}_{block_id}.png"
 
     # тут лежит тип и изначальная фотка элемента
+    db_con_var = db.DbConnection()
     elements = db_con_var.get_data_request(table_name="elements", all="*")
     # здесь получаем группы состояний по каждому элементу
     print("elements = ", elements)
