@@ -54,7 +54,7 @@ def load_elements(message_dict):
     """ получает элементы из БД и отправляет их в редактор оборудования """
     status = False
     error = "no-error"
-    #TODO:: добавить conditions
+    # TODO:: добавить conditions
 
     directory = '../eed-frontend/src/views/editor/control'
     dir_names = [dir_name for dir_name in os.listdir(directory)]
@@ -116,7 +116,6 @@ def load_elements(message_dict):
 
         elements[element_type].append(element)
 
-
     print("***")
     print(elements)
     print("***")
@@ -128,6 +127,7 @@ def load_elements(message_dict):
 
     back_answer = {"status": status, "error": error, "src": apparat_src, "elements": elements}
     return back_answer
+
 
 # ДОБАВЛЕНИЕ CONDISION
 # front->back: {
@@ -177,10 +177,10 @@ def add_positions_to_condition(message_dict):
     if db_con_var.check_exist(table_name="element_group_condition", key="id", value=message_dict["condition_id"]):
         condition_id = message_dict["condition_id"]
         positions = message_dict["positions"]
-        
+
         status = True
         error = "positions added"
-        
+
         # проходимся по позициям
         for pos in positions:
             returned_id = db_con_var.add_values_and_get_id(table_name="element_condition_positions",
@@ -190,8 +190,6 @@ def add_positions_to_condition(message_dict):
                                                            condition_order=pos["order"])
             if returned_id == -1:
                 error = "one or more positions was previously added"
-            
-        
 
     back_answer = {"status": status, "error": error}
     return back_answer
@@ -212,10 +210,8 @@ def add_element(message_dict):
     image = img_ops.binary_2_image(message_dict["element"]["src"])
     width, height = img_ops.get_image_params(image)
 
-    element_id = db_con_var.add_values_and_get_id(table_name="elements",
-                                                       type_id=type_id,
-                                                       width=width,
-                                                       height=height)
+    element_id = db_con_var.add_values_and_get_id(table_name="elements", type_id=type_id,
+                                                  width=width, height=height)
 
     # сохранение изображения
     element_path = f'./../eed-frontend/public/elements/{element_id}_{message_dict["element"]["type"]}.png'
@@ -249,7 +245,7 @@ def find_id_by_name(table_name, param_name):
     where_statement = f"name='{param_name}'".format(param_name=param_name)
     param_dict = db_con_var.get_data_with_where_statement(table_name=table_name, id="id",
                                                           where_statement=where_statement)
-   
+
     param_id = -1  # значит такого нет и нужно добавить в БД
     print(param_dict)
     if len(param_dict.keys()) > 0:
