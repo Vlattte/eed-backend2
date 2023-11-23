@@ -65,7 +65,8 @@ class DbConnection:
                           """
 
         request_id = self.send_request(request_string)
-        return request_id['id'][0]
+        print(request_id)
+        return request_id[0]['id']
 
     def get_data_with_where_statement(self, table_name, where_statement, **kwargs):
         """

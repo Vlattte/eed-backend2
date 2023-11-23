@@ -32,7 +32,7 @@ def test_handler():
     # message = {'operation': 'addConditionPositions', 'session_hash': '47', 'apparat_id': 1, 'block_id': 2, 'condition_id':  4, 
     #      'positions':[{'position':{'angle': 3, 'src': {src} }, 'order': 0}, {'position': {'angle': 55, 'src': src }, 'order': 1}, {'position': {'angle': 99, 'src': src }, 'order': 2}], 'element': {'type': 'penis', 'src': {src} } }
     
-    message = {"operation": "loadElements", "session_hash": "47", 'apparat_id': 1, 'block_id': 2}
+    message = {"operation": "connect", "session_hash": "47", 'apparat_id': 1, 'block_id': 2}
 
     # message = {"operation": "addElement", "session_hash": "47", "element": {"type": "penis", "src": src}}
 

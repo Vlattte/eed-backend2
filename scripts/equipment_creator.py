@@ -23,7 +23,7 @@ def establish_connection(session_hash):
         # добавляем новую сессию для полученного id пользователя (user_id)
         user_id = create_new_user()
         db_con_var.add_values_and_get_id(table_name="sessions", session_hash=session_hash,
-                                          user_id=user_id, session_exercise_id=-1)
+                                         user_id=user_id, session_exercise_id=-1)
 
     status = user_id > 0  # если добавилось, то все окей
     back_answer = {"status": status}
@@ -50,7 +50,10 @@ def check_connection(session_hash):
     where_statement = f"session_hash='{session_hash}'".format(session_hash=session_hash)
     user_ids_tuple = db_con_var.get_data_with_where_statement(table_name="sessions", user_id='user_id',
                                                               where_statement=where_statement)
+
+    print('user_ids_tuple:', user_ids_tuple)
     if len(user_ids_tuple) > 0:
+        # TODO протестить
         user_id = user_ids_tuple[0][0]
         return user_id
     return -1
@@ -102,6 +105,7 @@ def add_block(message_dict):
     back_answer = {"status": status, "block_id": block_id, "error": "no-error"}
     return back_answer
 
+# TODO две одинаковые функции, которые можно бы было объединить
 
 def find_block(block_name):
     """ tries to find block by name in table "apparat_blocks" """
