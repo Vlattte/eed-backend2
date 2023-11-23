@@ -22,7 +22,7 @@ def establish_connection(session_hash):
     if user_id == -1:
         # добавляем новую сессию для полученного id пользователя (user_id)
         user_id = create_new_user()
-        db_con_var.add_element_and_get_id(table_name="sessions", session_hash=session_hash,
+        db_con_var.add_values_and_get_id(table_name="sessions", session_hash=session_hash,
                                           user_id=user_id, session_exercise_id=-1)
 
     status = user_id > 0  # если добавилось, то все окей
@@ -36,7 +36,7 @@ def create_new_user(login="test", password="123", role=1):
         :return user_id
     """
     db_con_var = db.DbConnection()
-    user_id = db_con_var.add_element_and_get_id(table_name="user_data", login=login, role=1, password=password)
+    user_id = db_con_var.add_values_and_get_id(table_name="user_data", login=login, role=1, password=password)
     return user_id
 
 
@@ -63,10 +63,9 @@ def add_equipment_name(message_dict):
 
     db_con_var = db.DbConnection()
     # TODO:: придумать как ипользовать session_hash
-    equipment_names = db_con_var.add_element_and_get_id(table_name="apparats",
+    equipment_id = db_con_var.add_values_and_get_id(table_name="apparats",
                                                         name=message_dict["apparat_name"],
                                                         apparat_description=message_dict["apparat_description"])
-    equipment_id = equipment_names[0]
     status = True
 
     back_answer = {"status": status, "apparat_id": equipment_id, "error": "no-error"}
@@ -84,13 +83,11 @@ def add_block(message_dict):
     db_con_var = db.DbConnection()
 
     # запись блока в бд, получение id добавленного блока 
-    block_names = db_con_var.add_element_and_get_id(table_name="apparat_blocks",
+    block_id = db_con_var.add_values_and_get_id(table_name="apparat_blocks",
                                                     apparat_id=message_dict["apparat_id"],
                                                     name=message_dict["block_name"],
                                                     width=message_dict["width"],
                                                     height=message_dict["height"])
-    
-    block_id = block_names[0]
 
     # сохранение изображения
     block_path = f'./../eed-frontend/public/apparats/{message_dict["apparat_id"]}_{block_id}.png'

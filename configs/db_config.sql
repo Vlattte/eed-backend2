@@ -63,6 +63,7 @@ CREATE TABLE element_condition_positions (
 	angle integer, -- --> градусы
 	condition_order integer, -- --> порядок переключения состояний
 	src text, -- --> ОТНОСИТЕЛЬНЫЙ путь до оригинальной фотографии
+	UNIQUE (condition_group_id, condition_order), 
 	CONSTRAINT element_condition_positions_pkey PRIMARY KEY (id)
 );
 
