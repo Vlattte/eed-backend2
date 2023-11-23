@@ -36,7 +36,6 @@ def test_handler():
 
     # message = {"operation": "addElement", "session_hash": "47", "element": {"type": "penis", "src": src}}
 
-
     # _str = json.dumps(_str)
     # message = json.loads(_str)
          

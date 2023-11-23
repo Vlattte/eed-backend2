@@ -11,7 +11,7 @@ import scripts.equipment_creator as equipment_creator
 import scripts.elements_handler as elements_handler
 
 
-
+# TODO вынести в сервер ??
 def request_handler(message_dict):
     """ decide which module will handle message """
     # message_dict = json.dumps(message_dict)
@@ -29,7 +29,8 @@ def request_handler(message_dict):
     if "operation" in message_dict:
         answer = choose_equipment_operation(message_dict)
         return json.dumps(answer)
-    
+
+
 def choose_equipment_operation(message_dict):
     """ define equipment operation """
     if message_dict["operation"] == "connect":          # connection establishing

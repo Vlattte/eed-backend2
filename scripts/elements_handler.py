@@ -68,15 +68,23 @@ def load_elements(message_dict):
 
     # тут лежит тип и изначальная фотка элемента
     db_con_var = db.DbConnection()
-    elements = db_con_var.get_data_request(table_name="elements", all="*")
-    print('*', elements, '*', sep='\n')
+    table_elements = db_con_var.get_data_request(table_name="elements", all="*")
+    type_match = db_con_var.get_data_request(table_name="types", all="*")
+    print("++", type_match, "++", sep="\n")
+    elements = {}
+
+    print('*', table_elements, '*', sep='\n')
 
     # здесь получаем группы состояний по каждому элементу
-    # print("elements = ", elements)
-    for element_id, element_type_id, element_original_src in zip(elements["id"], elements['type_id'], elements['original_src']):
-        cur_element_dict = {}
+    for i in range(len(table_elements['id'])):
+        element_id = table_elements['id'][i]
+        type_id = table_elements['type_id'][i]
+        original_src = table_elements['original_src'][i]
+        width = table_elements['width'][i]
+        height = table_elements['height'][i]
 
-        cur_element = {"is_new_condition": False, "condition_positions": []}
+        element = {"id": element_id, "type_id": type_id}
+        condition = {"is_new_condition": False, "condition_positions": []}
        
         where_statement = f"element_id = {element_id}"
         condition_ids = db_con_var.get_data_with_where_statement(table_name="element_group_condition", id="id",
@@ -89,23 +97,21 @@ def load_elements(message_dict):
         #                                                          where_statement=where_statement)
 
         # проверка типа
-        where_statement = f"id = {element_type_id}"
+        where_statement = f"id = {type_id}"
         type_names = db_con_var.get_data_with_where_statement(table_name="types", name="name", 
-                                                        where_statement=where_statement)
+                                                              where_statement=where_statement)
         type_name = type_names['name'][0]
-
-        # print(type_name)
 
         if type_name not in elements_dict.keys():
             elements_dict[type_name] = []
         
-        cur_element_dict['id'] = element_id, 
-        cur_element_dict['original_src'] = element_original_src
-        cur_element_dict['conditions'] = []
+        element['id'] = element_id,
+        element['original_src'] = original_src
+        element['conditions'] = []
 
         # есть ли вообще позиции у элемента
         if len(condition_ids) > 0:
-            cur_element["is_new_condition"] = True
+            condition["is_new_condition"] = True
 
         for cond_id in condition_ids:
             where_statement = f"condition_group_id = {cond_id}"
@@ -115,14 +121,13 @@ def load_elements(message_dict):
             # condition_positions = []
             # position = []
             # cur_element["condition_positions"].append(condition_positions)
-    
 
     # проверяем, есть ли вообще елементы в таблице "block_elements"
-    if len(elements) == 0:
+    if len(table_elements) == 0:
         error = "no-elements-in-database"
         status = False
 
-    back_answer = {"status": status, "error": error, "elements": elements, "src": src}
+    back_answer = {"status": status, "error": error, "elements": table_elements, "src": src}
     return back_answer
 
 
