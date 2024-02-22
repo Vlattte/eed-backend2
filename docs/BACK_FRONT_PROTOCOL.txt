@@ -141,6 +141,7 @@ front->back
     "session_hash": string,
     "apparat_name": string,
     "operation": "addApparat",
+    "apparat_description": string
 }
 
 back->front
@@ -179,8 +180,8 @@ front->back:
     "apparat_id": integer,
     "block_name": string,
     "operation": "addBlock",
-    "width": integer,
-	"height": integer,
+    # "width": integer,
+	# "height": integer,
     "src": string
 }
 
@@ -268,6 +269,7 @@ front->back:
         "type": string,
         "src": string
     }
+    "operation": string
 }
 
 back->front

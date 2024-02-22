@@ -129,7 +129,7 @@ def load_elements(message_dict):
     return back_answer
 
 
-# ДОБАВЛЕНИЕ CONDISION
+# ДОБАВЛЕНИЕ CONDITION
 # front->back: {
 #   "session_hash": string,
 #   "operation": "addCondision",
@@ -185,8 +185,7 @@ def add_positions_to_condition(message_dict):
         for pos in positions:
             returned_id = db_con_var.add_values_and_get_id(table_name="element_condition_positions",
                                                            condition_group_id=condition_id,
-                                                           angle=pos["position"]["angle"],
-                                                           src=pos["position"]["angle"],
+                                                           angle=pos["positions"]["angle"],
                                                            condition_order=pos["order"])
             if returned_id == -1:
                 error = "one or more positions was previously added"
@@ -242,14 +241,14 @@ def add_type(type_name):
 def find_id_by_name(table_name, param_name):
     """ tries to find any param by name in table "table_name" """
     db_con_var = db.DbConnection()
-    where_statement = f"name='{param_name}'".format(param_name=param_name)
+    where_statement = f"name='{param_name}'"
     param_dict = db_con_var.get_data_with_where_statement(table_name=table_name, id="id",
                                                           where_statement=where_statement)
 
     param_id = -1  # значит такого нет и нужно добавить в БД
     print(param_dict)
-    if len(param_dict.keys()) > 0:
-        param_id = param_dict["id"][0]
+    if len(param_dict) > 0:
+        param_id = param_dict[0]["id"]
 
     return param_id
 

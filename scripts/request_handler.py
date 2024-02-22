@@ -42,6 +42,7 @@ def choose_equipment_operation(message_dict):
     elif message_dict["operation"] == "addBlock":       # add block
         adding_block_status = equipment_creator.add_block(message_dict)
         return adding_block_status
+    # TODO протестить
     elif message_dict["operation"] == "loadElements":
         loading_elements_status = elements_handler.load_elements(message_dict)
         print(loading_elements_status)
@@ -52,6 +53,7 @@ def choose_equipment_operation(message_dict):
     elif message_dict["operation"] == "addCondition":
         adding_condition_status = elements_handler.add_condition(message_dict)
         return adding_condition_status
+    # TODO протестить
     elif message_dict["operation"] == "addConditionPositions":
         adding_positions_status = elements_handler.add_positions_to_condition(message_dict)
         return adding_positions_status

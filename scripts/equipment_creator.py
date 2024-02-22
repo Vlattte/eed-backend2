@@ -47,7 +47,7 @@ def check_connection(session_hash):
     """
     db_con_var = db.DbConnection()
 
-    where_statement = f"session_hash='{session_hash}'".format(session_hash=session_hash)
+    where_statement = f"session_hash='{session_hash}'"
     user_ids_tuple = db_con_var.get_data_with_where_statement(table_name="sessions", user_id='user_id',
                                                               where_statement=where_statement)
 
@@ -67,8 +67,8 @@ def add_equipment_name(message_dict):
     db_con_var = db.DbConnection()
     # TODO:: придумать как ипользовать session_hash
     equipment_id = db_con_var.add_values_and_get_id(table_name="apparats",
-                                                        name=message_dict["apparat_name"],
-                                                        apparat_description=message_dict["apparat_description"])
+                                                    name=message_dict["apparat_name"],
+                                                    apparat_description=message_dict["apparat_description"])
     status = True
 
     back_answer = {"status": status, "apparat_id": equipment_id, "error": "no-error"}
