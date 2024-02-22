@@ -1,5 +1,6 @@
 """ Подключение к базе данных из конфига db_connection.yaml """
 
+import os
 import psycopg2
 import yaml
 from psycopg2 import Error
@@ -20,7 +21,7 @@ class DbConnection:
         try:
             if not hasattr(cls, 'instance'):
                 cls.instance = super(DbConnection, cls).__new__(cls)
-
+                print(os.getcwd())
                 with open('./configs/db_connection.yaml', 'r') as config_file:
                     connect_params = yaml.safe_load(config_file)['connect_params']
 
@@ -85,6 +86,7 @@ class DbConnection:
                             SELECT {columns_string} FROM {table_name}             
                             WHERE {where_statement}          
                           """
+        print(request_string)
         chosen_data = self.send_request(request_string)
         return chosen_data
 
@@ -131,18 +133,16 @@ class DbConnection:
 
             cursor.close()
             self.connection.commit()
-            return return_data
         
         except Exception as E:
+            return_data = [{"id": -1, "error": E}]
+            print("ERROR:", E)
             if type(E) == psycopg2.errors.UniqueViolation:
                 print('Попытка добавить одинаковую пару значений')
-                return_data = {}
-                return_data["id"] = [-1]
-                return_data["error"] = "attemption to add existing element"
                 cursor.close()
                 self.connection.commit()
 
-                return return_data        
+        return return_data
 
     def get_data_request(self, table_name, **kwargs):
         """

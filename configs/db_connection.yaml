@@ -3,4 +3,4 @@ connect_params:
   database: "vuc" # имя базы данных 
   password: "123456" # пароль от базы данных 
   host: "localhost" # адрес хоста 
-  port: 5432 # порт
+  port: 5433 # порт

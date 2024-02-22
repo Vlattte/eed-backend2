@@ -48,15 +48,11 @@ def check_connection(session_hash):
     db_con_var = db.DbConnection()
 
     where_statement = f"session_hash='{session_hash}'".format(session_hash=session_hash)
-    user_ids_tuple = db_con_var.get_data_with_where_statement(table_name="sessions", user_id='user_id',
-                                                              where_statement=where_statement)
+    user_ids = db_con_var.get_data_with_where_statement(table_name="sessions", user_id='user_id',
+                                                        where_statement=where_statement)
 
-    print('user_ids_tuple:', user_ids_tuple)
-    if len(user_ids_tuple) > 0:
-        # TODO протестить
-        user_id = user_ids_tuple[0][0]
-        return user_id
-    return -1
+    print('user_ids_tuple:', user_ids)
+    return user_ids[0]["id"]
 
 
 def add_equipment_name(message_dict):
