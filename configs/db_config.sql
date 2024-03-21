@@ -176,7 +176,7 @@ CREATE TABLE exercises_status(
 	map_id integer,
 	stage_id integer,
 	group_steps_id integer,
-  steps_id integer,
+    steps_id integer,
 	CONSTRAINT exercises_status_pkey PRIMARY KEY (id)
 );
 

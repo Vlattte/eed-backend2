@@ -110,7 +110,7 @@ class DbConnection:
             values.append(value)
 
         return values
-    
+
     def columns_values_from_kwargs(self, **kwargs):
         """ получает kwargs(именнованые аргументы) и возвращает список столбцов, список значений"""
         columns, values = [], []
