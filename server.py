@@ -25,6 +25,8 @@ async def handler(websocket):
     # преобразуем json к словарю для удобной обработки
     request = dict(json.loads(message))
     return_json = req.request_handler(request)
+    if return_json:
+        return_json["process_status"] = "done"
     print(return_json)
 
     # отправляем результат обработки

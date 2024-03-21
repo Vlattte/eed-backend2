@@ -1,0 +1,215 @@
+{
+  "step_0": {
+    "step": 0,
+    "id": "multiple",
+    "before_id": "multiple",
+    "draggable": false,
+    "current_value": "multiple",
+    "tag": "multiple",
+    "count_action": 0,
+    "actions_for_step": 0,
+    "array_actions": [
+      {
+        "name": "nan"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3003,
+        "draggable": true,
+        "current_value": "jumper2",
+        "tag": "drag"
+      }
+    ],
+    "annotation": "Переставить перемычку в Гн. «16»"
+  },
+  "step_1": {
+    "step": 1,
+    "id": 3003,
+    "before_id": 3003,
+    "draggable": false,
+    "current_value": "jumper2",
+    "tag": "drag",
+    "actions_for_step": 1,
+    "count_action": 0,
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 6,
+        "next_id": 6003,
+        "draggable": false,
+        "current_value": "-15",
+        "tag": "rotate"
+      }
+    ],
+    "annotation": "Переключатель «СОПР.ВХ.» в блоке УУ в положение « >6000»"
+  },
+  "step_2": {
+    "step": 2,
+    "id": 6003,
+    "before_id": 6003,
+    "draggable": false,
+    "current_value": "-15",
+    "actions_for_step": 1,
+    "tag": "rotate",
+    "count_action": 0,
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 6,
+        "next_id": 6003,
+        "draggable": false,
+        "current_value": "15",
+        "tag": "rotate"
+      }
+    ],
+    "annotation": "Переключатель «СОПР.ВХ.» в блоке УУ в положение « >6000»"
+  },
+    "step_3": {
+      "step": 3,
+      "id": 6003,
+      "before_id": 6003,
+      "draggable": false,
+      "current_value": "15",
+      "actions_for_step": 1,
+      "count_action": 1,
+      "array_actions": [
+        {
+          "apparat_id": 6,
+          "action_id": 6401,
+          "action_value": "pos_2",
+          "tag": "arrow"
+        }
+      ],
+      "count_next": 1,
+      "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2016,
+        "draggable": false,
+        "current_value": "110",
+        "tag": "rotate"
+      }
+    ],
+    "annotation": "Установить ручкой «РН» на бл. Ус.-12 уровень сигнала «-2 Нп»."
+  },
+  "step_4": {
+    "step": 4,
+    "id": 2016,
+    "before_id": 2016,
+    "draggable": false,
+    "current_value": "110",
+    "actions_for_step": 1,
+    "tag": "rotate",
+    "count_action": 0,
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2014,
+        "draggable": false,
+        "current_value": "on",
+        "tag": "button"
+      }
+    ],
+    "annotation": "Тумблер «ТЕРМ» на бл. Ус.-12- «ВКЛ»."
+  },
+  "step_5": {
+    "step": 5,
+    "id": 2014,
+    "before_id": 2014,
+    "draggable": false,
+    "current_value": "on",
+    "actions_for_step": 1,
+    "tag": "button",
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 2,
+        "action_id": 2020,
+        "action_value": "on",
+        "tag": "lamp"
+      },
+      {
+        "apparat_id": 2,
+        "action_id": 2018,
+        "action_value": "on",
+        "tag": "lamp"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2011,
+        "draggable": false,
+        "current_value": "on",
+        "tag": "button"
+      }
+    ],
+    "annotation": "Установить тумблер «КЧ» на бл. ПКК-64/16 в положение «16»."
+  },
+    "step_6": {
+      "step": 6,
+      "id": 2011,
+      "before_id": 2011,
+      "draggable": false,
+      "current_value": "on",
+      "actions_for_step": 1,
+      "count_action": 0,
+      "count_next": 1,
+      "next_actions": [
+        {
+          "apparat_id": 2,
+          "next_id": 2022,
+          "draggable": false,
+          "current_value": "on",
+          "tag": "button"
+        }
+      ],
+    "annotation": "Нажать кнопку «УСТ.МРУ» установить стрелку МРУ  на нуль."
+  },
+  "step_7": {
+    "step": 7,
+    "id": 2022,
+    "before_id": 2022,
+    "draggable": false,
+    "current_value": "on",
+    "actions_for_step": 1,
+    "tag": "button",
+    "count_action": 0,
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2009,
+        "draggable": false,
+        "current_value": "on",
+        "tag": "button"
+      }
+    ],
+    "annotation": "Тумблеры «АРУ»  на бл.ПКК 64/16 и Ус.-12 в положение «ВКЛ»."
+  },
+    "step_8": {
+      "step": 8,
+      "id": 2009,
+      "before_id": 2009,
+      "draggable": false,
+      "current_value": "on",
+      "actions_for_step": 1,
+      "count_action": 1,
+      "array_actions": [
+        {
+          "apparat_id": 2,
+          "action_id": 2018,
+          "action_value": "off",
+          "tag": "lamp"
+        }
+      ],
+      "count_next": 0,
+      "next_actions": [ {"name": "nan"} ],
+      "annotation": "Настроить уровень ЛКЧ  16 кГц ВЫПОЛНЕНО"
+    }
+  }

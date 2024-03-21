@@ -173,10 +173,10 @@ CREATE TABLE sessions (
 
 CREATE TABLE exercises_status(
 	id serial, -- --> session_exercise_id
-	map_id integer,
-	stage_id integer,
-	group_steps_id integer,
-    steps_id integer,
+	map_id integer,             -- --> номер карты (норматива)
+	stage_id integer,           -- --> stage - длится от одной аннотации "ВЫПОЛНЕНО" до другой (один json)
+	group_steps_id integer,     -- --> смена группы шагов == смена аннотации (набор шагов)
+    steps_id integer,           -- --> номер шага в группе шагов
 	CONSTRAINT exercises_status_pkey PRIMARY KEY (id)
 );
 

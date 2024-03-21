@@ -1,0 +1,69 @@
+{
+  "step_0": {
+    "step": 0,
+    "id": "multiple",
+    "before_id": "multiple",
+    "draggable": false,
+    "current_value": "start",
+    "tag": "multiple",
+    "count_next": 2,
+    "next_actions": [
+      {
+        "apparat_id": 5,
+        "next_id":  5201,
+        "draggable": false,
+        "current_value": "on",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 5,
+        "next_id": 5202,
+        "draggable": false,
+        "current_value": "on",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 0,
+    "actions_for_step": 0,
+    "array_actions": [
+      {
+        "name": "nan"
+      }
+    ],
+    "annotation": "Соединить 2-х пр. шнуром тракт передачи аппаратуры с трактом приема на упаковке ВКО-12."
+  },
+  "step_1": {
+    "step": 1,
+    "id": "multiple",
+    "before_id": "multiple",
+    "draggable": false,
+    "current_value": "multiple",
+    "actions_for_step": 2,
+    "sub_steps": [
+      {
+        "name": "sub_step_1",
+        "action_id": 5201,
+        "current_value": "on",
+        "before_id": 5201
+      },
+      {
+        "name": "sub_step_2",
+        "action_id": 5202,
+        "current_value": "on",
+        "before_id": 5202
+      }
+    ],
+    "count_action": 1,
+    "array_actions": [
+      {
+        "apparat_id": 5,
+        "action_id": 5301,
+        "action_value": "cabel",
+        "tag": "cabel"
+      }
+    ],
+    "count_next": 0,
+    "next_actions": [{"name": "nan"}],
+    "annotation": "ВЫПОЛНЕНО"
+  }
+}
