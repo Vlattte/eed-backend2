@@ -9,13 +9,26 @@ import json
 import scripts.request_handler as req
 
 
+def send_format(json_data):
+    return json.dumps(json_data, ensure_ascii=False)
+
+
 async def handler(websocket):
+    # получаем сообщение от клиента
     message = await websocket.recv()
-    # message = json.dumps("{\"operation\": \"addApparat\", \"session_hash\": \"47\", \"apparat_name\": \"P320-OO\" }")
+    print("front message:\n", message)
+
+    # отправляем сообщение, что приняли сообщение в обработку
+    return_json = {"process_status": "processing"}
+    await websocket.send(send_format(return_json))
+
+    # преобразуем json к словарю для удобной обработки
     request = dict(json.loads(message))
     return_json = req.request_handler(request)
     print(return_json)
-    await websocket.send(json.dumps(return_json, ensure_ascii=False))
+
+    # отправляем результат обработки
+    await websocket.send(send_format(return_json))
 
 
 def test_handler(message_type):
