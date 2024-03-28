@@ -27,7 +27,7 @@ async def handler(websocket):
     return_json = req.request_handler(request)
     if return_json:
         return_json["process_status"] = "done"
-    print(return_json)
+    print("\t[LOG] data for front: ", return_json)
 
     # отправляем результат обработки
     await websocket.send(send_format(return_json))

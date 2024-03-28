@@ -170,7 +170,6 @@ CREATE TABLE sessions (
 	CONSTRAINT sessions_pkey PRIMARY KEY (id)
 );
 
-
 CREATE TABLE exercises_status(
 	id serial, -- --> session_exercise_id
 	map_id integer,             -- --> номер карты (норматива)

@@ -79,15 +79,20 @@ class DbConnection:
         # создаем список из столбцов и их значений
         columns = self.columns_from_kwargs(**kwargs)
         columns_string = ', '.join(map(str, columns))
-        if "all" in kwargs:
+        if "all" in kwargs or len(kwargs) == 0:
             columns_string = '*'
 
         request_string = f"""
                             SELECT {columns_string} FROM {table_name}             
                             WHERE {where_statement}          
                           """
-        print(request_string)
+        print("REQUEST: ", request_string)
         chosen_data = self.send_request(request_string)
+
+        # если только один элемент в массиве, то возвращаем его
+        if len(chosen_data) == 1:
+            return chosen_data[0]
+
         return chosen_data
 
     # FIXME: по хорошему мы к значениям можем обращаться только по ключам

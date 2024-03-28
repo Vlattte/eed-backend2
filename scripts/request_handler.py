@@ -22,7 +22,7 @@ def request_handler(message_dict):
         return
 
     # is request == exercise
-    if "session_hash" in message_dict:
+    if "session_id" in message_dict:
         choose_exercise_type(message_dict)
 
     # if request == equipment_creator
