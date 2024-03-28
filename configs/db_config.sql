@@ -172,11 +172,29 @@ CREATE TABLE sessions (
 
 CREATE TABLE exercises_status(
 	id serial, -- --> session_exercise_id
-	map_id integer,             -- --> номер карты (норматива)
+	map_id integer,             -- --> номер карты (норматива: либо фильм, либо первый норматив)
 	stage_id integer,           -- --> stage - длится от одной аннотации "ВЫПОЛНЕНО" до другой (один json)
 	group_steps_id integer,     -- --> смена группы шагов == смена аннотации (набор шагов)
-    steps_id integer,           -- --> номер шага в группе шагов
 	CONSTRAINT exercises_status_pkey PRIMARY KEY (id)
+);
+
+-- состояние шага
+CREATE TABLE step(
+    id serial, -- --> step_id
+    step_order integer
+);
+
+CREATE TABLE sub_steps(
+    id serial, -- --> sub_step_id
+    step_id integer,    -- id группы sub_steps
+    element_id integer, -- id элемента на аппаратуре
+    correct_value text, -- верное положение элемента
+    tag text            -- тэг элемента (button, lever)
+);
+
+-- соответствие
+CREATE TABLE group_steps(
+    id serial, -- --> group_step_id
 );
 
 CREATE TABLE mistakes(
