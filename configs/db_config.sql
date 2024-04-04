@@ -181,7 +181,8 @@ CREATE TABLE exercises_status(
 -- состояние шага
 CREATE TABLE step(
     id serial, -- --> step_id
-    step_order integer
+    step_order integer,
+    CONSTRAINT step_id PRIMARY KEY (id)
 );
 
 CREATE TABLE sub_steps(
@@ -189,12 +190,8 @@ CREATE TABLE sub_steps(
     step_id integer,    -- id группы sub_steps
     element_id integer, -- id элемента на аппаратуре
     correct_value text, -- верное положение элемента
-    tag text            -- тэг элемента (button, lever)
-);
-
--- соответствие
-CREATE TABLE group_steps(
-    id serial, -- --> group_step_id
+    tag text,           -- тэг элемента (button, lever)
+    CONSTRAINT sub_step_id PRIMARY KEY (id)
 );
 
 CREATE TABLE mistakes(

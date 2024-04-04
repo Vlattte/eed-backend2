@@ -20,8 +20,15 @@ def get_next_step(session_hash):
                     where_statement=where_statement)
     print(exercises_data)  # [{'id': 18, 'map_id': 11, 'stage_id': 0, 'group_steps_id': 0, 'steps_id': 0}]
 
+    # получаем карту по ее id
+    map_id = exercises_data["stage_id"]
+    cur_step = get_map(map_id)
+    return cur_step
+
+
+def get_map(map_id):
     # карта в виде словаря
-    map_dict = map_from_id(exercises_data["map_id"])
+    map_dict = map_from_id(map_id)
     print("\t[LOG] словарь с текущим шагом: ", map_dict)
 
     # получаем шаг из карты
@@ -36,6 +43,7 @@ def map_from_id(norm_id):
     # получаем название файла для текущей карты норматива
     id_json_file = open("configs/id_json.json", encoding='utf-8')
     id_to_json = json.load(id_json_file)
+    print("AAAAAAA: ", norm_id)
     map_file_name = id_to_json[str(norm_id)]
     id_json_file.close()
 
