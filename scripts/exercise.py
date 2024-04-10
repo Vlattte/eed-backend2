@@ -30,7 +30,7 @@ def training_exercise(message_dict):
         # получаем по шагу, для подсветки элементов
         cur_step = map_parser.get_next_step(session_hash)
 
-        return_json = {"session_id": session_hash, "next_steps": cur_step["next_steps"]}
+        return_json = {"session_id": session_hash, "next_steps": cur_step["next_actions"]}
         return return_json
     else:
         # получаем эталонные данные по шагу
@@ -48,7 +48,7 @@ def configure_norm(message_dict):
         stage_id = message_dict["norm"]  # id упражнения в нормативе
 
         # получаем id для новой группы подшагов
-        table_name = "step"
+        table_name = "step_group_status"
         step_id = db_con_var.add_values_and_get_id(
             table_name=table_name, step_order=0)
 
@@ -66,7 +66,7 @@ def configure_norm(message_dict):
 
         return step_id
 
-    except (Exception, Error) as error:
+    except Exception as error:
         print("Ошибка в инициализации норматива:\n", error)
 
 

@@ -170,21 +170,23 @@ CREATE TABLE sessions (
 	CONSTRAINT sessions_pkey PRIMARY KEY (id)
 );
 
+-- храним статус прохождения карты
 CREATE TABLE exercises_status(
 	id serial, -- --> session_exercise_id
-	map_id integer,             -- --> номер карты (норматива: либо фильм, либо первый норматив)
-	stage_id integer,           -- --> stage - длится от одной аннотации "ВЫПОЛНЕНО" до другой (один json)
-	group_steps_id integer,     -- --> смена группы шагов == смена аннотации (набор шагов)
+	map_id integer,      -- --> номер карты (норматива: либо фильм, либо первый норматив)
+	stage_id integer,    -- --> stage - длится от одной аннотации "ВЫПОЛНЕНО" до другой (один json)
+	step_id integer,     -- --> смена группы шагов == смена аннотации (набор шагов)
 	CONSTRAINT exercises_status_pkey PRIMARY KEY (id)
 );
 
--- состояние шага
-CREATE TABLE step(
-    id serial, -- --> step_id
+-- состояние шага (объединяет подшаги шаги в группу)
+CREATE TABLE step_group_status(
+    id serial, -- --> step_group_status_id
     step_order integer,
     CONSTRAINT step_id PRIMARY KEY (id)
 );
 
+-- состояние подшага (содержит ожидаемые данные для этого подшага)
 CREATE TABLE sub_steps(
     id serial, -- --> sub_step_id
     step_id integer,    -- id группы sub_steps
