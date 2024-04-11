@@ -10,7 +10,6 @@ import scripts.request_handler as req
 
 
 from fastapi import FastAPI, WebSocket
-from fastapi.responses import HTMLResponse
 
 
 app = FastAPI()
@@ -115,6 +114,7 @@ async def main():
     async with websockets.serve(handler, "", 8083, max_size=10_000_000):
         await asyncio.Future()
 
+
 @app.websocket('/')
 async def main(websocket: WebSocket):
     print("SERVER ON")
@@ -122,14 +122,15 @@ async def main(websocket: WebSocket):
     while True:
         # получаем сообщение от клиента
         message = await websocket.receive_json()
-        print("front message:\n", message)
 
         # преобразуем json к словарю для удобной обработки
         request = dict(message)
+        print("\t[LOG]data from front:\n\t", request)
         answer = req.request_handler(request)
-        print("\t[LOG] data for front: ", answer)
+        print("\t[LOG] data for front:\n\t", answer)
 
         await websocket.send_json(answer)
+        # команда запуска
         # uvicorn server:app --reload --port 8083
 
 

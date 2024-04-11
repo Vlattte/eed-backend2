@@ -28,7 +28,8 @@ class DbConnection:
                 cls.connection = psycopg2.connect(**connect_params)
             return cls.instance
         except (Exception, Error) as error:
-            print("Ошибка подключения к PostgreSQL", error)
+            print("Ошибка подключения к PostgreSQL. Возможно поменялись таблицы, либо неправильные параметры в"
+                  "db_connection.yaml", error)
 
     def update_rows(self, table_name, where_statement, **kwargs):
         """ обновляет данные в выбранной строке """
@@ -66,7 +67,6 @@ class DbConnection:
                           """
 
         request_id = self.send_request(request_string)
-        print(request_id)
         return request_id[0]['id']
 
     def get_data_with_where_statement(self, table_name, where_statement, **kwargs):

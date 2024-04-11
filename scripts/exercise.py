@@ -62,14 +62,14 @@ def training_exercise(message_dict):
     # получаем текущий шаг пользователя
     cur_step = map_parser.get_next_step(session_hash)
 
-    # записываем все подшаги из шага в бд
+    # записываем все подшаги из шага в бд, если новый шаг (step, а не sub_step)
     write_substeps(session_hash, cur_step)
 
     # формируем ответ в виде словаря
     answer = create_default_answer(cur_step)
     answer["session_id"] = session_hash
 
-    # получаем эталонные данные по шагу
+    # получаем эталонные данные по шагу и исправляем флаги в словаре ответа answer
     validation = validate_step(cur_step, message_dict)
 
     return answer
@@ -80,14 +80,31 @@ def write_substeps(session_hash, cur_step):
     # получаем id группы подшагов
     step_id = get_step_id(session_hash)
 
-    print("\t\t\tcur_step", cur_step)
+    # проверяем, нужно ли записывать новые подшаги (если еще есть подшаги, то не надо)
     db_con_var = db.DbConnection()
+    where_statement = f"step_id={step_id}"
+    prev_sub_steps = db_con_var.get_data_with_where_statement(
+        table_name="sub_steps", where_statement=where_statement)
+    print("\t[LOG]\t\tprev_sub_steps", prev_sub_steps)
+    if len(prev_sub_steps) > 0: # TODO проверить, а то вдруг > 1
+        return  # ничего не пишем, т.к. прошлый шаг еще не кончился
+
+    print("\t[LOG]\t\tcur_step", cur_step)
+
+    # если нет под шагов
+    zero_sub_step = cur_step["sub_steps"][0]
+    if "name" in zero_sub_step:
+        if zero_sub_step["name"] == "nan":
+            return
+
     # TODO можно переделать на executescript
-    # for i in len(cur_step[])
-    # db_con_var.add_values_and_get_id(
-        # table_name="sub_steps", step_id=step_id,
-    #
-    # )
+    # само добавление под шагов в таблицу sub_steps
+    for i in cur_step["sub_steps"]:
+        db_con_var.add_values_and_get_id(
+            table_name="sub_steps", step_id=step_id,
+            element_id=cur_step["action_id"],
+            correct_value=cur_step["current_value"],
+            tag=cur_step["tag"])
 
 
 def get_step_id(session_hash):
@@ -159,7 +176,6 @@ def create_default_answer(cur_step):
     return_json["is_random_step"] = False
     return_json["random_values"] = [{'name': 'nan'}]
 
-
     # flags - координируют переход между шагами, нормативами и т.д.
     return_json["finish"] = False       # закончен ли шаг
     return_json["status"] = "progres"   # progres - элемент еще не в свое положении, не убираем подсветку, correct - убираем подсветку, элемент в нужном положении
@@ -177,4 +193,25 @@ def validate_step(cur_step, message_dict):
     # проверяем соответсвие id шага и его порядка, если важен порядок
     print("\t[LOG] validation cur step:\n\t", cur_step)
     print("\t[LOG] validation message dict:\n\t", message_dict)
+    sub_steps_data, cur_order = get_sub_steps(message_dict["session_hash"])
 
+
+def get_sub_steps(session_hash):
+    """ получает массив подшагов для этого шага """
+    # получаем все подшаги для данного шага
+    step_id = get_step_id(session_hash)
+    db_con_var = db.DbConnection()
+
+    # получаем текущий номер шага (если порядок ообще важен)
+    where_statement = f"id={step_id}"
+    cur_step_order = db_con_var.get_data_with_where_statement(
+        table_name="step_group_status", where_statement=where_statement,
+        step_order="step_order")
+    print("\t[LOG] cur_step_order = ", cur_step_order)
+
+    # получаем все данные про подшаги из текущего шага
+    where_statement = f"step_id={step_id}"
+    sub_steps_data = db_con_var.get_data_with_where_statement(
+        table_name="sub_steps", where_statement=where_statement)
+    print("\t[LOG] sub_steps_data = ", sub_steps_data)
+    return sub_steps_data, cur_step_order
