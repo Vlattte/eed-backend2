@@ -9,6 +9,13 @@ import json
 import scripts.request_handler as req
 
 
+from fastapi import FastAPI, WebSocket
+from fastapi.responses import HTMLResponse
+
+
+app = FastAPI()
+
+
 def send_format(json_data):
     return json.dumps(json_data, ensure_ascii=False)
 
@@ -25,8 +32,8 @@ async def handler(websocket):
     # преобразуем json к словарю для удобной обработки
     request = dict(json.loads(message))
     return_json = req.request_handler(request)
-    if return_json:
-        return_json["process_status"] = "done"
+    # if return_json:
+        # return_json["process_status"] = "done"
     print("\t[LOG] data for front: ", return_json)
 
     # отправляем результат обработки
@@ -107,6 +114,24 @@ async def main():
     # test_handler(message_type='addConditionPositions')
     async with websockets.serve(handler, "", 8083, max_size=10_000_000):
         await asyncio.Future()
+
+@app.websocket('/')
+async def main(websocket: WebSocket):
+    print("SERVER ON")
+    await websocket.accept()
+    while True:
+        # получаем сообщение от клиента
+        message = await websocket.receive_json()
+        print("front message:\n", message)
+
+        # преобразуем json к словарю для удобной обработки
+        request = dict(message)
+        answer = req.request_handler(request)
+        print("\t[LOG] data for front: ", answer)
+
+        await websocket.send_json(answer)
+        # uvicorn server:app --reload --port 8083
+
 
 if __name__ == "__main__":
     asyncio.run(main())

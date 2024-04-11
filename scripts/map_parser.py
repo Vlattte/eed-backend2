@@ -18,10 +18,10 @@ def get_next_step(session_hash):
     exercises_data = db_con_var.get_data_with_where_statement(
                     table_name="exercises_status",
                     where_statement=where_statement)
-    print(exercises_data)  # [{'id': 18, 'map_id': 11, 'stage_id': 0, 'group_steps_id': 0}]
+    print("\t[LOG] exercise status:\n\t", exercises_data)  # [{'id': 18, 'map_id': 11, 'stage_id': 0, 'group_steps_id': 0}]
 
     # из таблицы "step_group_status" порядковый номер шага
-    where_statement = f"id={exercises_data['group_steps_id']}"
+    where_statement = f"id={exercises_data['step_id']}"
     step_data = db_con_var.get_data_with_where_statement(
         table_name="step_group_status",
         where_statement=where_statement,
@@ -43,7 +43,7 @@ def get_map(map_id, step_order):
     # получаем шаг из карты
     step_num = f"step_{step_order}"
     cur_step = map_dict[str(step_num)]
-    print("\t[LOG] номер текущего подшага: ", cur_step)
+    print("\t[LOG] текущего подшага: ", cur_step)
     return cur_step
 
 
@@ -52,7 +52,6 @@ def map_from_id(norm_id):
     # получаем название файла для текущей карты норматива
     id_json_file = open("configs/id_json.json", encoding='utf-8')
     id_to_json = json.load(id_json_file)
-    print("AAAAAAA: ", norm_id)
     map_file_name = id_to_json[str(norm_id)]
     id_json_file.close()
 

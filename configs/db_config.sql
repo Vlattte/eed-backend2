@@ -139,7 +139,7 @@ CREATE TABLE actions (
 
 -- CREATE TABLE map_pairs (
 -- 	id serial,
--- 	map_id 
+-- 	map_id
 -- 	CONSTRAINT map_double_pkey PRIMARY KEY (id)
 -- );
 

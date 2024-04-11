@@ -86,12 +86,14 @@ class DbConnection:
                             SELECT {columns_string} FROM {table_name}             
                             WHERE {where_statement}          
                           """
-        print("REQUEST: ", request_string)
+        # print("REQUEST: ", request_string)
         chosen_data = self.send_request(request_string)
 
         # если только один элемент в массиве, то возвращаем его
         if len(chosen_data) == 1:
             return chosen_data[0]
+        elif len(chosen_data) == 0:
+            return {"name": "nan"}
 
         return chosen_data
 
