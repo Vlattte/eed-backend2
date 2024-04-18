@@ -23,12 +23,13 @@ def request_handler(message_dict):
 
     # is request == exercise
     if "session_id" in message_dict:
-        choose_exercise_type(message_dict)
+        answer = choose_exercise_type(message_dict)
+        return answer
 
     # if request == equipment_creator
     if "operation" in message_dict:
         answer = choose_equipment_operation(message_dict)
-        return json.dumps(answer)
+        return answer
 
 
 def choose_equipment_operation(message_dict):

@@ -28,7 +28,8 @@ class DbConnection:
                 cls.connection = psycopg2.connect(**connect_params)
             return cls.instance
         except (Exception, Error) as error:
-            print("Ошибка подключения к PostgreSQL", error)
+            print("Ошибка подключения к PostgreSQL. Возможно поменялись таблицы, либо неправильные параметры в"
+                  "db_connection.yaml", error)
 
     def update_rows(self, table_name, where_statement, **kwargs):
         """ обновляет данные в выбранной строке """
@@ -66,7 +67,6 @@ class DbConnection:
                           """
 
         request_id = self.send_request(request_string)
-        print(request_id)
         return request_id[0]['id']
 
     def get_data_with_where_statement(self, table_name, where_statement, **kwargs):
@@ -86,12 +86,14 @@ class DbConnection:
                             SELECT {columns_string} FROM {table_name}             
                             WHERE {where_statement}          
                           """
-        print("REQUEST: ", request_string)
+        # print("REQUEST: ", request_string)
         chosen_data = self.send_request(request_string)
 
         # если только один элемент в массиве, то возвращаем его
         if len(chosen_data) == 1:
             return chosen_data[0]
+        elif len(chosen_data) == 0:
+            return {"name": "nan"}
 
         return chosen_data
 
