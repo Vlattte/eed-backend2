@@ -117,3 +117,7 @@ __Последний шаг__
 ```json5
 "next_actions": [{"name": "nan"}]
 ```
+
+__Логика работы__
+
+![plot](./diagrams/KUTC.png)
