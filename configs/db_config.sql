@@ -182,7 +182,8 @@ CREATE TABLE exercises_status(
 -- состояние шага (объединяет подшаги шаги в группу)
 CREATE TABLE step_group_status(
     id serial, -- --> step_group_status_id
-    step_order integer, -- текущий номер шага в группе, либо -1, если порядок не важен
+    step_order integer, 	-- текущий номер шага в карте
+	sub_step_order integer	-- текущий номер подшага, либо -1, если порядок не важен
     CONSTRAINT step_id PRIMARY KEY (id)
 );
 
@@ -193,7 +194,7 @@ CREATE TABLE sub_steps(
     element_id integer, -- id элемента на аппаратуре
     correct_value text, -- верное положение элемента
     tag text,           -- тэг элемента (button, lever)
-    order integer       -- очередность шагов, либо -1, если ее нет
+    sub_step_order integer       -- очередность шагов, либо -1, если ее нет
     CONSTRAINT sub_step_id PRIMARY KEY (id)
 );
 

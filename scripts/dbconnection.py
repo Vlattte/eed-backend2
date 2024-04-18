@@ -69,7 +69,7 @@ class DbConnection:
         request_id = self.send_request(request_string)
         return request_id[0]['id']
 
-    def get_data_with_where_statement(self, table_name, where_statement, **kwargs):
+    def get_data_with_where_statement(self, table_name, where_statement, is_return_arr=False, **kwargs):
         """
             получает имя таблицы и выбранные колонки
 
@@ -90,13 +90,23 @@ class DbConnection:
         chosen_data = self.send_request(request_string)
 
         # если только один элемент в массиве, то возвращаем его
-        if len(chosen_data) == 1:
+        if len(chosen_data) == 1 and not is_return_arr:
             return chosen_data[0]
-        elif len(chosen_data) == 0:
-            return {"name": "nan"}
 
         return chosen_data
 
+    def delete_data_where(self, table_name, where_statement):
+        """ 
+            удаляем запись из выбранного таблицы учитывая запрос WHERE 
+            where_statement: полный where запрос (example: "id = 47")
+        """
+         # создаем список из столбцов и их значений
+        request_string = f"""
+                            DELETE FROM {table_name} WHERE {where_statement}          
+                          """
+        self.send_request(request_string)
+
+    
     # FIXME: по хорошему мы к значениям можем обращаться только по ключам
     def columns_from_kwargs(self, **kwargs):
         """ получает kwargs(именнованые аргументы) и возвращает массив столбцов """
@@ -129,6 +139,7 @@ class DbConnection:
 
     def send_request(self, request_string, is_return_data=True, is_return_column_names=True):
         # добавление в таблицу значений
+        return_data = None
         try:
             cursor = self.connection.cursor()
             cursor.execute(request_string)
@@ -136,11 +147,10 @@ class DbConnection:
             if is_return_data:
                 return_data = cursor.fetchall()
                 column_names = [column.name for column in cursor.description]
-                return_data = self.parse_returned_data(return_data, *column_names)
+                return_data = self._parse_returned_data(return_data, *column_names)
 
             cursor.close()
-            self.connection.commit()
-        
+            self.connection.commit()        
         except Exception as E:
             return_data = [{"id": -1, "error": E}]
             print("ERROR:", E)
@@ -148,7 +158,7 @@ class DbConnection:
                 print('Попытка добавить одинаковую пару значений')
                 cursor.close()
                 self.connection.commit()
-
+                        
         return return_data
 
     def get_data_request(self, table_name, **kwargs):
@@ -165,15 +175,15 @@ class DbConnection:
             columns_string = '*'
 
         request_string = f"""
-                        SELECT {columns_string} FROM {table_name}                       
-                        """
+                            SELECT {columns_string} FROM {table_name}                       
+                          """
         return_data = self.send_request(request_string)
         return return_data
 
     def del_user(self, table_name, user_session_hash):
         pass
 
-    def parse_returned_data(self, data, *column_names):
+    def _parse_returned_data(self, data, *column_names):
         """
         Функция принимает на вход кортеж из строк таблицы. Каждый элемент кортежа содержит в себе массив с элементами строки
         
@@ -208,3 +218,4 @@ class DbConnection:
         if len(data): 
             return True
         return False
+    

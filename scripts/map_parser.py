@@ -4,7 +4,6 @@ import scripts.dbconnection as db
 
 def get_next_step(session_hash):
     """ получаем следующий шаг исходя из хэша сессии """
-
     db_con_var = db.DbConnection()
 
     # из таблицы "sessions" получаем session_exercise_id, который id в таблице "exercises_status"
@@ -18,32 +17,41 @@ def get_next_step(session_hash):
     exercises_data = db_con_var.get_data_with_where_statement(
                     table_name="exercises_status",
                     where_statement=where_statement)
-    print("\t[LOG] exercise status:\n\t", exercises_data)  # [{'id': 18, 'map_id': 11, 'stage_id': 0, 'group_steps_id': 0}]
+    print("\t[DEBUG] exercise status:", exercises_data)  # [{'id': 18, 'map_id': 11, 'stage_id': 0, 'group_steps_id': 0}]
 
     # из таблицы "step_group_status" порядковый номер шага
     where_statement = f"id={exercises_data['step_id']}"
     step_data = db_con_var.get_data_with_where_statement(
         table_name="step_group_status",
         where_statement=where_statement,
-        step_order="step_order")
-    print("\t[LOG] step_order = ", step_data)
+        step_order="step_order",
+        sub_step_order=0)
 
     # получаем карту по ее id
     map_id = exercises_data["stage_id"]
     step_order = step_data["step_order"]
     cur_step = get_map(map_id, step_order)
+    
+    # если порядок шагов не важен, пишем об этом в таблицу step_group_status
+    if cur_step["order"] == False:
+        where_statement = f"id={exercises_data['step_id']}"
+        db_con_var.update_rows(
+            table_name="step_group_status",  where_statement=where_statement,
+            sub_step_order=-1
+        )
+
     return cur_step
 
 
 def get_map(map_id, step_order):
     # карта в виде словаря
     map_dict = map_from_id(map_id)
-    print("\t[LOG] словарь с текущим шагом: ", map_dict)
+    # print("\t[DEBUG] текущая карта: ", map_dict)
 
     # получаем шаг из карты
     step_num = f"step_{step_order}"
     cur_step = map_dict[str(step_num)]
-    print("\t[LOG] текущего подшага: ", cur_step)
+    print("\t[LOG] текущий подшаг из карты: ", cur_step)
     return cur_step
 
 
@@ -56,7 +64,7 @@ def map_from_id(norm_id):
     id_json_file.close()
 
     # парсим файл в json
-    print("\t[LOG] norm file name: ", map_file_name)
+    print("\t[LOG] файл с картой: ", map_file_name)
     map_file = open(map_file_name, encoding='utf-8')
     map_dict = json.load(map_file)
     return map_dict

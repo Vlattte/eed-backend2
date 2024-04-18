@@ -10,6 +10,7 @@ import scripts.request_handler as req
 
 
 from fastapi import FastAPI, WebSocket
+import uvicorn
 
 
 app = FastAPI()
@@ -116,18 +117,19 @@ async def main():
 
 
 @app.websocket('/')
-async def main(websocket: WebSocket):
-    print("SERVER ON")
+async def main(websocket: WebSocket):   
+    print("SERVER ON") 
     await websocket.accept()
     while True:
+
         # получаем сообщение от клиента
         message = await websocket.receive_json()
 
         # преобразуем json к словарю для удобной обработки
         request = dict(message)
-        print("\t[LOG]data from front:\n\t", request)
+        print("\t[DATA FROM FRONT] ", request)
         answer = req.request_handler(request)
-        print("\t[LOG] data for front:\n\t", answer)
+        print("\t[DATA FOR FRONT] ", answer)
 
         await websocket.send_json(answer)
         # команда запуска
@@ -135,4 +137,6 @@ async def main(websocket: WebSocket):
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    print("SERVER ON")
+    asyncio.run(main())    
+    # uvicorn.run(app, host="localhost", port=8083)
