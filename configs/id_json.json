@@ -1,5 +1,9 @@
 {
     "ex_test": "ex_test.json",
+    "last_step_num":{
+        "norm_1": "19",
+        "norm_2": "26"
+    },
     "10": "norm_1/ex_1.2.0.json",
     "11": "norm_1/ex_1.2.1.json",
     "12": "norm_1/ex_1.2.2.json",

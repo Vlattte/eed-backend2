@@ -39,14 +39,12 @@ def configure_norm(message_dict):
         stage_id = message_dict["norm"]  # id упражнения в нормативе
 
         # получаем id для новой группы подшагов
-        table_name = "step_group_status"
         step_id = db_con_var.add_values_and_get_id(
-            table_name=table_name, step_order=0, sub_step_order=0)
+            table_name="step_group_status", step_order=0, sub_step_order=0)
 
         # добавляем в таблицу "exercises_status" данные по началу прохождения карты
-        table_name = "exercises_status"
         session_exercise_id = db_con_var.add_values_and_get_id(
-            table_name=table_name, map_id=map_id, stage_id=stage_id,
+            table_name="exercises_status", map_id=map_id, stage_id=stage_id,
             step_id=step_id)
 
         # добавляем сессию в таблицу, если такой нет
@@ -70,12 +68,23 @@ def training_exercise(message_dict):
     answer["session_id"] = session_hash
 
     # получаем эталонные данные по шагу и исправляем флаги в словаре ответа answer
-    attempt_fail, step_finish, stage_finish, status = validate_step(message_dict)
-    answer["fail"] = attempt_fail
-    answer["validation"] = step_finish
-    answer["finish"] = stage_finish
-    answer["status"] = status
+    status_flags = validate_step(message_dict)
+    answer["finish"] = status_flags["stage_finish"]
+    answer["status"] = status_flags["status"]
+    answer["validation"] = status_flags["step_finish"]
+    answer["fail"] = status_flags["attempt_fail"]
 
+    print("\t[DEBUG] table_step: ", table_step)
+    # проверяем, кончился ли stage
+    if answer["validation"]:
+        # если кончился шаг и count_next == 0, то stage кончился
+        if table_step["count_next"] == 0:
+            answer["is_norm_finish"] = True  
+
+    # 
+
+    answer.update(status_flags)
+    
     return answer
 
 
@@ -117,7 +126,6 @@ def write_substeps(session_hash, cur_step):
             tag=sub_step["tag"],
             sub_step_order=sub_step_order)
     print("\t[LOG] записаны новые подшаги: ", cur_step["sub_steps"])
-
 
 
 def add_session(session_hash, session_exercise_id):
@@ -167,10 +175,11 @@ def create_default_answer(cur_step):
     return_json["random_values"] = [{'name': 'nan'}]
 
     # flags - координируют переход между шагами, нормативами и т.д.
-    return_json["finish"] = False       # закончен ли шаг
-    return_json["status"] = "progres"   # progres - элемент еще не в свое положении, не убираем подсветку, correct - убираем подсветку, элемент в нужном положении
-    return_json["validation"] = False   # закончился ли шаг
-    return_json["fail"] = False         # провалена ли попытка
+    return_json["finish"] = False           # закончен ли шаг
+    return_json["status"] = "progres"       # progres - элемент еще не в свое положении, не убираем подсветку, correct - убираем подсветку, элемент в нужном положении
+    return_json["validation"] = False       # закончился ли шаг
+    return_json["fail"] = False             # провалена ли попытка
+    return_json["is_norm_finish"] = False   # закончился ли норматив
     return return_json
 
 
@@ -180,16 +189,16 @@ def validate_step(message_dict):
     db_con_var = db.DbConnection()
     
     # флаги для статуса шага
-    attempt_fail = False    # fail
-    step_finish = False     # validation
-    stage_finish = False    # finish
-    status = "progres"      # progress - не убирать подсветку, correct - убрать подсветку и удалить подшаг
+    status_flags = {"attempt_fail": False,  # fail
+                    "step_finish": False,   # validation
+                    "stage_finish": False,  # finish
+                    "status": "progres"}    # progress - не убирать подсветку, correct - убрать подсветку и удалить подшаг
 
     # если начальный шаг, то значений нет
     if "currentValue" not in message_dict:
         print("\t[LOG] увеличиваем шаг: был обработан начальный шаг без проверки действия пользователя")
         update_step(session_hash)
-        return attempt_fail, step_finish, stage_finish, status
+        return status_flags
 
     sub_steps_data, sub_step_order = get_sub_steps(message_dict["session_id"])
     
@@ -202,32 +211,30 @@ def validate_step(message_dict):
     # проверяем, нашли ли такой элемент среди подшагов
     if is_invalid(interected_el):
         print(f"\t[BAD MOVE] элемента с id = {message_dict["id"]} не найдено")
-        attempt_fail = True
-        return attempt_fail, step_finish, stage_finish, status
+        status_flags["attempt_fail"] = True
+        return status_flags
 
     # совпадает ли порядок шага, если влияет порядок
     if interected_el["sub_step_order"] != sub_step_order and sub_step_order != -1:
         # print(f"\t[BAD MOVE] не совпал номер шага: под шаг в базе = {interected_el["sub_step_order"]}, порядок элемента = {sub_step_order}")
-        attempt_fail = True  # TODO проверка на число ошибок, пока 1 ошибка == смерть
-        return attempt_fail, step_finish, stage_finish, status
+        status_flags["attempt_fail"] = True  # TODO проверка на число ошибок, пока 1 ошибка == смерть
+        return status_flags
 
     # если порядок верный и теперь элемент в нужном положении => снимаем подсветку
     if interected_el["correct_value"] == message_dict["currentValue"]:
         print("\t[GOOD MOVE] status == CORRECT")
         # убираем подсветку
-        status = "correct"
+        status_flags["status"] = "correct"
         
-        # print("\t\t[DEBUG]: sub_stepsss\n", get_sub_steps(session_hash), "\n\n")
         # удаляем запись об этом подшаге, так как он в нужном положении
         where_statement = f"id={interected_el["id"]}"
         db_con_var.delete_data_where(
             table_name="sub_steps", where_statement=where_statement
         ) 
-        # print("\n\t\t[DEBUG]: sub_stepsss\n", get_sub_steps(session_hash), "\n\n")        
 
     # если попытка провалена, удаляем подшаги из таблицы
     step_id = get_step_id(session_hash)
-    if attempt_fail:
+    if status_flags["attempt_fail"]:
         print("\t[BAD MOVE] sub steps deleted")
         where_statement = f"step_id={step_id}"
         db_con_var.delete_data_where(
@@ -240,19 +247,18 @@ def validate_step(message_dict):
         table_name="sub_steps", where_statement=where_statement
     )
 
-    print("\n\t\t[DEBUG] ________sub_steps: \n\t\t", cur_sub_steps, "\n\n")
     # увеличиваем номер шага, если подшаги кончились
     if len(cur_sub_steps) == 0:
-        step_finish = True
+        status_flags["step_finish"] = True
         print("\t[LOG] STEP FINISHED")  
 
     # если шаг кончился, то переходим на следующий шаг, иначе увеличиваем номер подшага
     step_inc = False
-    if step_finish:
+    if status_flags["step_finish"]:
         step_inc = True
     update_step(session_hash, step_inc)
 
-    return attempt_fail, step_finish, stage_finish, status
+    return status_flags
 
         
 def is_invalid(check_dict):
@@ -327,10 +333,10 @@ def get_step_id(session_hash):
         table_name="exercises_status", where_statement=where_statement)
 
     # из таблицы "step_group_status" id группы шагов
+    # TODO тут кажется этот шаг лишний FIX
     where_statement = f"id={exercises_data['step_id']}"
     step_id = db_con_var.get_data_with_where_statement(
-        table_name="step_group_status",
-        where_statement=where_statement,
+        table_name="step_group_status", where_statement=where_statement,
         id="id")
     
     return step_id["id"]

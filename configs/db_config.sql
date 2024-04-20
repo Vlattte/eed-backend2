@@ -184,6 +184,7 @@ CREATE TABLE step_group_status(
     id serial, -- --> step_group_status_id
     step_order integer, 	-- текущий номер шага в карте
 	sub_step_order integer	-- текущий номер подшага, либо -1, если порядок не важен
+	last_step_num integer, 	-- номер последнего stage это 
     CONSTRAINT step_id PRIMARY KEY (id)
 );
 

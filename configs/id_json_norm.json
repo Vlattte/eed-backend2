@@ -2,22 +2,22 @@
     "ex_test": {
         "ex_test": "ex_test.json"
     },
-    "norm_1": {
-        "0": "norm_1/ex_1.2.0.json",
-        "1": "norm_1/ex_1.2.1.json",
-        "2": "norm_1/ex_1.2.2.json",
-        "3": "norm_1/ex_1.2.3.json",
-        "4": "norm_1/ex_1.2.4.json",
-        "5": "norm_1/ex_1.2.5.json",
-        "6": "norm_1/ex_1.2.6.json",
-        "7": "norm_1/ex_1.2.7.json",
-        "8": "norm_1/ex_1.2.8.json",
-        "9": "norm_1/ex_1.2.9.json",
-        "10": "norm_1/ex_1.2.10.json",
-        "11": "norm_1/ex_1.2.11.json",
-        "12": "norm_1/ex_1.2.12.json",
-        "13": "norm_1/ex_1.2.13.json"
-    },
+    "norm_1": [
+        "norm_1/ex_1.2.0.json",
+        "norm_1/ex_1.2.1.json",
+        "norm_1/ex_1.2.2.json",
+        "norm_1/ex_1.2.3.json",
+        "norm_1/ex_1.2.4.json",
+        "norm_1/ex_1.2.5.json",
+        "norm_1/ex_1.2.6.json",
+        "norm_1/ex_1.2.7.json",
+        "norm_1/ex_1.2.8.json",
+        "norm_1/ex_1.2.9.json",
+        "norm_1/ex_1.2.10.json",
+        "norm_1/ex_1.2.11.json",
+        "norm_1/ex_1.2.12.json",
+        "norm_1/ex_1.2.13.json"
+    ],
     "norm_2": {
         "1": "norm_2/ex_2.1.1.json",
         "2": "norm_2/ex_2.1.2.json",
