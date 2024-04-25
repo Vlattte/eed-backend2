@@ -45,36 +45,99 @@
         "sub_step": 0,
         "action_id": 11012,
         "current_value": "on",
-        "tag": "lever"
+        "tag": "lever",
+        "array_actions": [{"name": "nan"}]
       },
       {
         "sub_step": 1,
         "action_id": 1019,
         "current_value": "on",
-        "tag": "lever"
+        "tag": "lever",
+        "array_actions": [{"name": "nan"}]
       },
       {
         "sub_step": 2,
         "action_id": 9010,
         "current_value": "on",
-        "tag": "lever"
+        "tag": "lever",
+        "array_actions":[
+            {
+              "action_id": 9018,
+              "action_value": "on",
+              "apparat_id": 9,
+              "tag": "lamp"
+            }
+        ]
       },
       {
         "sub_step": 3,
         "action_id": 4000,
         "current_value": "on",
-        "tag": "lever"
+        "tag": "lever",
+        "array_actions": [{"name": "nan"}]
       },
       {
         "sub_step": 4,
         "action_id": 4001,
         "current_value": "on",
-        "tag": "lever"
+        "tag": "lever",
+        "array_actions": [{"name": "nan"}]
+      }
+    ],
+    "count_action": 0,
+    "array_actions": [ { "name": "nan" } ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 7,
+        "next_id": 7008,
+        "current_value": "on",
+        "tag": "button"
+      }
+    ],
+    "annotation": "Нажать кнопку Выкл.Зв. на упаковке ЩКНЧ2."
+  },
+  "step_2": {
+    "step": 2,
+    "order": true,
+    "actions_for_step": 1,
+    "sub_steps":
+    [
+      {
+        "sub_step": 0,
+        "action_id": 7008,
+        "current_value": "on",
+        "tag": "button"
+      }
+    ],
+    "count_action": 0,
+    "array_actions": [{"name": "nan"}],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 6,
+        "next_id": 6012,
+        "current_value": "on",
+        "tag": "button"
+      }
+    ],
+    "annotation": "Нажать кнопку «КОНТР.ПИТ» стрелка должна быть в черном секторе ПИТ шкалы УУ."
+  },
+  "step_3": {
+    "step": 3,
+    "order": true,
+    "actions_for_step": 1,
+    "sub_steps":
+    [
+      {
+        "sub_step": 0,
+        "action_id": 6012,
+        "current_value": "on",
+        "tag": "button"
       }
     ],
     "count_action": 1,
-    "array_actions":
-    [
+    "array_actions": [
       {
         "apparat_id": 6,
         "action_id": 6401,
@@ -87,14 +150,14 @@
       {
         "apparat_id": 6,
         "next_id": 6012,
-        "current_value": "on",
+        "current_value": "off",
         "tag": "button"
       }
     ],
-    "annotation": "Нажать кнопку «КОНТР.ПИТ» стрелка должна быть в черном секторе ПИТ шкалы УУ."
+    "annotation": "Отпустить кнопку «КОНТР.ПИТ» стрелка должна быть в черном секторе ПИТ шкалы УУ."
   },
-  "step_2": {
-    "step": 2,
+  "step_4": {
+    "step": 4,
     "order": true,
     "actions_for_step": 1,
     "sub_steps":
@@ -106,8 +169,15 @@
         "tag": "button"
       }
     ],
-    "count_action": 0,
-    "array_actions": [{"name": "nan"}],
+    "count_action": 1,
+    "array_actions": [
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": "pos_1",
+        "tag": "arrow"
+      }
+    ],
     "count_next": 0,
     "next_actions": [{"name": "nan"}],
     "annotation": "ВЫПОЛНЕНО"

@@ -199,12 +199,14 @@ CREATE TABLE sub_steps(
     CONSTRAINT sub_step_id PRIMARY KEY (id)
 );
 
--- состояние подшага (содержит ожидаемые данные для этого подшага)
+-- действие после данного подшага (зажечь лампу после переключения тумблера питания)
 CREATE TABLE sub_step_actions(
     id serial, -- --> sub_step_action_id
     sub_step_id integer,    -- id в таблице sub_steps
+	apparat_id integer,	-- id оборудования
     element_id integer, -- id элемента на аппаратуре
     correct_value text, -- положение, в которое нужно выставить элемент после данного подшага
+	tag text,			-- tag элемента
     CONSTRAINT sub_step_action_id PRIMARY KEY (id)
 );
 

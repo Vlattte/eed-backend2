@@ -73,17 +73,14 @@ def training_exercise(message_dict):
     answer["status"] = status_flags["status"]
     answer["validation"] = status_flags["step_finish"]
     answer["fail"] = status_flags["attempt_fail"]
+    answer["array_actions"].extend(status_flags["array_actions"])
+    answer["count_action"] += len(status_flags["array_actions"])
 
-    print("\t[DEBUG] table_step: ", table_step)
     # проверяем, кончился ли stage
     if answer["validation"]:
         # если кончился шаг и count_next == 0, то stage кончился
         if table_step["count_next"] == 0:
             answer["is_norm_finish"] = True  
-
-    # 
-
-    answer.update(status_flags)
     
     return answer
 
@@ -98,7 +95,6 @@ def write_substeps(session_hash, cur_step):
     where_statement = f"step_id={step_id}"
     prev_sub_steps = db_con_var.get_data_with_where_statement(
         table_name="sub_steps", where_statement=where_statement)
-    print("\t[DEBUG] prev_sub_steps", prev_sub_steps)
     
     # TODO если пусто, то получаем словарь "name": "nan"
     # TODO переделать, так как проверять тип это ужас
@@ -106,10 +102,8 @@ def write_substeps(session_hash, cur_step):
             return  # ничего не пишем, т.к. прошлый шаг еще не кончился
 
     # если нет под шагов в карте, то и писать нечего
-    zero_sub_step = cur_step["sub_steps"][0]
-    if "name" in zero_sub_step:
-        if zero_sub_step["name"] == "nan":
-            return
+    if len(cur_step["sub_steps"]) == 0:
+        return
 
     # TODO можно переделать на executescript
     # само добавление под шагов в таблицу sub_steps
@@ -119,13 +113,37 @@ def write_substeps(session_hash, cur_step):
         if len(cur_step["sub_steps"]) > 0:
             sub_step_order = sub_step["sub_step"]
 
-        db_con_var.add_values_and_get_id(
-            table_name="sub_steps", step_id=step_id,
+        # пишем данные по подшагам
+        sub_step_id = db_con_var.add_values_and_get_id(
+            table_name="sub_steps", 
+            step_id=step_id,
             element_id=sub_step["action_id"],
             correct_value=sub_step["current_value"],
             tag=sub_step["tag"],
             sub_step_order=sub_step_order)
-    print("\t[LOG] записаны новые подшаги: ", cur_step["sub_steps"])
+                
+        # действия вызываемые после данного подшага (если они есть)
+        if not "array_actions" in sub_step: # TODO заглушка, пока не переделаем все json для нормативов                        
+            continue
+
+        array_actions = sub_step["array_actions"]
+        # если нет дейтсвий, то не пишем их в базу
+        if len(array_actions) == 0:                        
+            continue
+
+        print("\t[DEBUG] array_actions: ", array_actions)
+        # добавляем ответные действия после подшага
+        for action in array_actions:
+            print("\t\t[DEBUG] action", action)
+            db_con_var.add_values_and_get_id(
+                table_name="sub_step_actions",
+                sub_step_id=sub_step_id,
+                element_id=action["action_id"],
+                correct_value=action["action_value"],
+                apparat_id=action["apparat_id"],
+                tag=action["tag"]
+            )
+    print("\t[LOG] В БД записаны под шаги и действия для подшагов:\n\t", cur_step["sub_steps"])
 
 
 def add_session(session_hash, session_exercise_id):
@@ -192,7 +210,9 @@ def validate_step(message_dict):
     status_flags = {"attempt_fail": False,  # fail
                     "step_finish": False,   # validation
                     "stage_finish": False,  # finish
-                    "status": "progres"}    # progress - не убирать подсветку, correct - убрать подсветку и удалить подшаг
+                    "status": "progres",    # progress - не убирать подсветку, correct - убрать подсветку и удалить подшаг
+                    "array_actions": []     # действия после подшага
+                    } 
 
     # если начальный шаг, то значений нет
     if "currentValue" not in message_dict:
@@ -225,6 +245,29 @@ def validate_step(message_dict):
         print("\t[GOOD MOVE] status == CORRECT")
         # убираем подсветку
         status_flags["status"] = "correct"
+
+        print("\t\t[DEBUG] interected_el: ", interected_el)
+        # TODO добавляем действия после подшага из таблицы sub_step_action
+        where_statement=f"sub_step_id={interected_el['id']}"
+        sub_step_actions = db_con_var.get_data_with_where_statement(
+            table_name="sub_step_actions",
+            where_statement=where_statement
+        )
+
+        # если есть действия после подшага отсылаем их на фронт
+        if len(sub_step_actions) > 0:
+            for action in sub_step_actions:  
+                print("\t\t\t\tACTION:", action)     
+                action_to_append = {
+                    "apparat_id": action["apparat_id"],
+                    "action_id": action["element_id"],
+                    "action_value": action["correct_value"],
+                    "tag": action["tag"]
+                }
+                status_flags["array_actions"].append(action_to_append)
+            print("\t\t[DEBUG] status_flags: ", status_flags)
+        else:
+            status_flags["array_actions"] = [ {"name": "nan"} ]
         
         # удаляем запись об этом подшаге, так как он в нужном положении
         where_statement = f"id={interected_el['id']}"

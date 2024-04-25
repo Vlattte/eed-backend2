@@ -17,7 +17,7 @@ def get_next_step(session_hash):
     exercises_data = db_con_var.get_data_with_where_statement(
                     table_name="exercises_status",
                     where_statement=where_statement)
-    print("\t[DEBUG] exercise status:", exercises_data)  # [{'id': 18, 'map_id': 11, 'stage_id': 0, 'group_steps_id': 0}]
+    # print("\t[DEBUG] exercise status:", exercises_data)  # [{'id': 18, 'map_id': 11, 'stage_id': 0, 'group_steps_id': 0}]
 
     # из таблицы "step_group_status" порядковый номер шага
     where_statement = f"id={exercises_data['step_id']}"
@@ -44,9 +44,7 @@ def get_next_step(session_hash):
     where_statement = f"id={session_data['session_exercise_id']}"
     exercises_data = db_con_var.get_data_with_where_statement(
         table_name="exercises_status", where_statement=where_statement)
-
-    print("\t[DEBUG] exercise_data = ", exercises_data)
-    print(f"\t last = {last_step_num}")
+    
     where_statement = f"id={exercises_data['step_id']}"
     db_con_var.update_rows(
         table_name="step_group_status", where_statement=where_statement,
@@ -67,7 +65,7 @@ def get_next_step(session_hash):
 def get_map_data(map_id, step_order):
     # карта в виде словаря
     map_dict, last_step_order = map_from_id(map_id)
-    print("\t[DEBUG] текущая карта: ", map_dict)
+    # print("\t[DEBUG] текущая карта: ", map_dict)
 
     # получаем шаг из карты
     step_num = f"step_{step_order}"
@@ -86,12 +84,9 @@ def map_from_id(norm_id):
     norm_name = norm_id
     if norm_id == 11:
         norm_name = "norm_1"
-    print("aaaaaa, ", norm_name)
 
     # TODO проверить, есть ли файл
-
     id_to_json = json.load(id_json_file)
-    print("\t\t\t[DEBUG] json_file = ", id_to_json)
     
     # номер последнего шага
     norm_id_str = str(norm_id)

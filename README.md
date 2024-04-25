@@ -40,7 +40,8 @@ uvicorn server:app --port 8083 --reload
         [  
           {
             "element_id": 1020,   // id элемента, которому нужно выставить положение current_value
-            "current_value": "on"
+            "action_value": "on",
+            "apparat_id": 1
           }
         ]
       },
