@@ -47,7 +47,7 @@ def get_next_step(session_hash):
 
     print("\t[DEBUG] exercise_data = ", exercises_data)
     print(f"\t last = {last_step_num}")
-    where_statement = f"id={exercises_data["step_id"]}"
+    where_statement = f"id={exercises_data['step_id']}"
     db_con_var.update_rows(
         table_name="step_group_status", where_statement=where_statement,
         last_step_num=last_step_num

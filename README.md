@@ -15,7 +15,10 @@ connect_params:
   host: "localhost" # адрес хоста 
   port: 5432 # порт
 
-5. запустить проект с помощью команды python server.py (если появилась надпись "SERVER ON", то все верно)
+6. запустить проект с помощью команды:
+```bash
+uvicorn server:app --port 8083 --reload
+``` 
 
 ### Формат json карты:
 ```json5

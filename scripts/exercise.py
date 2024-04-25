@@ -210,7 +210,7 @@ def validate_step(message_dict):
 
     # проверяем, нашли ли такой элемент среди подшагов
     if is_invalid(interected_el):
-        print(f"\t[BAD MOVE] элемента с id = {message_dict["id"]} не найдено")
+        print(f"\t[BAD MOVE] элемента с id = {message_dict['id']} не найдено")
         status_flags["attempt_fail"] = True
         return status_flags
 
@@ -227,7 +227,7 @@ def validate_step(message_dict):
         status_flags["status"] = "correct"
         
         # удаляем запись об этом подшаге, так как он в нужном положении
-        where_statement = f"id={interected_el["id"]}"
+        where_statement = f"id={interected_el['id']}"
         db_con_var.delete_data_where(
             table_name="sub_steps", where_statement=where_statement
         ) 
