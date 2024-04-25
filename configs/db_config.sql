@@ -199,6 +199,16 @@ CREATE TABLE sub_steps(
     CONSTRAINT sub_step_id PRIMARY KEY (id)
 );
 
+-- состояние подшага (содержит ожидаемые данные для этого подшага)
+CREATE TABLE sub_step_actions(
+    id serial, -- --> sub_step_action_id
+    sub_step_id integer,    -- id в таблице sub_steps
+    element_id integer, -- id элемента на аппаратуре
+    correct_value text, -- положение, в которое нужно выставить элемент после данного подшага
+    CONSTRAINT sub_step_action_id PRIMARY KEY (id)
+);
+
+
 CREATE TABLE mistakes(
 	id serial, -- --> mistakes_id
 	condition_group_id integer,
