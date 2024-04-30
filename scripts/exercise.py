@@ -19,7 +19,6 @@ def choose_exercise_type(message_dict):
 
     # если только начали упражнение, то обновляем данные в базе
     if "norm" in message_dict:
-        print("\n[FIX DEBUG] norm")
         configure_norm(message_dict)
 
     # TODO добавить эту проверку, и не писать поля с подсветкой и аннотацией в ответ
@@ -73,14 +72,17 @@ def training_exercise(message_dict):
     answer["status"] = status_flags["status"]
     answer["validation"] = status_flags["step_finish"]
     answer["fail"] = status_flags["attempt_fail"]
-    answer["array_actions"].extend(status_flags["array_actions"])
-    answer["count_action"] += len(status_flags["array_actions"])
+    
+    # если есть что-то кроме "name": "nan", то размер это вот это
+    if status_flags["array_actions"] != [{"name":"nan"}]:        
+        answer["array_actions"].extend(status_flags["array_actions"])
+        answer["count_action"] += len(status_flags["array_actions"])
 
     # проверяем, кончился ли stage
     if answer["validation"]:
         # если кончился шаг и count_next == 0, то stage кончился
         if table_step["count_next"] == 0:
-            answer["is_norm_finish"] = True  
+            answer["finish"] = True  
     
     return answer
 
@@ -99,7 +101,7 @@ def write_substeps(session_hash, cur_step):
     # TODO если пусто, то получаем словарь "name": "nan"
     # TODO переделать, так как проверять тип это ужас
     if len(prev_sub_steps) > 0:
-            return  # ничего не пишем, т.к. прошлый шаг еще не кончился
+        return  # ничего не пишем, т.к. прошлый шаг еще не кончился
 
     # если нет под шагов в карте, то и писать нечего
     if len(cur_step["sub_steps"]) == 0:
@@ -164,7 +166,6 @@ def session_exists(session_hash):
     where_statement = f"session_hash='{session_hash}'"
     session_data = db_con_var.get_data_with_where_statement(
         table_name="sessions", where_statement=where_statement)
-    # print("\t[DEBUG] session_data", session_data)
 
     # если name == nan, то запрос вернул пустой массив
     if len(session_data) == 0:
@@ -211,7 +212,7 @@ def validate_step(message_dict):
                     "step_finish": False,   # validation
                     "stage_finish": False,  # finish
                     "status": "progres",    # progress - не убирать подсветку, correct - убрать подсветку и удалить подшаг
-                    "array_actions": []     # действия после подшага
+                    "array_actions": [ {"name": "nan"} ]     # действия после подшага
                     } 
 
     # если начальный шаг, то значений нет
@@ -251,23 +252,21 @@ def validate_step(message_dict):
         where_statement=f"sub_step_id={interected_el['id']}"
         sub_step_actions = db_con_var.get_data_with_where_statement(
             table_name="sub_step_actions",
-            where_statement=where_statement
+            where_statement=where_statement,
+            is_return_arr=True
         )
 
         # если есть действия после подшага отсылаем их на фронт
-        if len(sub_step_actions) > 0:
-            for action in sub_step_actions:  
-                print("\t\t\t\tACTION:", action)     
+        if len(sub_step_actions) > 0:            
+            status_flags["array_actions"].clear()
+            for action in sub_step_actions:                  
                 action_to_append = {
                     "apparat_id": action["apparat_id"],
                     "action_id": action["element_id"],
                     "action_value": action["correct_value"],
                     "tag": action["tag"]
                 }
-                status_flags["array_actions"].append(action_to_append)
-            print("\t\t[DEBUG] status_flags: ", status_flags)
-        else:
-            status_flags["array_actions"] = [ {"name": "nan"} ]
+                status_flags["array_actions"].append(action_to_append)            
         
         # удаляем запись об этом подшаге, так как он в нужном положении
         where_statement = f"id={interected_el['id']}"

@@ -3,7 +3,7 @@
     "step": 0,
     "order": false,
     "actions_for_step": 0,
-    "sub_steps": [ {"name": "nan"} ],
+    "sub_steps": [ ],
     "count_next": 5,
     "next_actions": [
       {
@@ -33,7 +33,7 @@
       }
     ],
     "count_action": 0,
-    "array_actions": [ {"name": "nan"} ],
+    "array_actions": [ ],
     "annotation": "На упаковках ПИТ, ДСВ, ДП, СС-О аппаратуры П- 302-О тумблеры питания перевести в положение «ВКЛ»"
   },
   "step_1": {
@@ -46,14 +46,14 @@
         "action_id": 11012,
         "current_value": "on",
         "tag": "lever",
-        "array_actions": [{"name": "nan"}]
+        "array_actions": [ ]
       },
       {
         "sub_step": 1,
         "action_id": 1019,
         "current_value": "on",
         "tag": "lever",
-        "array_actions": [{"name": "nan"}]
+        "array_actions": [ ]
       },
       {
         "sub_step": 2,
@@ -74,14 +74,14 @@
         "action_id": 4000,
         "current_value": "on",
         "tag": "lever",
-        "array_actions": [{"name": "nan"}]
+        "array_actions": [ ]
       },
       {
         "sub_step": 4,
         "action_id": 4001,
         "current_value": "on",
         "tag": "lever",
-        "array_actions": [{"name": "nan"}]
+        "array_actions": [ ]
       }
     ],
     "count_action": 0,
@@ -141,7 +141,7 @@
       {
         "apparat_id": 6,
         "action_id": 6401,
-        "action_value": "pos_3",
+        "action_value": 10,
         "tag": "arrow"
       }
     ],
@@ -160,12 +160,13 @@
     "step": 4,
     "order": true,
     "actions_for_step": 1,
+    "next_stage_num": 12,
     "sub_steps":
     [
       {
         "sub_step": 0,
         "action_id": 6012,
-        "current_value": "on",
+        "current_value": "off",
         "tag": "button"
       }
     ],
@@ -174,7 +175,7 @@
       {
         "apparat_id": 6,
         "action_id": 6401,
-        "action_value": "pos_1",
+        "action_value": -54,
         "tag": "arrow"
       }
     ],
