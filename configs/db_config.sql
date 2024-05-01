@@ -173,9 +173,10 @@ CREATE TABLE sessions (
 -- храним статус прохождения карты
 CREATE TABLE exercises_status(
 	id serial, -- --> session_exercise_id
-	map_id integer,      -- --> номер карты (норматива: либо фильм, либо первый норматив)
-	stage_id integer,    -- --> stage - длится от одной аннотации "ВЫПОЛНЕНО" до другой (один json)
-	step_id integer,     -- --> смена группы шагов == смена аннотации (набор шагов)
+	map_id integer,     	-- --> номер карты (норматива: либо фильм, либо первый норматив)
+	stage_id integer,    	-- --> stage - длится от одной аннотации "ВЫПОЛНЕНО" до другой (один json)
+	step_id integer,     	-- --> смена группы шагов == смена аннотации (набор шагов)
+	last_stage_num integer,	-- --> номер последнего stage
 	CONSTRAINT exercises_status_pkey PRIMARY KEY (id)
 );
 
@@ -183,8 +184,7 @@ CREATE TABLE exercises_status(
 CREATE TABLE step_group_status(
     id serial, -- --> step_group_status_id
     step_order integer, 	-- текущий номер шага в карте
-	sub_step_order integer	-- текущий номер подшага, либо -1, если порядок не важен
-	last_step_num integer, 	-- номер последнего stage это 
+	sub_step_order integer,	-- текущий номер подшага, либо -1, если порядок не важен	
     CONSTRAINT step_id PRIMARY KEY (id)
 );
 
@@ -202,11 +202,11 @@ CREATE TABLE sub_steps(
 -- действие после данного подшага (зажечь лампу после переключения тумблера питания)
 CREATE TABLE sub_step_actions(
     id serial, -- --> sub_step_action_id
-    sub_step_id integer,    -- id в таблице sub_steps
-	apparat_id integer,	-- id оборудования
-    element_id integer, -- id элемента на аппаратуре
-    correct_value text, -- положение, в которое нужно выставить элемент после данного подшага
-	tag text,			-- tag элемента
+    sub_step_id integer,	-- id в таблице sub_steps
+	apparat_id integer,		-- id оборудования
+    element_id integer, 	-- id элемента на аппаратуре
+    correct_value text, 	-- положение, в которое нужно выставить элемент после данного подшага
+	tag text,				-- tag элемента
     CONSTRAINT sub_step_action_id PRIMARY KEY (id)
 );
 

@@ -67,22 +67,18 @@ def training_exercise(message_dict):
     answer["session_id"] = session_hash
 
     # получаем эталонные данные по шагу и исправляем флаги в словаре ответа answer
-    status_flags = validate_step(message_dict)
+    status_flags = validate_step(message_dict, table_step)
+    print("AAAAAAAAAAAAA: ", status_flags)
     answer["finish"] = status_flags["stage_finish"]
     answer["status"] = status_flags["status"]
     answer["validation"] = status_flags["step_finish"]
     answer["fail"] = status_flags["attempt_fail"]
+    answer["is_norm_finish"] = status_flags["is_norm_finish"]
     
     # если есть что-то кроме "name": "nan", то размер это вот это
     if status_flags["array_actions"] != [{"name":"nan"}]:        
         answer["array_actions"].extend(status_flags["array_actions"])
         answer["count_action"] += len(status_flags["array_actions"])
-
-    # проверяем, кончился ли stage
-    if answer["validation"]:
-        # если кончился шаг и count_next == 0, то stage кончился
-        if table_step["count_next"] == 0:
-            answer["finish"] = True  
     
     return answer
 
@@ -97,9 +93,7 @@ def write_substeps(session_hash, cur_step):
     where_statement = f"step_id={step_id}"
     prev_sub_steps = db_con_var.get_data_with_where_statement(
         table_name="sub_steps", where_statement=where_statement)
-    
-    # TODO если пусто, то получаем словарь "name": "nan"
-    # TODO переделать, так как проверять тип это ужас
+        
     if len(prev_sub_steps) > 0:
         return  # ничего не пишем, т.к. прошлый шаг еще не кончился
 
@@ -181,7 +175,7 @@ def create_default_answer(cur_step):
     return_json["annotation"] = cur_step["annotation"]
 
     # actions - применимые действия, зажечь лампы, передвинуть рычаг вручную
-    return_json["has_action"] = has_action  # есть ли ответные дейтсвия (зажечь лампу и т.п.)
+    return_json["has_action"] = has_action  # есть ли ответные действия (зажечь лампу и т.п.)
     return_json["count_action"] = cur_step["count_action"]  # количество ответных дейтсвий
     return_json["array_actions"] = cur_step["array_actions"]
 
@@ -202,7 +196,7 @@ def create_default_answer(cur_step):
     return return_json
 
 
-def validate_step(message_dict):
+def validate_step(message_dict, table_step):
     """ проверка переданных данных на правильность """
     session_hash = message_dict["session_id"]
     db_con_var = db.DbConnection()
@@ -212,7 +206,8 @@ def validate_step(message_dict):
                     "step_finish": False,   # validation
                     "stage_finish": False,  # finish
                     "status": "progres",    # progress - не убирать подсветку, correct - убрать подсветку и удалить подшаг
-                    "array_actions": [ {"name": "nan"} ]     # действия после подшага
+                    "array_actions": [ {"name": "nan"} ],     # действия после подшага
+                    "is_norm_finish": False # кончился ли норматив
                     } 
 
     # если начальный шаг, то значений нет
@@ -225,6 +220,7 @@ def validate_step(message_dict):
     
     # ищем элемент с переданным id
     interected_el = {"name": "nan"}  # подшаг из базы, у которого совпал id с тем, что нажал пользователь
+    print("\t[DEBUG] sub_steps_data: ", sub_steps_data)
     for el in sub_steps_data:   
         if el["element_id"] == message_dict["id"]:            
             interected_el = el
@@ -241,14 +237,15 @@ def validate_step(message_dict):
         status_flags["attempt_fail"] = True  # TODO проверка на число ошибок, пока 1 ошибка == смерть
         return status_flags
 
-    # если порядок верный и теперь элемент в нужном положении => снимаем подсветку
-    if interected_el["correct_value"] == message_dict["currentValue"]:
+    ####### STATUS == STATUS #######
+
+    # если порядок верный и теперь элемент в нужном положении => снимаем подсветку    
+    if interected_el["correct_value"] == str(message_dict["currentValue"]):
         print("\t[GOOD MOVE] status == CORRECT")
         # убираем подсветку
         status_flags["status"] = "correct"
-
-        print("\t\t[DEBUG] interected_el: ", interected_el)
-        # TODO добавляем действия после подшага из таблицы sub_step_action
+        
+        # добавляем действия после подшага из таблицы sub_step_action
         where_statement=f"sub_step_id={interected_el['id']}"
         sub_step_actions = db_con_var.get_data_with_where_statement(
             table_name="sub_step_actions",
@@ -273,6 +270,9 @@ def validate_step(message_dict):
         db_con_var.delete_data_where(
             table_name="sub_steps", where_statement=where_statement
         ) 
+        print("DELETE: ", where_statement)
+
+    ####### ATTEMPT_FAIL == FAIL #######
 
     # если попытка провалена, удаляем подшаги из таблицы
     step_id = get_step_id(session_hash)
@@ -282,6 +282,8 @@ def validate_step(message_dict):
         db_con_var.delete_data_where(
             table_name="sub_steps", where_statement=where_statement
         )
+    
+    ####### STEP_FINISH == VALIDATION #######
 
     # проверить, закончились ли подшаги в текущем шаге        
     where_statement = f"step_id={step_id}"
@@ -292,17 +294,60 @@ def validate_step(message_dict):
     # увеличиваем номер шага, если подшаги кончились
     if len(cur_sub_steps) == 0:
         status_flags["step_finish"] = True
-        print("\t[LOG] STEP FINISHED")  
+        print("\t[LOG] STEP FINISHED")
 
+    ####### STAGE FINISHED == FINISH #######
     # если шаг кончился, то переходим на следующий шаг, иначе увеличиваем номер подшага
     step_inc = False
     if status_flags["step_finish"]:
         step_inc = True
-    update_step(session_hash, step_inc)
 
+        # если кончился шаг и count_next == 0, то stage кончился
+        if table_step["count_next"] == 0:
+            status_flags["stage_finish"] = True
+            print("\t[LOG] STAGE FINISHED")
+
+            # увеличиваем номер stage (потом id stage) в таблице exercises_status
+            status_flags["is_norm_finish"] = increase_stage(session_hash)            
+        
+    # обновляем статус шага
+    update_step(session_hash, step_inc)
     return status_flags
 
-        
+
+def increase_stage(session_hash):
+    db_con_var = db.DbConnection()
+
+    # из таблицы "sessions" получаем session_exercise_id
+    where_statement = f"session_hash='{session_hash}'"
+    session_data = db_con_var.get_data_with_where_statement(
+        table_name="sessions",
+        where_statement=where_statement)
+
+    # получаем номер текущего stage и номер последнего stage в карте
+    where_statement = f"id={session_data['session_exercise_id']}"
+    exercise_data = db_con_var.get_data_with_where_statement(
+        table_name="exercises_status",
+        where_statement=where_statement)
+    
+    # кончился ли норматив
+    is_norm_finish = False
+    stage_num = exercise_data["stage_id"] + 1
+    print("\t[DEBUG] stage_num = ", stage_num)
+    print("\t[DEBUG] last_stage_num = ", exercise_data["last_stage_num"])
+    if stage_num > exercise_data["last_stage_num"]:
+        is_norm_finish = True
+        return is_norm_finish
+
+    # обновляем номер stage
+    where_statement = f"id={session_data['session_exercise_id']}"
+    db_con_var.update_rows(
+        table_name="exercises_status", 
+        where_statement=where_statement,
+        stage_id=stage_num)
+    return is_norm_finish
+
+
 def is_invalid(check_dict):
     """ проверяет является ли словарь словарем вида {"name": "nan"} """
     if check_dict == {"name": "nan"}:
