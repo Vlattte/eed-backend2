@@ -66,6 +66,7 @@ def get_map_data(map_id, step_order):
 
     # получаем шаг из карты
     step_num = f"step_{step_order}"
+    # TODO если шага нет в карте, то не ломаемся
     cur_step = map_dict[str(step_num)]
     print("\t[LOG] текущий подшаг из карты: ", cur_step)
     return cur_step, last_step_order

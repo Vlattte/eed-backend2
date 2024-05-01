@@ -1,62 +1,49 @@
 {
   "step_0": {
     "step": 0,
-    "id": "multiple",
-    "before_id": "multiple",
-    "draggable": false,
-    "current_value": "start",
-    "tag": "multiple",
-    "count_next": 2,
+    "order": false,
+    "actions_for_step": 0,
+    "sub_steps": [ ],
+    "count_next": 1,
     "next_actions": [
       {
-        "apparat_id": 9,
-        "next_id": 9204,
-        "draggable": false,
-        "current_value": "on",
+        "apparat_id": 2,
+        "next_id": 2022,
+        "tag": "button"
+      }
+    ],
+    "count_action": 9,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3003,
+        "action_value": "jumper2",
+        "tag": "jumper"
+      },
+      {
+        "apparat_id": 2,
+        "action_id": 2000,
+        "action_value": "jumper2",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 2,
+        "action_id": 2301,
+        "action_value": "cabel",
         "tag": "cabel"
       },
       {
         "apparat_id": 6,
-        "next_id": 6202,
-        "draggable": false,
-        "current_value": "on",
-        "tag": "cabel"
-      }
-    ],
-    "count_action": 0,
-    "actions_for_step": 0,
-    "array_actions": [
-      {
-        "name": "nan"
-      }
-    ],
-    "annotation": "Подключить гнездо «ВХ.» бл. УУ к гнездам перемычки в блоке ПИТ.ДСВ."
-  },
-  "step_1": {
-    "step": 1,
-    "id": "multiple",
-    "before_id": "multiple",
-    "draggable": false,
-    "current_value": "on",
-    "actions_for_step": 2,
-    "sub_steps": [
-      {
-        "name": "sub_step_1",
-        "action_id": 6202,
-        "current_value": "on",
-        "before_id": 6202,
-        "tag": "cabel"
+        "action_id": 6401,
+        "action_value": -8,
+        "tag": "arrow"
       },
       {
-        "name": "sub_step_2",
-        "action_id": 9204,
-        "current_value": "on",
-        "before_id": 9204,
+        "apparat_id": 6,
+        "action_id": 6202,
+        "action_value": "on",
         "tag": "cabel"
-      }
-    ],
-    "count_action": 2,
-    "array_actions": [
+      },
       {
         "apparat_id": 6,
         "action_id": 6302,
@@ -64,12 +51,383 @@
         "tag": "cabel"
       },
       {
-        "apparat_id": 9,
-        "action_id": 9301,
+        "apparat_id": 2,
+        "action_id": 2401,
+        "action_value": 10,
+        "tag": "arrow"
+      },
+      {
+        "apparat_id": 2,
+        "action_id": 2020,
+        "action_value": "on",
+        "tag": "lamp"
+      },
+      {
+        "apparat_id": 2,
+        "action_id": 2018,
+        "action_value": "on",
+        "tag": "lamp"
+      }
+    ],
+    "annotation": "Отрегулировать стрелку на блоке ПКК упаковки ЛО"
+  },
+  "step_1": {
+    "step": 1,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 2022,
+        "current_value": "on",
+        "tag": "button"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 2,
+        "action_id": 2401,
+        "action_value": 0,
+        "tag": "arrow"
+      },
+      {
+        "apparat_id": 2,
+        "action_id": 2022,
+        "action_value": "off",
+        "tag": "button"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2001,
+        "tag": "tumbler"
+      }
+    ],
+    "annotation": "Включаем АРУ на блоке уселителя, потом на блоке ПКК 64"
+  },
+  "step_2": {
+    "step": 2,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+       {
+        "sub_step": 0,
+        "action_id": 2001,
+        "current_value": "on",
+        "tag": "tumbler"
+      }
+    ],
+    "count_action": 0,
+    "array_actions": [{"name": "nan"}],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2009,
+        "tag": "tumbler"
+      }
+    ],
+    "annotation": "Включаем АРУ на блоке уселителя, потом на блоке ПКК"
+  },
+  "step_3": {
+    "step": 3,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 2009,
+        "current_value": "on",
+        "tag": "tumbler"
+      }
+    ],
+    "count_action": 1,
+    "array_actions": [
+      {
+        "apparat_id": 2,
+        "action_id": 2018,
+        "action_value": "off",
+        "tag": "lamp"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2000,
+        "tag": "cabel"
+      }
+    ],
+    "annotation": "Настроили 64 частоту. Настраиваем 16-ю. Вставляем шнур из Ус.Л-12 в Ус.12"
+  },
+  "step_4": {
+    "step": 4,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 2000,
+        "current_value": "off",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 1,
+    "array_actions": [
+      {
+        "apparat_id": 2,
+        "action_id": 2301,
+        "action_value": "none",
+        "tag": "cabel"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2201,
+        "tag": "cabel"
+      }
+    ],
+    "annotation": "Настроили 64 частоту. Настраиваем 16-ю. Вставляем шнур из Ус.Л-12 в Ус.12"
+  },
+  "step_5": {
+    "step": 5,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 2201,
+        "current_value": "on",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 1,
+    "array_actions": [
+      {
+        "apparat_id": 2,
+        "action_id": 2301,
         "action_value": "cabel",
         "tag": "cabel"
       }
     ],
+    "count_next": 2,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2011,
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 3,
+        "next_id": 3002,
+        "tag": "jumper"
+      }
+    ],
+    "annotation": "Перводим средний тумблер на блоке ПКК упаковки ЛО в положение 16 и переносим пермычку из 64 на блоке ГП Пер в гнездо 16"
+  },
+  "step_6": {
+    "step": 6,
+    "order": false,
+    "actions_for_step": 2,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 2011,
+        "current_value": "on",
+        "tag": "tumbler"
+      },
+      {
+        "sub_step": 1,
+        "action_id": 3002,
+        "current_value": "jumper2",
+        "tag": "jumper"
+      }
+    ],
+    "count_action": 0,
+    "array_actions": [{"name": "nan"}],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3003,
+        "tag": "jumper"
+      }
+    ],
+    "annotation": "Перводим средний тумблер на блоке ПКК упаковки ЛО в положение 16 и переносим пермычку из 64 на блоке ГП Пер в гнездо 16"
+  },
+  "step_7": {
+    "step": 7,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3003,
+        "current_value": "off",
+        "tag": "jumper"
+      }
+    ],
+    "count_action": 1,
+    "array_actions": [
+      {
+        "apparat_id": 2,
+        "action_id": 2401,
+        "action_value": 10,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2017,
+        "tag": "channel"
+      }
+    ],
+    "annotation": "Устанавливаем стрелку на блоке УУ упаковки ЩКНЧ1 в положение 0 по нижней шкале (-2 Нп в итоге)"
+  },
+  "step_8": {
+    "step": 8,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 2017,
+        "current_value": 144,
+        "tag": "channel"
+      }
+    ],
+    "count_action": 1,
+    "array_actions": [
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -8,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2024,
+        "tag": "button"
+      }
+    ],
+    "annotation": "Регулируем стрелку на блоке ПКК упаковки ЛО в красный сектор"
+  },
+  "step_9": {
+    "step": 9,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 2024,
+        "current_value": "on",
+        "tag": "button"
+      }
+    ],
+    "count_action": 1,
+    "array_actions": [
+      {
+        "apparat_id": 2,
+        "action_id": 2024,
+        "action_value": "off",
+        "tag": "button"
+      },
+      {
+        "apparat_id": 2,
+        "action_id": 2401,
+        "action_value": 0,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2013,
+        "tag": "tumbler"
+      }
+    ],
+    "annotation": "Включаем АРУ: сначала на блоке УС-12, затем на блоке ПКК 16"
+  },
+  "step_10": {
+    "step": 10,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 2013,
+        "current_value": "on",
+        "tag": "tumbler"
+      }
+    ],
+    "count_action": 0,
+    "array_actions": [{"name": "nan"}],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2021,
+        "tag": "tumbler"
+      }
+    ],
+    "annotation": "Включаем АРУ: сначала на блоке УС-12, затем на блоке ПКК 16"
+  },
+  "step_11": {
+    "step": 11,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 2021,
+        "current_value": "on",
+        "tag": "tumbler"
+      }
+    ],
+    "count_action": 1,
+    "array_actions": [
+      {
+        "apparat_id": 2,
+        "action_id": 2020,
+        "action_value": "off",
+        "tag": "lamp"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3002,
+        "tag": "jumper"
+      }
+    ],
+    "annotation": "Возвращаем перемычку на блок ГП Пер 64"
+  },
+  "step_12": {
+    "step": 12,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3002,
+        "current_value": "off",
+        "tag": "jumper"
+      }
+    ],
+    "count_action": 0,
+    "array_actions": [{"name": "nan"}],
     "count_next": 0,
     "next_actions": [{"name": "nan"}],
     "annotation": "ВЫПОЛНЕНО"

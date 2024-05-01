@@ -68,7 +68,6 @@ def training_exercise(message_dict):
 
     # получаем эталонные данные по шагу и исправляем флаги в словаре ответа answer
     status_flags = validate_step(message_dict, table_step)
-    print("AAAAAAAAAAAAA: ", status_flags)
     answer["finish"] = status_flags["stage_finish"]
     answer["status"] = status_flags["status"]
     answer["validation"] = status_flags["step_finish"]

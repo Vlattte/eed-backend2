@@ -1,69 +1,163 @@
 {
   "step_0": {
     "step": 0,
-    "id": "multiple",
-    "before_id": "multiple",
-    "draggable": false,
-    "current_value": "start",
-    "tag": "multiple",
-    "count_next": 2,
+    "order": false,
+    "actions_for_step": 0,
+    "sub_steps": [ ],
+    "count_next": 3,
     "next_actions": [
       {
-        "apparat_id": 5,
-        "next_id":  5201,
-        "draggable": false,
-        "current_value": "on",
-        "tag": "cabel"
+        "apparat_id": 6,
+        "next_id": 6001,
+        "tag": "rotator"
       },
       {
-        "apparat_id": 5,
-        "next_id": 5202,
-        "draggable": false,
-        "current_value": "on",
-        "tag": "cabel"
+        "apparat_id": 1,
+        "next_id": 1010,
+        "tag": "jumper"
+      },
+      {
+        "apparat_id": 1,
+        "next_id": 1011,
+        "tag": "jumper"
       }
     ],
-    "count_action": 0,
-    "actions_for_step": 0,
+    "count_action": 10,
     "array_actions": [
       {
-        "name": "nan"
+        "apparat_id": 6,
+        "action_id": 6000,
+        "action_value": -30,
+        "tag": "rotator"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6001,
+        "action_value": -80,
+        "tag": "rotator"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6003,
+        "action_value": -15,
+        "tag": "rotator"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6004,
+        "action_value": -80,
+        "tag": "rotator"
+      },
+      {
+        "apparat_id": 1,
+        "action_id": 1008,
+        "action_value": "jumper4",
+        "tag": "jumper"
+      },
+      {
+        "apparat_id": 1,
+        "action_id": 1010,
+        "action_value": "jumper4",
+        "tag": "jumper"
+      },
+      {
+        "apparat_id": 1,
+        "action_id": 1011,
+        "action_value": "jumper4",
+        "tag": "jumper"
+      },
+       {
+        "apparat_id": 1,
+        "action_id": 1009,
+        "action_value": "jumper4",
+        "tag": "jumper"
+      },
+      {
+        "apparat_id": 1,
+        "action_id": 1006,
+        "action_value": "jumper4",
+        "tag": "jumper"
+      },
+      {
+        "apparat_id": 1,
+        "action_id": 1007,
+        "action_value": "jumper4",
+        "tag": "jumper"
       }
+
     ],
-    "annotation": "Соединить 2-х пр. шнуром тракт передачи аппаратуры с трактом приема на упаковке ВКО-12."
+    "annotation": "Устанавливаем уровень генератора в 0 и вытаскиваем перемычки из "
   },
   "step_1": {
     "step": 1,
-    "id": "multiple",
-    "before_id": "multiple",
-    "draggable": false,
-    "current_value": "multiple",
-    "actions_for_step": 2,
+    "order": false,
+    "actions_for_step": 1,
     "sub_steps": [
-      {
-        "name": "sub_step_1",
-        "action_id": 5201,
-        "current_value": "on",
-        "before_id": 5201
+       {
+        "sub_step": 0,
+        "action_id": 6001,
+        "current_value": "40",
+        "tag": "rotator"
       },
       {
-        "name": "sub_step_2",
-        "action_id": 5202,
-        "current_value": "on",
-        "before_id": 5202
+        "sub_step": 1,
+        "action_id": 1010,
+        "current_value": "off",
+        "tag": "jumper"
+      },
+      {
+        "sub_step": 2,
+        "action_id": 1011,
+        "current_value": "off",
+        "tag": "jumper"
+      }
+    ],
+    "count_action": 0,
+    "array_actions": [{"name": "nan"}],
+    "count_next": 2,
+    "next_actions": [
+      {
+        "apparat_id": 6,
+        "next_id": 6201,
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 1,
+        "next_id": 1010,
+        "tag": "jumper"
+      }
+    ],
+    "annotation": "Вытаскиваем шнур из блока УУ упаковки ЩКЧН1"
+  },
+  "step_2": {
+    "step": 2,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+       {
+        "sub_step": 0,
+        "action_id": 6202,
+        "current_value": "off",
+        "tag": "cabel"
       }
     ],
     "count_action": 1,
     "array_actions": [
       {
-        "apparat_id": 5,
-        "action_id": 5301,
-        "action_value": "cabel",
+        "apparat_id": 6,
+        "action_id": 6302,
+        "action_value": "none",
         "tag": "cabel"
       }
     ],
-    "count_next": 0,
-    "next_actions": [{"name": "nan"}],
-    "annotation": "ВЫПОЛНЕНО"
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 6,
+        "next_id": 6202,
+        "tag": "tumbler"
+      }
+    ],
+    "annotation": "Вытаскиваем шнур из блока УУ упаковки ЩКЧН1"
   }
 }

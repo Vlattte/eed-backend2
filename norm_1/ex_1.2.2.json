@@ -12,13 +12,25 @@
         "tag": "rotate"
       }
     ],
-    "count_action": 1,
+    "count_action": 3,
     "array_actions": [
       {
         "apparat_id": 6,
         "action_id": 6004,
         "action_value": -30,
         "tag": "rotator"
+      },
+      {
+        "apparat_id": 2,
+        "action_id": 2020,
+        "action_value": "on",
+        "tag": "lamp"
+      },
+      {
+        "apparat_id": 2,
+        "action_id": 2018,
+        "action_value": "on",
+        "tag": "lamp"
       }
     ],
     "annotation": "Произвести калибровку блока указателя уровня (УУ)."    

@@ -4,7 +4,7 @@
     "order": false,
     "actions_for_step": 0,
     "sub_steps": [ ],
-    "count_next": 2,
+    "count_next": 4,
     "next_actions": [
       {
         "apparat_id": 5,
@@ -17,8 +17,20 @@
         "tag": "cabel"
       }
     ],
-    "count_action": 13,
+    "count_action": 15,
     "array_actions": [
+      {
+        "apparat_id": 2,
+        "action_id": 2020,
+        "action_value": "on",
+        "tag": "lamp"
+      },
+      {
+        "apparat_id": 2,
+        "action_id": 2018,
+        "action_value": "on",
+        "tag": "lamp"
+      },
        {
         "apparat_id": 2,
         "action_id": 2009,

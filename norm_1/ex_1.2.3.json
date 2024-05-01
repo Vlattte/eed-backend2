@@ -4,8 +4,20 @@
     "order": false,
     "actions_for_step": 0,
     "sub_steps": [ ],
-    "count_action": 4,
+    "count_action": 6,
     "array_actions": [
+      {
+        "apparat_id": 2,
+        "action_id": 2020,
+        "action_value": "on",
+        "tag": "lamp"
+      },
+      {
+        "apparat_id": 2,
+        "action_id": 2018,
+        "action_value": "on",
+        "tag": "lamp"
+      },
       {
         "apparat_id": 6,
         "action_id": 6401,
