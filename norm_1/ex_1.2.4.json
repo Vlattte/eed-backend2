@@ -1,131 +1,428 @@
 {
   "step_0": {
     "step": 0,
-    "id": 11012,
-    "before_id": 11012,
-    "draggable": false,
-    "current_value": "start",
-    "tag": "multiple",
+    "order": false,
+    "actions_for_step": 0,
+    "sub_steps": [ ],
     "count_next": 2,
     "next_actions": [
       {
-        "apparat_id": 6,
-        "next_id": 6202,
-        "draggable": false,
-        "current_value": "on",
+        "apparat_id": 5,
+        "next_id": 5201,
         "tag": "cabel"
       },
       {
-        "apparat_id": 3,
-        "next_id": 3203,
-        "draggable": false,
-        "current_value": "on",
+        "apparat_id": 5,
+        "next_id": 5202,
         "tag": "cabel"
       }
     ],
-    "count_action": 0,
-    "actions_for_step": 0,
+    "count_action": 13,
     "array_actions": [
+       {
+        "apparat_id": 2,
+        "action_id": 2009,
+        "action_value": "on",
+        "tag": "tumbler"
+      },
       {
-        "name": "nan"
+        "apparat_id": 5,
+        "action_id": 5201,
+        "action_value": "on",
+        "tag": "cabel_head"
+      },
+      {
+        "apparat_id": 5,
+        "action_id": 5202,
+        "action_value": "on",
+        "tag": "cabel_head"
+      },
+      {
+        "apparat_id": 5,
+        "action_id": 5001,
+        "action_value": "jumper4",
+        "tag": "jumper"
+      },
+      {
+        "apparat_id": 5,
+        "action_id": 5007,
+        "action_value": "on",
+        "tag": "jumper"
+      },
+      {
+        "apparat_id": 5,
+        "action_id": 5003,
+        "action_value": "jumper4",
+        "tag": "jumper"
+      },
+      {
+        "apparat_id": 5,
+        "action_id": 5008,
+        "action_value": "on",
+        "tag": "jumper"
+      },
+      {
+        "apparat_id": 5,
+        "action_id": 5002,
+        "action_value": "jumper4",
+        "tag": "jumper"
+      },
+      {
+        "apparat_id": 5,
+        "action_id": 5004,
+        "action_value": "jumper4",
+        "tag": "jumper"
+      },
+      {
+        "apparat_id": 5,
+        "action_id": 5006,
+        "action_value": "jumper4",
+        "tag": "jumper"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6301,
+        "action_value": "cabel",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6201,
+        "action_value": "on",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6202,
+        "action_value": "on",
+        "tag": "cabel"
       }
     ],
-    "annotation": "Поочередно соединить 2-х пр. шнуром гн. «ВХ» на бл. УУ \nи гн. на ГО-12 с гравировками, соответствующими значениям измеряемых частот"
+    "annotation": "Вытащить перемычки на блоке УВО-1 упаковки ВКО-12"
   },
   "step_1": {
     "step": 1,
-    "id": "multiple",
-    "before_id": "multiple",
-    "draggable": false,
-    "current_value": "multiple",
+    "order": false,
     "actions_for_step": 2,
     "sub_steps": [
       {
-        "name": "sub_step_1",
-        "action_id": 6202,
-        "current_value": "on",
-        "before_id": 6202,
-        "tag": "cabel"
+        "sub_step": 0,
+        "action_id": 5201,
+        "current_value": "off",
+        "tag": "cabel_head"
       },
       {
-        "name": "sub_step_2",
-        "action_id": 3203,
+        "sub_step": 1,
+        "action_id": 5202,
+        "current_value": "off",
+        "tag": "cabel_head"
+      }
+    ],
+    "count_action": 0,
+    "array_actions": [{"name": "nan"}],
+    "count_next": 2,
+    "next_actions": [
+      {
+        "apparat_id": 5,
+        "next_id": 5000,
+        "tag": "jumper"
+      },
+      {
+        "apparat_id": 5,
+        "next_id": 5005,
+        "tag": "jumper"
+      }
+    ],
+    "annotation": "Вставить перемычки на блоке УВО-1 упаковки ВКО-12"
+  },
+  "step_2": {
+    "step": 2,
+    "order": false,
+    "actions_for_step": 2,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 5000,
+        "current_value": "jumper4",
+        "tag": "jumper"
+      },
+      {
+        "sub_step": 1,
+        "action_id": 5005,
+        "current_value": "jumper4",
+        "tag": "jumper"
+      }
+    ],
+    "count_action": 0,
+    "array_actions": [{"name": "nan"}],
+    "count_next": 2,
+    "next_actions": [
+      {
+        "apparat_id": 5,
+        "next_id": 5201,
+        "tag": "cabel_head"
+      },
+      {
+        "apparat_id": 5,
+        "next_id": 5202,
+        "tag": "cabel_head"
+      }
+    ],
+    "annotation": "Замкнуть шнуром блок УВО-1 на упаковке ВКО-12"
+  },
+  "step_3": {
+    "step": 3,
+    "order": false,
+    "actions_for_step": 2,
+    "sub_steps": [
+      {
+        "sub_step": 1,
+        "action_id": 5201,
         "current_value": "on",
-        "before_id": 3203,
+        "tag": "jumper"
+      },
+      {
+        "sub_step": 2,
+        "action_id": 5202,
+        "current_value": "on",
+        "tag": "jumper"
+      }
+    ],
+    "count_action": 1,
+    "array_actions": [
+      {
+        "apparat_id": 5,
+        "action_id": 5301,
+        "action_value": "cabel",
         "tag": "cabel"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2000,
+        "tag": "jumper"
+      }
+    ],
+    "annotation": "Соединить второй конец шнура от упаковки ЩКНЧ1 с блоком Ус.Л-12 на упаковке ЛО"
+  },
+  "step_4": {
+    "step": 4,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 2000,
+        "current_value": "jumper2",
+        "tag": "jumper"
+      }
+    ],
+    "count_action": 1,
+    "array_actions": [
+      {
+        "apparat_id": 2,
+        "action_id": 2301,
+        "action_value": "cabel",
+        "tag": "cabel"
+      }
+    ],
+    "count_next": 2,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2002,
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 2,
+        "next_id": 2014,
+        "tag": "tumbler"
+      }
+    ],
+    "annotation": "Включить термостаты на блоке ЛО"
+  },
+  "step_5": {
+    "step": 5,
+    "order": false,
+    "actions_for_step": 2,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 2002,
+        "current_value": "on",
+        "tag": "tumbler"
+      },
+      {
+        "sub_step": 1,
+        "action_id": 2014,
+        "current_value": "on",
+        "tag": "tumbler"
+      }
+    ],
+    "count_action": 0,
+    "array_actions": [{"name": "nan"}],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3003,
+        "tag": "jumper"
+      }
+    ],
+    "annotation": "На блоке ГП Пер упаковки ГО-12 вытащить перемычку из 16"
+  },
+  "step_6": {
+    "step": 6,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3003,
+        "current_value": "jumper2",
+        "tag": "jumper"
+      }
+    ],
+    "count_action": 0,
+    "array_actions": [{"name": "nan"}],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3017,
+        "tag": "jumper"
+      }
+    ],
+    "annotation": "Вставить эту перемычку в ГНЧ-120-1"
+  },
+  "step_7": {
+    "step": 7,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3017,
+        "current_value": "jumper2",
+        "tag": "jumper"
+      }
+    ],
+    "count_action": 1,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3040,
+        "action_value": "on",
+        "tag": "lamp"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 7,
+        "next_id": 7008,
+        "tag": "button"
+      }
+    ],
+    "annotation": "Выключить звонок"
+  },
+  "step_8": {
+    "step": 8,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 7008,
+        "current_value": "on",
+        "tag": "button"
+      }
+    ],
+    "count_action": 1,
+    "array_actions": [
+      {
+        "apparat_id": 7,
+        "action_id": 7008,
+        "action_value": "off",
+        "tag": "button"
+      }
+    ],
+    "count_next": 2,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2009,
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 6,
+        "next_id": 6004,
+        "tag": "rotator"
+      }
+    ],
+    "annotation": "Выставляем 0 Нп на блоке ЩКНЧ1 (в итоге -2 Нп)"
+  },
+  "step_9": {
+    "step": 9,
+    "order": false,
+    "actions_for_step": 2,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 2009,
+        "current_value": "off",
+        "tag": "tumbler"
+      },
+      {
+        "sub_step": 1,
+        "action_id": 6004,
+        "current_value": -60,
+        "tag": "rotator"
+      }
+    ],
+    "count_action": 0,
+    "array_actions": [{"name": "nan"}],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 2,
+        "next_id": 2004,
+        "tag": "channel"
+      }
+    ],
+    "annotation": "Выставляем 0 Нп на блоке ЩКНЧ1 (в итоге -2 Нп)"
+  },
+  "step_10": {
+    "step": 10,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 2004,
+        "current_value": 110,
+        "tag": "channel"
       }
     ],
     "count_action": 2,
     "array_actions": [
       {
         "apparat_id": 6,
-        "action_id": 6302,
-        "action_value": "cabel",
-        "tag": "cabel"
+        "action_id": 6401,
+        "action_value": -8,
+        "tag": "arrow"
       },
       {
-        "apparat_id": 3,
-        "action_id": 3301,
-        "action_value": "cabel",
-        "tag": "cabel"
-      }
-    ],
-    "count_next": 1,
-    "next_actions": [
-      {
-        "apparat_id": 6,
-        "next_id": 6003,
-        "draggable": false,
-        "current_value": "-15",
-        "tag": "rotate"
-      }
-    ],
-    "annotation": "Переключатель «СОПР.ВХ.» в блоке УУ в положение « >6000»"
-  },
-  "step_2": {
-    "step": 2,
-    "id": 6003,
-    "before_id": 6003,
-    "draggable": false,
-    "current_value": "-15",
-    "tag": "rotate",
-    "actions_for_step": 1,
-    "count_action": 0,
-    "count_next": 1,
-    "next_actions": [
-      {
-        "apparat_id": 6,
-        "next_id": 6003,
-        "draggable": false,
-        "current_value": "15",
-        "tag": "rotate"
-      }
-    ],
-    "annotation": "Переключатель «СОПР.ВХ.» в блоке УУ в положение « >6000»"
-  },
-  "step_3": {
-    "step": 3,
-    "id": 6003,
-    "before_id": 6003,
-    "draggable": false,
-    "current_value": "15",
-    "tag": "rotate",
-    "actions_for_step": 1,
-    "count_action": 1,
-    "array_actions": [
-      {
-        "apparat_id": 6,
-        "action_id": 6401,
-        "action_value": "pos_2",
+        "apparat_id": 2,
+        "action_id": 2401,
+        "action_value": 10,
         "tag": "arrow"
       }
     ],
     "count_next": 0,
-    "next_actions": [
-      {
-        "name": "nan"
-      }
-    ],
+    "next_actions": [{"name": "nan"}],
     "annotation": "ВЫПОЛНЕНО"
   }
 }

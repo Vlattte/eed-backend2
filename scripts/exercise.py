@@ -176,7 +176,7 @@ def create_default_answer(cur_step):
 
     # actions - применимые действия, зажечь лампы, передвинуть рычаг вручную
     return_json["has_action"] = has_action  # есть ли ответные действия (зажечь лампу и т.п.)
-    return_json["count_action"] = cur_step["count_action"]  # количество ответных дейтсвий
+    return_json["count_action"] = cur_step["count_action"]  # количество ответных действий
     return_json["array_actions"] = cur_step["array_actions"]
 
     # next_actions - элементы для подсветки
