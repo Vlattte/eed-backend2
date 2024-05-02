@@ -277,7 +277,7 @@
       {
         "apparat_id": 2,
         "action_id": 2401,
-        "action_value": 10,
+        "action_value": -10,
         "tag": "arrow"
       }
     ],
