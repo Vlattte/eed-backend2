@@ -12,8 +12,80 @@
         "tag": "cabel"
       }
     ],
-    "count_action": 4,
+    "count_action": 16,
     "array_actions": [
+      {
+        "apparat_id": 7,
+        "action_id": 7000,
+        "action_value": "on",
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 7,
+        "action_id": 7001,
+        "action_value": "on",
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 7,
+        "action_id": 7002,
+        "action_value": "on",
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 7,
+        "action_id": 7003,
+        "action_value": "on",
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 7,
+        "action_id": 7004,
+        "action_value": "on",
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 7,
+        "action_id": 7005,
+        "action_value": "on",
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 7,
+        "action_id": 7006,
+        "action_value": "on",
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 7,
+        "action_id": 7007,
+        "action_value": "on",
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 7,
+        "action_id": 7008,
+        "action_value": "on",
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 7,
+        "action_id": 7009,
+        "action_value": "on",
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 7,
+        "action_id": 7010,
+        "action_value": "on",
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 7,
+        "action_id": 7011,
+        "action_value": "on",
+        "tag": "tumbler"
+      },
       {
         "apparat_id": 2,
         "action_id": 2201,
