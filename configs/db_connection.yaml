@@ -1,6 +1,0 @@
-connect_params: 
-  user: "vuc" # имя пользователя 
-  database: "vuc" # имя базы данных 
-  password: "123456" # пароль от базы данных
-  host: "localhost" # адрес хоста 
-  port: 5433 # порт

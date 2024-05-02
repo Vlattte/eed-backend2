@@ -29,8 +29,8 @@ def parse_instruction_ids(instruction):
     """
     id_list = []
 
-    for action in instruction['array_actions']:
-        action_id = action['action_id']
+    for action in instruction['next_actions']:
+        action_id = action['next_id']
         if action_id not in id_list  and str(action_id).isnumeric():
             id_list.append(int(action_id))
 
@@ -90,17 +90,17 @@ def get_right_element_value(instruction, element_id):
     right_element_value = -1
 
     # колличество подшагов
-    steps = instruction["array_actions"]
+    steps = instruction["next_actions"]
 
     # проходимся по всем подшагам
     for step in steps:
         # когда найдем шаг связанный с нужным элементом
         # сравниваем соответсвует ли рандомизированное значение с нужным из карты
-        if not str(step["action_id"]).isnumeric():
+        if not str(step["next_id"]).isnumeric():
             continue
 
-        if int(step["action_id"]) == int(element_id):
-            element_value = step["action_value"]
+        if int(step["next_id"]) == int(element_id):
+            element_value = step["current_value"]
             right_element_value = int(element_value) if str(element_value).isnumeric() else str(element_value)
             break
 
@@ -116,6 +116,10 @@ def randomize_elements(app_name, instruction, session_hash):
     устанавливает эти элементы в случайные положения
     """
     random.seed(session_hash)
+
+    print('INSTRUCTION:')
+    print(instruction)
+
 
     sub_step_counter = 0
     
@@ -152,7 +156,7 @@ def randomize_elements(app_name, instruction, session_hash):
 
             new_array_action = {"apparat_id": apparat_id, 
                                 "action_id": element_id, 
-                                "current_value": state, 
+                                "action_value": state, 
                                 "tag": tag}
             array_actions.append(new_array_action)
             

@@ -3,6 +3,9 @@
 import json
 import scripts.dbconnection as db
 import scripts.db_fast_scripts as db_script
+from scripts.randomize_instruction import randomize_elements
+
+import os
 
 
 def get_next_step(session_hash):
@@ -52,7 +55,6 @@ def update_last_stage_order(last_stage_num, step_id):
         where_statement=where_statement,
         last_stage_num=last_stage_num)    
 
-
 def get_current_step(map_dict, step_order):     
     # получаем шаг из карты
     step_num = f"step_{step_order}"
@@ -67,7 +69,7 @@ def get_current_step(map_dict, step_order):
     return table_step
 
 
-def map_from_id(norm_id):
+def map_from_id(norm_id, session_hash):
     """ получаем карту в формате словаря по id норматива (TODO потом переделать под БД) """
     # получаем название файла для текущей карты норматива
     id_json_file = open("configs/id_json.json", encoding='utf-8')        
@@ -90,4 +92,9 @@ def map_from_id(norm_id):
     print("\t[LOG] файл с картой: ", map_file_name)
     map_file = open(map_file_name, encoding='utf-8')
     map_dict = json.load(map_file)
+
+    if os.path.basename(map_file_name) == 'ex_1.2.0.json':
+        print('RANDOM')
+        map_dict = randomize_elements('P302O', map_dict['step_0'], session_hash)
+
     return map_dict, last_stage_num
