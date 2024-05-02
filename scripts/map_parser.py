@@ -64,8 +64,7 @@ def get_next_step(session_hash):
 
 def get_map_data(map_id, step_order, session_hash):
     # карта в виде словаря
-    map_dict, last_step_order = map_from_id(map_id, session_hash)
-    # print("\t[DEBUG] текущая карта: ", map_dict)
+    map_dict, last_step_order = map_from_id(map_id, session_hash)    
 
     # получаем шаг из карты
     step_num = f"step_{step_order}"
