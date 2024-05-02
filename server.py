@@ -111,9 +111,9 @@ def test_handler(message_type):
 
 @app.websocket('/')
 async def main(websocket: WebSocket):   
-    print("SERVER ON") 
     await websocket.accept()
     while True:
+        print("SERVER ON") 
 
         # получаем сообщение от клиента
         message = await websocket.receive_json()
@@ -129,7 +129,6 @@ async def main(websocket: WebSocket):
         # uvicorn server:app --reload --port 8083
 
 
-if __name__ == "__main__":
-    print("SERVER ON")
-    asyncio.run(main())    
+if __name__ == "__main__":    
+    asyncio.run(main())  
     # uvicorn.run(app, host="localhost", port=8083)

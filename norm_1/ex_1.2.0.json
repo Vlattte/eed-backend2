@@ -740,7 +740,7 @@
       }
     ],
     "count_action": 0,
-    "array_actions": [],
+    "array_actions": [ ],
     "annotation": "Установить органы управления аппаратуры в исходное положение"
   },
   "step_1": {

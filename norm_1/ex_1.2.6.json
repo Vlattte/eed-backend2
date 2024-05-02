@@ -121,62 +121,62 @@
     "next_actions": [
       {
         "apparat_id": 7,
-        "next_id": 7000,
+        "next_id": 7300,
         "tag": "jumper"
       },
       {
         "apparat_id": 7,
-        "next_id": 7001,
+        "next_id": 7301,
         "tag": "jumper"
       },
       {
         "apparat_id": 7,
-        "next_id": 7002,
+        "next_id": 7302,
         "tag": "jumper"
       },
       {
         "apparat_id": 7,
-        "next_id": 7003,
+        "next_id": 7303,
         "tag": "jumper"
       },
       {
         "apparat_id": 7,
-        "next_id": 7004,
+        "next_id": 7304,
         "tag": "jumper"
       },
       {
         "apparat_id": 7,
-        "next_id": 7005,
+        "next_id": 7305,
         "tag": "jumper"
       },
       {
         "apparat_id": 7,
-        "next_id": 7006,
+        "next_id": 7306,
         "tag": "jumper"
       },
       {
         "apparat_id": 7,
-        "next_id": 7007,
+        "next_id": 7307,
         "tag": "jumper"
       },
       {
         "apparat_id": 7,
-        "next_id": 7008,
+        "next_id": 7308,
         "tag": "jumper"
       },
       {
         "apparat_id": 7,
-        "next_id": 7009,
+        "next_id": 7309,
         "tag": "jumper"
       },
       {
         "apparat_id": 7,
-        "next_id": 7010,
+        "next_id": 7310,
         "tag": "jumper"
       },
       {
         "apparat_id": 7,
-        "next_id": 7011,
+        "next_id": 7311,
         "tag": "jumper"
       }
     ],
@@ -189,74 +189,74 @@
     "sub_steps": [
       {
         "sub_step": 0,
-        "action_id": 7000,
-        "current_value": "on",
+        "action_id": 7300,
+        "current_value": "off",
         "tag": "jumper"
       },
       {
         "sub_step": 1,
-        "action_id": 7001,
-        "current_value": "on",
+        "action_id": 7301,
+        "current_value": "off",
         "tag": "jumper"
       },
       {
         "sub_step": 2,
-        "action_id": 7002,
-        "current_value": "on",
+        "action_id": 7302,
+        "current_value": "off",
         "tag": "jumper"
       },
       {
         "sub_step": 3,
-        "action_id": 7003,
-        "current_value": "on",
+        "action_id": 7303,
+        "current_value": "off",
         "tag": "jumper"
       },
       {
         "sub_step": 4,
-        "action_id": 7004,
-        "current_value": "on",
+        "action_id": 7304,
+        "current_value": "off",
         "tag": "jumper"
       },
       {
         "sub_step": 5,
-        "action_id": 7005,
-        "current_value": "on",
+        "action_id": 7305,
+        "current_value": "off",
         "tag": "jumper"
       },
       {
         "sub_step": 6,
-        "action_id": 7006,
-        "current_value": "on",
+        "action_id": 7306,
+        "current_value": "off",
         "tag": "jumper"
       },
       {
         "sub_step": 7,
-        "action_id": 7007,
-        "current_value": "on",
+        "action_id": 7307,
+        "current_value": "off",
         "tag": "jumper"
       },
       {
         "sub_step": 8,
-        "action_id": 7008,
-        "current_value": "on",
+        "action_id": 7308,
+        "current_value": "off",
         "tag": "jumper"
       },
       {
         "sub_step": 9,
-        "action_id": 7009,
-        "current_value": "on",
+        "action_id": 7309,
+        "current_value": "off",
         "tag": "jumper"
       },
       {
         "sub_step": 10,
-        "action_id": 7010,
-        "current_value": "on",
+        "action_id": 7310,
+        "current_value": "off",
         "tag": "jumper"
       },
       {
         "sub_step": 11,
-        "action_id": 7011,
-        "current_value": "on",
+        "action_id": 7311,
+        "current_value": "off",
         "tag": "jumper"
       }
     ],
@@ -290,7 +290,7 @@
     "next_actions": [
       {
         "apparat_id": 6,
-        "next_id": 6400,
+        "next_id": 6402,
         "tag": "cabel"
       }, 
       {
@@ -308,7 +308,7 @@
     "sub_steps": [
       {
         "sub_step": 0,
-        "action_id": 6400,
+        "action_id": 6402,
         "current_value": "on",
         "tag": "cabel"
       }, 
@@ -323,7 +323,7 @@
     "array_actions": [
       {
         "apparat_id": 6,
-        "action_id": 6500,
+        "action_id": 6501,
         "action_value": "cabel",
         "tag": "cabel"
       }, 
@@ -338,7 +338,7 @@
     "next_actions": [
       {
         "apparat_id": 6,
-        "next_id": 6401,
+        "next_id": 6400,
         "tag": "cabel"
       }, 
       {
@@ -356,7 +356,7 @@
     "sub_steps": [
       {
         "sub_step": 0,
-        "action_id": 6401,
+        "action_id": 6400,
         "current_value": "on",
         "tag": "cabel"
       }, 
@@ -371,7 +371,7 @@
     "array_actions": [
       {
         "apparat_id": 6,
-        "action_id": 6501,
+        "action_id": 6500,
         "action_value": "cabel",
         "tag": "cabel"
       }, 
@@ -399,7 +399,7 @@
     "sub_steps": [
       {
         "sub_step": 0,
-        "action_id": 6007,
+        "action_id": 6008,
         "current_value": "down",
         "tag": "tumbler"
       }
@@ -497,76 +497,12 @@
         "tag": "arrow"
       }
     ],
-    "count_next": 1,
+    "count_next": 0,
     "next_actions": [
       {
-        "apparat_id": 6,
-        "next_id": 6400,
-        "tag": "cabel"
+        "name":"nan"
       }
     ],
-    "annotation": "Проверяем дифференциальные системы"
-  }, 
-  "step_11": {
-    "step": 11,
-    "order": false,
-    "actions_for_step": 1,
-    "sub_steps": [
-      {
-        "sub_step": 0,
-        "action_id": 6400,
-        "current_value": "off",
-        "tag": "cabel"
-      }
-    ],
-    "count_action": 1,
-    "array_actions": [
-      {
-        "apparat_id": 6,
-        "action_id": 6501,
-        "action_value": "none",
-        "tag": "cabel"
-      }
-    ],
-    "count_next": 1,
-    "next_actions": [
-      {
-        "apparat_id": 6,
-        "next_id": 6401,
-        "tag": "cabel"
-      }
-    ],
-    "annotation": "Проверяем дифференциальные системы"
-  }, 
-  "step_12": {
-    "step": 12,
-    "order": false,
-    "actions_for_step": 1,
-    "sub_steps": [
-      {
-        "sub_step": 0,
-        "action_id": 6401,
-        "current_value": "off",
-        "tag": "cabel"
-      }
-    ],
-    "count_action": 1,
-    "array_actions": [
-      {
-        "apparat_id": 6,
-        "action_id": 6500,
-        "action_value": "none",
-        "tag": "cabel"
-      }
-    ],
-    "count_next": 1,
-    "next_actions": [
-      {
-        "apparat_id": 6,
-        "next_id": 6401,
-        "tag": "cabel"
-      }
-    ],
-    "annotation": "Проверяем дифференциальные системы"
+    "annotation": "ВЫПОЛНЕНО"
   }
 }

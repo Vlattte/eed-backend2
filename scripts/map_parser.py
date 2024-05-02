@@ -14,7 +14,7 @@ def get_next_step(session_hash):
 
     # карта в виде словаря и номер последней стадии
     stage_id = db_script.get_stage_id(session_hash)
-    map_dict, last_stage_num = map_from_id(stage_id)        
+    map_dict, last_stage_num = map_from_id(stage_id, session_hash)        
     if map_dict == {}:
         return map_dict
 
