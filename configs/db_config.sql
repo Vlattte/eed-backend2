@@ -195,7 +195,7 @@ CREATE TABLE sub_steps(
     element_id integer, -- id элемента на аппаратуре
     correct_value text, -- верное положение элемента
     tag text,           -- тэг элемента (button, lever)
-    sub_step_order integer       -- очередность шагов, либо -1, если ее нет
+    sub_step_order integer,       -- очередность шагов, либо -1, если ее нет
     CONSTRAINT sub_step_id PRIMARY KEY (id)
 );
 
