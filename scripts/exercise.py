@@ -125,8 +125,7 @@ def write_substeps(session_hash, cur_step):
         # если нет дейтсвий, то не пишем их в базу
         if len(array_actions) == 0:                        
             continue
-
-        print("\t[DEBUG] array_actions: ", array_actions)
+        
         # добавляем ответные действия после подшага
         for action in array_actions:
             print("\t\t[DEBUG] action", action)
