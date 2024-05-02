@@ -109,13 +109,6 @@ def test_handler(message_type):
     return answer_json
 
 
-async def main():
-    print("SERVER ON")
-    # test_handler(message_type='addConditionPositions')
-    async with websockets.serve(handler, "", 8083, max_size=10_000_000):
-        await asyncio.Future()
-
-
 @app.websocket('/')
 async def main(websocket: WebSocket):   
     print("SERVER ON") 
@@ -127,7 +120,7 @@ async def main(websocket: WebSocket):
 
         # преобразуем json к словарю для удобной обработки
         request = dict(message)
-        print("\t[DATA FROM FRONT] ", request)
+        print("\n\n\t[DATA FROM FRONT] ", request)
         answer = req.request_handler(request)
         print("\t[DATA FOR FRONT] ", answer)
 

@@ -1,7 +1,7 @@
 {
     "ex_test": "ex_test.json",
-    "last_step_num":{
-        "norm_1": "19",
+    "last_stage_num":{
+        "norm_1": "15",
         "norm_2": "26"
     },
     "10": "norm_1/ex_1.2.0.json",
@@ -14,9 +14,6 @@
     "17": "norm_1/ex_1.2.7.json",
     "18": "norm_1/ex_1.2.8.json",
     "19": "norm_1/ex_1.2.9.json",
-    "110": "norm_1/ex_1.2.10.json",
-    "111": "norm_1/ex_1.2.11.json",
-    "112": "norm_1/ex_1.2.12.json",
     "ex_1_13": "norm_1/ex_1.2.13.json",
     "снизу": "вернуть на ex_2_1, ex_2_2 и т.д.",
     "ex_2_1": "norm_2/ex_2.1.1.json",

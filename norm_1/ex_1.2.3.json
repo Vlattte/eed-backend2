@@ -1,213 +1,1006 @@
 {
   "step_0": {
     "step": 0,
-    "id": "multiple",
-    "before_id": "multiple",
-    "draggable": false,
-    "current_value": "multiple",
-    "tag": "multiple",
-    "count_action": 0,
-    "count_next": 2,
-    "next_actions": [
+    "order": false,
+    "actions_for_step": 0,
+    "sub_steps": [ ],
+    "count_action": 6,
+    "array_actions": [
       {
-        "apparat_id": 6,
-        "next_id": 6201,
-        "draggable": false,
-        "current_value": "on",
-        "tag": "cabel"
+        "apparat_id": 2,
+        "action_id": 2020,
+        "action_value": "on",
+        "tag": "lamp"
+      },
+      {
+        "apparat_id": 2,
+        "action_id": 2018,
+        "action_value": "on",
+        "tag": "lamp"
       },
       {
         "apparat_id": 6,
-        "next_id": 6202,
-        "draggable": false,
-        "current_value": "on",
-        "tag": "cabel"
-      }
-    ],
-    "array_actions": [
-      {
-        "name": "nan"
-      }
-    ],
-    "annotation": "Соединить шнуром «ВЫХ» и «ВХ» бл.УУ."
-  },
-  "step_1": {
-    "step": 1,
-    "id": "multiple",
-    "before_id": "multiple",
-    "draggable": false,
-    "current_value": "multiple",
-    "tag": "multiple",
-    "actions_for_step": 2,
-    "sub_steps": [
-      {
-        "name": "sub_step_1",
-        "action_id": 6201,
-        "current_value": "on",
-        "before_id": 6201,
-        "tag": "cabel"
+        "action_id": 6401,
+        "action_value": 44,
+        "tag": "arrow"
       },
-      {
-        "name": "sub_step_2",
-        "action_id": 6202,
-        "current_value": "on",
-        "before_id": 6202,
-        "tag": "cabel"
-      }
-    ],
-    "count_action": 1,
-    "array_actions": [
       {
         "apparat_id": 6,
         "action_id": 6301,
         "action_value": "cabel",
         "tag": "cabel"
-      }
-    ],
-    "count_next": 2,
-    "next_actions": [
-      {
-        "apparat_id": 6,
-        "next_id": 6000,
-        "current_value": "-90",
-        "tag": "rotate",
-        "draggable": false
       },
       {
         "apparat_id": 6,
-        "next_id": 6001,
-        "current_value": "-80",
-        "tag": "rotate",
-        "draggable": false
+        "action_id": 6201,
+        "action_value": "on",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6202,
+        "action_value": "on",
+        "tag": "cabel"
       }
     ],
-    "annotation": "Переключатели: \n«кГц» → «0,8»;\n«Нп» на ГЕН→ «0»."
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 6,
+        "next_id": 6201,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_1": {
+    "step": 1,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 6201,
+        "current_value": "off",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 3,
+    "array_actions": [
+      {
+        "apparat_id": 6,
+        "action_id": 6301,
+        "action_value": "jumper2",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -54,
+        "tag": "arrow"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6302,
+        "action_value": "cabel",
+        "tag": "cabel"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 9,
+        "next_id": 9204,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
   },
   "step_2": {
     "step": 2,
-    "id": "multiple",
-    "before_id": "multiple",
-    "draggable": false,
-    "tag": "multiple",
-    "current_value": "multiple",
-    "actions_for_step": 8,
+    "order": false,
+    "actions_for_step": 2,
     "sub_steps": [
       {
-        "name": "sub_step_1",
-        "action_id": 6000,
-        "current_value": "-90",
-        "before_id": 6000,
-        "tag": "rotate"
-      },
-      {
-        "name": "sub_step_2",
-        "action_id": 6000,
-        "current_value": "-60",
-        "before_id": 6000,
-        "tag": "rotate"
-      },
-      {
-        "name": "sub_step_3",
-        "action_id": 6000,
-        "current_value": "-30",
-        "before_id": 6000,
-        "tag": "rotate"
-      },
-      {
-        "name": "sub_step_4",
-        "action_id": 6001,
-        "current_value": "-80",
-        "before_id": 6001,
-        "tag": "rotate"
-      },
-      {
-        "name": "sub_step_5",
-        "action_id": 6001,
-        "current_value": "-60",
-        "before_id": 6001,
-        "tag": "rotate"
-      },
-      {
-        "name": "sub_step_6",
-        "action_id": 6001,
-        "current_value": "-30",
-        "before_id": 6001,
-        "tag": "rotate"
-      },
-      {
-        "name": "sub_step_7",
-        "action_id": 6001,
-        "current_value": "10",
-        "before_id": 6001,
-        "tag": "rotate"
-      },
-      {
-        "name": "sub_step_8",
-        "action_id": 6001,
-        "current_value": "40",
-        "before_id": 6001,
-        "tag": "rotate"
+        "sub_step": 0,
+        "action_id": 9204,
+        "current_value": "on",
+        "tag": "cabel"
       }
     ],
-    "count_action": 0,
-    "count_next": 2,
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 9,
+        "action_id": 9301,
+        "action_value": "cabel",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": 5,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
     "next_actions": [
       {
-        "next_id": 6003,
-        "apparat_id": 6,
-        "current_value": "-15",
-        "tag": "rotate",
-        "draggable": false
-      },
-      {
-        "next_id": 6004,
-        "apparat_id": 6,
-        "current_value": "-80",
-        "tag": "rotate",
-        "draggable": false
+        "apparat_id": 9,
+        "next_id": 9204,
+        "tag": "cabel"
       }
-    ],
-    "annotation": "4. Переключатели: «СОПР.ВХ»→ «600», «Нп» → «0»."
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
   },
   "step_3": {
     "step": 3,
-    "id": "multiple",
-    "before_id": "multiple",
-    "draggable": false,
-    "current_value": "multiple",
-    "tag": "multiple",
-    "actions_for_step": 3,
+    "order": false,
+    "actions_for_step": 1,
     "sub_steps": [
       {
-        "name": "sub_step_1",
-        "action_id": 6004,
-        "current_value": "-80",
-        "before_id": 6004
+        "sub_step": 0,
+        "action_id": 9204,
+        "current_value": "off",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 9,
+        "action_id": 9301,
+        "action_value": "jumper2",
+        "tag": "cabel"
       },
       {
-        "name": "sub_step_2",
-        "action_id": 6004,
-        "current_value": "-60",
-        "before_id": 6004
-      },
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -54,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
       {
-        "name": "sub_step_3",
-        "action_id": 6003,
-        "current_value": "-15",
-        "before_id": 6003
+        "apparat_id": 3,
+        "next_id": 3203,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_4": {
+    "step": 4,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3203,
+        "current_value": "on",
+        "tag": "cabel"
       }
     ],
     "count_action": 1,
     "array_actions": [
       {
+        "apparat_id": 3,
+        "action_id": 3301,
+        "action_value": "cabel",
+        "tag": "cabel"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 6,
+        "next_id": 6004,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_5": {
+    "step": 5,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 1,
+        "action_id": 6004,
+        "current_value": -80,
+        "tag": "rotator"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
         "apparat_id": 6,
         "action_id": 6401,
-        "action_value": "pos_4",
+        "action_value": -8,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3203,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_6": {
+    "step": 6,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3203,
+        "current_value": "off",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3301,
+        "action_value": "jumper2",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -54,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3008,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_7": {
+    "step": 7,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3008,
+        "current_value": "jumper2",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3314,
+        "action_value": "cabel",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -8,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3008,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_8": {
+    "step": 8,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3008,
+        "current_value": "off",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3314,
+        "action_value": "off",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -54,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3009,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_9": {
+    "step": 9,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3009,
+        "current_value": "jumper2",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3312,
+        "action_value": "cabel",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": 0,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3009,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_10": {
+    "step": 10,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3009,
+        "current_value": "off",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3312,
+        "action_value": "none",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -54,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3011,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_11": {
+    "step": 11,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3011,
+        "current_value": "jumper2",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3313,
+        "action_value": "cabel",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": 0,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3011,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_12": {
+    "step": 12,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3011,
+        "current_value": "off",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3313,
+        "action_value": "none",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -54,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3010,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_13": {
+    "step": 13,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3010,
+        "current_value": "jumper2",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3309,
+        "action_value": "cabel",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -10,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3010,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_14": {
+    "step": 14,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3010,
+        "current_value": "off",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3309,
+        "action_value": "none",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -54,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3012,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_15": {
+    "step": 15,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3012,
+        "current_value": "jumper2",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3308,
+        "action_value": "cabel",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": 0,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3012,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_16": {
+    "step": 16,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3012,
+        "current_value": "off",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3308,
+        "action_value": "none",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -54,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3013,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_17": {
+    "step": 17,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3013,
+        "current_value": "jumper2",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3307,
+        "action_value": "cabel",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": 0,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3013,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_18": {
+    "step": 18,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3013,
+        "current_value": "off",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3307,
+        "action_value": "none",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -54,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3015,
+        "tag": "cabel"
+      }
+  ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_19": {
+    "step": 19,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3015,
+        "current_value": "jumper2",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3306,
+        "action_value": "cabel",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": 0,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3015,
+        "tag": "cabel"
+      }
+    ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_20": {
+    "step": 20,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3015,
+        "current_value": "off",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3306,
+        "action_value": "none",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -54,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3014,
+        "tag": "cabel"
+      }
+    ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_21": {
+    "step": 21,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3014,
+        "current_value": "jumper2",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3304,
+        "action_value": "cabel",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": 45,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3014,
+        "tag": "cabel"
+      }
+    ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_22": {
+    "step": 22,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3014,
+        "current_value": "off",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3304,
+        "action_value": "none",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -54,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3017,
+        "tag": "cabel"
+      }
+    ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_23": {
+    "step": 23,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3017,
+        "current_value": "jumper2",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3303,
+        "action_value": "cabel",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": 0,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3017,
+        "tag": "cabel"
+      }
+    ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+   "step_24": {
+    "step": 24,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3017,
+        "current_value": "off",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3303,
+        "action_value": "none",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -54,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3016,
+        "tag": "cabel"
+      }
+    ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_25": {
+    "step": 25,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3016,
+        "current_value": "jumper2",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3302,
+        "action_value": "cabel",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": 44,
+        "tag": "arrow"
+      }
+    ],
+    "count_next": 1,
+    "next_actions": [
+      {
+        "apparat_id": 3,
+        "next_id": 3016,
+        "tag": "cabel"
+      }
+    ],
+    "annotation": "Проверить уровни тока несущих частот"
+  },
+  "step_26": {
+    "step": 26,
+    "order": false,
+    "actions_for_step": 1,
+    "sub_steps": [
+      {
+        "sub_step": 0,
+        "action_id": 3016,
+        "current_value": "off",
+        "tag": "cabel"
+      }
+    ],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 3,
+        "action_id": 3302,
+        "action_value": "none",
+        "tag": "cabel"
+      },
+      {
+        "apparat_id": 6,
+        "action_id": 6401,
+        "action_value": -54,
         "tag": "arrow"
       }
     ],
     "count_next": 0,
-    "next_actions": [],
+    "next_actions": [{"name": "nan"}],
     "annotation": "ВЫПОЛНЕНО"
   }
 }

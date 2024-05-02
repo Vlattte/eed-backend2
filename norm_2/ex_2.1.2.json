@@ -17,8 +17,21 @@
         "tag": "cabel"
       }
     ],
-    "count_action": 0,
-    "array_actions": [{"name": "nan"}],
+    "count_action": 2,
+    "array_actions": [
+      {
+        "apparat_id": 2,
+        "action_id": 2020,
+        "action_value": "on",
+        "tag": "lamp"
+      },
+      {
+        "apparat_id": 2,
+        "action_id": 2018,
+        "action_value": "on",
+        "tag": "lamp"
+      }
+    ],
     "annotation": "Подключите кабель «ИЗМ» на упаковке ГО-12 в КЧ-64"
   },
   "step_1": {
