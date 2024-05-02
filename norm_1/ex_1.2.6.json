@@ -16,73 +16,73 @@
     "array_actions": [
       {
         "apparat_id": 7,
-        "action_id": 7000,
+        "action_id": 7300,
         "action_value": "off",
         "tag": "tumbler"
       },
       {
         "apparat_id": 7,
-        "action_id": 7001,
+        "action_id": 7301,
         "action_value": "off",
         "tag": "tumbler"
       },
       {
         "apparat_id": 7,
-        "action_id": 7002,
+        "action_id": 7302,
         "action_value": "off",
         "tag": "tumbler"
       },
       {
         "apparat_id": 7,
-        "action_id": 7003,
+        "action_id": 7303,
         "action_value": "off",
         "tag": "tumbler"
       },
       {
         "apparat_id": 7,
-        "action_id": 7004,
+        "action_id": 7304,
         "action_value": "off",
         "tag": "tumbler"
       },
       {
         "apparat_id": 7,
-        "action_id": 7005,
-        "action_value": "jumper4",
-        "tag": "tumbler"
-      },
-      {
-        "apparat_id": 7,
-        "action_id": 7006,
+        "action_id": 7305,
         "action_value": "off",
         "tag": "tumbler"
       },
       {
         "apparat_id": 7,
-        "action_id": 7007,
+        "action_id": 7306,
         "action_value": "off",
         "tag": "tumbler"
       },
       {
         "apparat_id": 7,
-        "action_id": 7008,
+        "action_id": 7307,
         "action_value": "off",
         "tag": "tumbler"
       },
       {
         "apparat_id": 7,
-        "action_id": 7009,
+        "action_id": 7308,
         "action_value": "off",
         "tag": "tumbler"
       },
       {
         "apparat_id": 7,
-        "action_id": 7010,
+        "action_id": 7309,
         "action_value": "off",
         "tag": "tumbler"
       },
       {
         "apparat_id": 7,
-        "action_id": 7011,
+        "action_id": 7310,
+        "action_value": "off",
+        "tag": "tumbler"
+      },
+      {
+        "apparat_id": 7,
+        "action_id": 7311,
         "action_value": "off",
         "tag": "tumbler"
       },
