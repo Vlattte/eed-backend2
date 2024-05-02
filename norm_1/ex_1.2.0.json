@@ -1,11 +1,7 @@
 {
   "step_0": {
     "step": 0,
-    "id": "multiple",
-    "before_id": "multiple",
-    "draggable": false,
-    "current_value": "multiple",
-    "tag": "multiple",
+    "order": false,
     "count_next": 118,
     "next_actions": [
       {
@@ -862,843 +858,834 @@
       }
     ],
     "count_action": 0,
-    "array_actions": [
-      {
-        "name": "nan"
-      }
-    ],
+    "array_actions": [],
     "annotation": "Установить органы управления аппаратуры в исходное положение"
   },
   "step_1": {
     "step": 1,
-    "id": "multiple",
-    "draggable": false,
-    "current_value": "multiple",
-    "before_id": "multiple",
-    "tag": "multiple",
     "actions_for_step": 118,
     "sub_steps": [
       {
-        "name": "sub_step_1",
+        "sub_step": 1,
         "action_id": 1001,
         "current_value": "center",
         "before_id": 1001,
         "tag": "lever"
       },
       {
-        "name": "sub_step_2",
+        "sub_step": 2,
         "action_id": 1002,
         "current_value": "center",
         "before_id": 1002,
         "tag": "lever"
       },
       {
-        "name": "sub_step_3",
+        "sub_step": 3,
         "action_id": 1003,
         "current_value": "-150",
         "before_id": 1003,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_4",
+        "sub_step": 4,
         "action_id": 1005,
         "current_value": "0",
         "before_id": 1005,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_5",
+        "sub_step": 5,
         "action_id": 1004,
         "current_value": "-35",
         "before_id": 1004,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_6",
+        "sub_step": 6,
         "action_id": 1010,
         "current_value": "jumper2",
         "before_id": 1010,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_7",
+        "sub_step": 7,
         "action_id": 1011,
         "current_value": "jumper2",
         "before_id": 1011,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_8",
+        "sub_step": 8,
         "action_id": 1008,
         "current_value": "jumper2",
         "before_id": 1008,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_9",
+        "sub_step": 9,
         "action_id": "jumper_under 1006",
         "current_value": "jumper2",
         "before_id": "jumper_under 1006",
         "tag": "jumper"
       },
       {
-        "name": "sub_step_10",
+        "sub_step": 10,
         "action_id": 1006,
         "current_value": "jumper2",
         "before_id": 1006,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_11",
+        "sub_step": 11,
         "action_id": 1007,
         "current_value": "jumper2",
         "before_id": 1007,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_12",
+        "sub_step": 12,
         "action_id": 1009,
         "current_value": "jumper2",
         "before_id": 1009,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_13",
+        "sub_step": 13,
         "action_id": 1000,
         "current_value": "off",
         "before_id": 1000,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_14",
+        "sub_step": 14,
         "action_id": 1012,
         "current_value": "on",
         "before_id": 1012,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_15",
+        "sub_step": 15,
         "action_id": 1013,
         "current_value": "off",
         "before_id": 1013,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_16",
+        "sub_step": 16,
         "action_id": 1019,
         "current_value": "on",
         "before_id": 1019,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_17",
+        "sub_step": 17,
         "action_id": 2004,
         "current_value": "300",
         "before_id": 2004,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_18",
+        "sub_step": 18,
         "action_id": 2008,
         "current_value": "-160",
         "before_id": 2008,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_19",
+        "sub_step": 19,
         "action_id": 2001,
         "current_value": "off",
         "before_id": 2001,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_20",
+        "sub_step": 20,
         "action_id": 2002,
         "current_value": "off",
         "before_id": 2002,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_21",
+        "sub_step": 21,
         "action_id": 2005,
         "current_value": "jumper2",
         "before_id": 2005,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_22",
+        "sub_step": 22,
         "action_id": 2006,
         "current_value": "off",
         "before_id": 2006,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_23",
+        "sub_step": 23,
         "action_id": 2007,
         "current_value": "jumper2",
         "before_id": 2007,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_24",
+        "sub_step": 24,
         "action_id": 2009,
         "current_value": "off",
         "before_id": 2009,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_25",
+        "sub_step": 25,
         "action_id": 2021,
         "current_value": "off",
         "before_id": 2021,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_26",
+        "sub_step": 26,
         "action_id": 2010,
         "current_value": "off",
         "before_id": 2010,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_27",
+        "sub_step": 27,
         "action_id": 2011,
         "current_value": "off",
         "before_id": 2011,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_28",
+        "sub_step": 28,
         "action_id": 2012,
         "current_value": "off",
         "before_id": 2012,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_29",
+        "sub_step": 29,
         "action_id": 2013,
         "current_value": "off",
         "before_id": 2013,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_30",
+        "sub_step": 30,
         "action_id": 2014,
         "current_value": "off",
         "before_id": 2014,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_31",
+        "sub_step": 31,
         "action_id": 2015,
         "current_value": "180",
         "before_id": 2015,
         "tag": "channel"
       },
       {
-        "name": "sub_step_32",
+        "sub_step": 32,
         "action_id": 2016,
         "current_value": "110",
         "before_id": 2016,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_33",
+        "sub_step": 33,
         "action_id": 3004,
         "current_value": "off",
         "before_id": 3004,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_34",
+        "sub_step": 34,
         "action_id": 3003,
         "current_value": "jumper2",
         "before_id": 3003,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_35",
+        "sub_step": 35,
         "action_id": 3002,
         "current_value": "off",
         "before_id": 3002,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_36",
+        "sub_step": 36,
         "action_id": 3021,
         "current_value": "off",
         "before_id": 3021,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_37",
+        "sub_step": 37,
         "action_id": 3018,
         "current_value": "jumper2",
         "before_id": 3018,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_38",
+        "sub_step": 38,
         "action_id": 3019,
         "current_value": "off",
         "before_id": 3019,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_39",
+        "sub_step": 39,
         "action_id": 3000,
         "current_value": "off",
         "before_id": 3000,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_40",
+        "sub_step": 40,
         "action_id": 3001,
         "current_value": "off",
         "before_id": 3001,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_41",
+        "sub_step": 41,
         "action_id": 3005,
         "current_value": "off",
         "before_id": 3005,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_42",
+        "sub_step": 42,
         "action_id": 4000,
         "current_value": "off",
         "before_id": 4000,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_43",
+        "sub_step": 43,
         "action_id": 4001,
         "current_value": "off",
         "before_id": 4001,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_44",
+        "sub_step": 44,
         "action_id": 5006,
         "current_value": "jumper2",
         "before_id": 5006,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_45",
+        "sub_step": 45,
         "action_id": 5001,
         "current_value": "jumper2",
         "before_id": 5001,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_46",
+        "sub_step": 46,
         "action_id": 5007,
         "current_value": "jumper2",
         "before_id": 5007,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_47",
+        "sub_step": 47,
         "action_id": 5003,
         "current_value": "jumper2",
         "before_id": 5003,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_48",
+        "sub_step": 48,
         "action_id": 5008,
         "current_value": "jumper2",
         "before_id": 5008,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_49",
+        "sub_step": 49,
         "action_id": 5002,
         "current_value": "jumper2",
         "before_id": 5002,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_50",
+        "sub_step": 50,
         "action_id": 5004,
         "current_value": "jumper2",
         "before_id": 5004,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_51",
+        "sub_step": 51,
         "action_id": 5202,
         "current_value": "off",
         "before_id": 5202,
         "tag": "cabel"
       },
       {
-        "name": "sub_step_52",
+        "sub_step": 52,
         "action_id": 5005,
         "current_value": "off",
         "before_id": 5005,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_53",
+        "sub_step": 53,
         "action_id": 5201,
         "current_value": "off",
         "before_id": 5201,
         "tag": "cabel"
       },
       {
-        "name": "sub_step_54",
+        "sub_step": 54,
         "action_id": 5000,
         "current_value": "off",
         "before_id": 5000,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_55",
+        "sub_step": 55,
         "action_id": 5011,
         "current_value": "-90",
         "before_id": 5011,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_56",
+        "sub_step": 56,
         "action_id": 5009,
         "current_value": "off",
         "before_id": 5009,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_57",
+        "sub_step": 57,
         "action_id": 6001,
         "current_value": "40",
         "before_id": 6001,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_58",
+        "sub_step": 58,
         "action_id": 6000,
         "current_value": "-30",
         "before_id": 6000,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_59",
+        "sub_step": 59,
         "action_id": 6002,
         "current_value": "off",
         "before_id": 6002,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_60",
+        "sub_step": 60,
         "action_id": 6003,
         "current_value": "15",
         "before_id": 6003,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_61",
+        "sub_step": 61,
         "action_id": 6004,
         "current_value": "-60",
         "before_id": 6004,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_62",
+        "sub_step": 62,
         "action_id": 6202,
         "current_value": "off",
         "before_id": 6202,
         "tag": "cabel"
       },
       {
-        "name": "sub_step_63",
+        "sub_step": 63,
         "action_id": 6201,
         "current_value": "off",
         "before_id": 6201,
         "tag": "cabel"
       },
       {
-        "name": "sub_step_64",
+        "sub_step": 64,
         "action_id": 6014,
         "current_value": "off",
         "before_id": 6014,
         "tag": "button"
       },
       {
-        "name": "sub_step_65",
+        "sub_step": 65,
         "action_id": 6005,
         "current_value": "center",
         "before_id": 6005,
         "tag": "lever"
       },
       {
-        "name": "sub_step_66",
+        "sub_step": 66,
         "action_id": 6006,
         "current_value": "center",
         "before_id": 6006,
         "tag": "lever"
       },
       {
-        "name": "sub_step_67",
+        "sub_step": 67,
         "action_id": 6007,
         "current_value": "center",
         "before_id": 6007,
         "tag": "lever"
       },
       {
-        "name": "sub_step_68",
+        "sub_step": 68,
         "action_id": 6008,
         "current_value": "center",
         "before_id": 6008,
         "tag": "lever"
       },
       {
-        "name": "sub_step_69",
+        "sub_step": 69,
         "action_id": 6009,
         "current_value": "center",
         "before_id": 6009,
         "tag": "lever"
       },
       {
-        "name": "sub_step_70",
+        "sub_step": 70,
         "action_id": 6010,
         "current_value": "center",
         "before_id": 6010,
         "tag": "lever"
       },
       {
-        "name": "sub_step_71",
+        "sub_step": 71,
         "action_id": 7000,
         "current_value": "jumper2",
         "before_id": 7000,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_72",
+        "sub_step": 72,
         "action_id": 7001,
         "current_value": "jumper2",
         "before_id": 7001,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_73",
+        "sub_step": 73,
         "action_id": 7002,
         "current_value": "jumper2",
         "before_id": 7002,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_74",
+        "sub_step": 74,
         "action_id": 7003,
         "current_value": "jumper2",
         "before_id": 7003,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_75",
+        "sub_step": 75,
         "action_id": 8000,
         "current_value": "jumper2",
         "before_id": 8000,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_76",
+        "sub_step": 76,
         "action_id": 8001,
         "current_value": "jumper2",
         "before_id": 8001,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_77",
+        "sub_step": 77,
         "action_id": 8002,
         "current_value": "jumper2",
         "before_id": 8002,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_78",
+        "sub_step": 78,
         "action_id": 8003,
         "current_value": "jumper2",
         "before_id": 8003,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_79",
+        "sub_step": 79,
         "action_id": 8004,
         "current_value": "jumper2",
         "before_id": 8004,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_80",
+        "sub_step": 80,
         "action_id": 8005,
         "current_value": "jumper2",
         "before_id": 8005,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_81",
+        "sub_step": 81,
         "action_id": 8006,
         "current_value": "jumper2",
         "before_id": 8006,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_82",
+        "sub_step": 82,
         "action_id": 8007,
         "current_value": "jumper2",
         "before_id": 8007,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_83",
+        "sub_step": 83,
         "action_id": 8008,
         "current_value": "jumper2",
         "before_id": 8008,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_84",
+        "sub_step": 84,
         "action_id": 8009,
         "current_value": "jumper2",
         "before_id": 8009,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_85",
+        "sub_step": 85,
         "action_id": 9000,
         "current_value": "jumper2",
         "before_id": 9000,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_86",
+        "sub_step": 86,
         "action_id": 9001,
         "current_value": "jumper2",
         "before_id": 9001,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_87",
+        "sub_step": 87,
         "action_id": 9002,
         "current_value": "jumper2",
         "before_id": 9002,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_88",
+        "sub_step": 88,
         "action_id": 9003,
         "current_value": "jumper2",
         "before_id": 9003,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_89",
+        "sub_step": 89,
         "action_id": 9004,
         "current_value": "jumper2",
         "before_id": 9004,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_90",
+        "sub_step": 90,
         "action_id": 9005,
         "current_value": "jumper2",
         "before_id": 9005,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_91",
+        "sub_step": 91,
         "action_id": 9006,
         "current_value": "jumper2",
         "before_id": 9006,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_92",
+        "sub_step": 92,
         "action_id": 9007,
         "current_value": "jumper2",
         "before_id": 9007,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_93",
+        "sub_step": 93,
         "action_id": 9008,
         "current_value": "jumper2",
         "before_id": 9008,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_94",
+        "sub_step": 94,
         "action_id": 9011,
         "current_value": "jumper2",
         "before_id": 9011,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_95",
+        "sub_step": 95,
         "action_id": 9012,
         "current_value": "jumper2",
         "before_id": 9012,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_96",
+        "sub_step": 96,
         "action_id": 9013,
         "current_value": "jumper2",
         "before_id": 9013,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_97",
+        "sub_step": 97,
         "action_id": 9014,
         "current_value": "jumper2",
         "before_id": 9014,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_98",
+        "sub_step": 98,
         "action_id": 9015,
         "current_value": "jumper2",
         "before_id": 9015,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_99",
+        "sub_step": 99,
         "action_id": 9016,
         "current_value": "jumper2",
         "before_id": 9016,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_100",
+        "sub_step": 100,
         "action_id": 9010,
         "current_value": "off",
         "before_id": 9010,
         "tag": "tumbler"
       },
       {
-        "name": "sub_step_101",
+        "sub_step": 101,
         "action_id": 9204,
         "current_value": "off",
         "before_id": 9204,
         "tag": "cabel"
       },
       {
-        "name": "sub_step_102",
+        "sub_step": 102,
         "action_id": 9009,
         "current_value": "jumper2",
         "before_id": 9009,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_103",
+        "sub_step": 103,
         "action_id": 10000,
         "current_value": "jumper2",
         "before_id": 10000,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_104",
+        "sub_step": 104,
         "action_id": 10001,
         "current_value": "jumper2",
         "before_id": 10001,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_105",
+        "sub_step": 105,
         "action_id": 10002,
         "current_value": "jumper2",
         "before_id": 10002,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_106",
+        "sub_step": 106,
         "action_id": 10003,
         "current_value": "jumper2",
         "before_id": 10003,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_107",
+        "sub_step": 107,
         "action_id": 10004,
         "current_value": "jumper2",
         "before_id": 10004,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_108",
+        "sub_step": 108,
         "action_id": 10005,
         "current_value": "jumper2",
         "before_id": 10005,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_109",
+        "sub_step": 109,
         "action_id": 10006,
         "current_value": "jumper2",
         "before_id": 10006,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_110",
+        "sub_step": 110,
         "action_id": 10007,
         "current_value": "jumper2",
         "before_id": 10007,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_111",
+        "sub_step": 111,
         "action_id": 10008,
         "current_value": "jumper2",
         "before_id": 10008,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_112",
+        "sub_step": 112,
         "action_id": 10009,
         "current_value": "jumper2",
         "before_id": 10009,
         "tag": "jumper"
       },
       {
-        "name": "sub_step_113",
+        "sub_step": 113,
         "action_id": 10019,
         "current_value": "0",
         "before_id": 10019,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_114",
+        "sub_step": 114,
         "action_id": 10020,
         "current_value": "0",
         "before_id": 10020,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_115",
+        "sub_step": 115,
         "action_id": 10021,
         "current_value": "0",
         "before_id": 10021,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_116",
+        "sub_step": 116,
         "action_id": 100169,
         "current_value": "0",
         "before_id": 100169,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_117",
+        "sub_step": 117,
         "action_id": 10017,
         "current_value": "0",
         "before_id": 10017,
         "tag": "rotate"
       },
       {
-        "name": "sub_step_118",
+        "sub_step": 118,
         "action_id": 10018,
         "current_value": "0",
         "before_id": 10018,
@@ -1706,11 +1693,7 @@
       }
     ],
     "count_action": 0,
-    "array_actions": [
-      {
-        "name": "nan"
-      }
-    ],
+    "array_actions": [],
     "count_next": 0,
     "next_actions": [
       {

@@ -1,5 +1,8 @@
 import json
 import scripts.dbconnection as db
+from scripts.randomize_instruction import randomize_elements
+
+import os
 
 
 def get_next_step(session_hash):
@@ -29,7 +32,7 @@ def get_next_step(session_hash):
     # получаем карту по ее id
     map_id = exercises_data["stage_id"]
     step_order = step_data["step_order"]
-    cur_step, last_stage_num = get_map_data(map_id, step_order)
+    cur_step, last_stage_num = get_map_data(map_id, step_order, session_hash)
 
     # запоминаем номер последнего stage в нормативе    
     db_con_var.update_rows(
@@ -59,9 +62,9 @@ def get_next_step(session_hash):
     return cur_step
 
 
-def get_map_data(map_id, step_order):
+def get_map_data(map_id, step_order, session_hash):
     # карта в виде словаря
-    map_dict, last_step_order = map_from_id(map_id)
+    map_dict, last_step_order = map_from_id(map_id, session_hash)
     # print("\t[DEBUG] текущая карта: ", map_dict)
 
     # получаем шаг из карты
@@ -72,7 +75,7 @@ def get_map_data(map_id, step_order):
     return cur_step, last_step_order
 
 
-def map_from_id(norm_id):
+def map_from_id(norm_id, session_hash):
     """ получаем карту в формате словаря по id норматива (TODO потом переделать под БД) """
     # получаем название файла для текущей карты норматива
     id_json_file = open("configs/id_json.json", encoding='utf-8')    
@@ -92,4 +95,9 @@ def map_from_id(norm_id):
     print("\t[LOG] файл с картой: ", map_file_name)
     map_file = open(map_file_name, encoding='utf-8')
     map_dict = json.load(map_file)
+
+    if os.path.basename(map_file_name) == 'ex_1.2.0.json':
+        print('RANDOM')
+        map_dict = randomize_elements('P302O', map_dict['step_0'], session_hash)
+
     return map_dict, last_stage_num
