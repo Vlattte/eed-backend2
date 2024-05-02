@@ -26,8 +26,7 @@ def validate_step(message_dict, table_step):
     sub_steps_data, sub_step_order = get_sub_steps(message_dict["session_id"])
     
     # ищем элемент с переданным id
-    interected_el = {"name": "nan"}  # подшаг из базы, у которого совпал id с тем, что нажал пользователь
-    print("\t[DEBUG] sub_steps_data: ", sub_steps_data)
+    interected_el = {"name": "nan"}  # подшаг из базы, у которого совпал id с тем, что нажал пользователь    
     for el in sub_steps_data:   
         if el["element_id"] == message_dict["id"]:            
             interected_el = el

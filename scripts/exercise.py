@@ -61,6 +61,11 @@ def training_exercise(message_dict):
     # получаем текущий шаг пользователя
     table_step = map_parser.get_next_step(session_hash)
 
+    # если возникла ошибка в карте
+    if table_step == {}:
+        print("\t[ERROR] возникла ошибка во время обработки карты")
+        return {"status": "ERROR"}
+
     # записываем все подшаги из шага в бд, если новый шаг (step, а не sub_step)
     write_substeps(session_hash, table_step)
 
