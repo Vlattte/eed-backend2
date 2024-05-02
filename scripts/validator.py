@@ -1,6 +1,7 @@
 """ функции для валидации действий пользователя """
 
-import dbconnection as db
+import scripts.dbconnection as db
+import scripts.db_fast_scripts as db_script
 
 def validate_step(message_dict, table_step):
     """ проверка переданных данных на правильность """
@@ -80,7 +81,7 @@ def validate_step(message_dict, table_step):
     ####### ATTEMPT_FAIL == FAIL #######
 
     # если попытка провалена, удаляем подшаги из таблицы
-    step_id = get_step_id(session_hash)
+    step_id = db_script.get_step_id(session_hash)
     if status_flags["attempt_fail"]:
         print("\t[BAD MOVE] sub steps deleted")
         where_statement = f"step_id={step_id}"
@@ -122,7 +123,7 @@ def validate_step(message_dict, table_step):
 def update_step(session_hash, step_inc=True):
     """ сдвигает шаг или подшаг """
     db_con_var = db.DbConnection()
-    step_id = get_step_id(session_hash)
+    step_id = db_script.get_step_id(session_hash)
 
     # получаем номер шага
     where_statement = f"id={step_id}"
@@ -147,6 +148,27 @@ def update_step(session_hash, step_inc=True):
         step_order=step_order, sub_step_order=sub_step_order
     )
 
+def get_sub_steps(session_hash):
+    """ получает массив подшагов для этого шага """
+    # получаем id группы шагов
+    step_id = db_script.get_step_id(session_hash)
+
+    db_con_var = db.DbConnection()
+
+    # получаем текущий номер шага (если порядок ообще важен)
+    where_statement = f"id={step_id}"
+    step_data = db_con_var.get_data_with_where_statement(
+        table_name="step_group_status", where_statement=where_statement)
+    
+    sub_step_order = step_data["sub_step_order"]
+
+    # получаем все данные про подшаги из текущего шага
+    where_statement = f"step_id={step_id}"
+    sub_steps_data = db_con_var.get_data_with_where_statement(
+        table_name="sub_steps", where_statement=where_statement, is_return_arr=True)
+    print("\t[LOG] sub_steps_data = ", sub_steps_data)
+
+    return sub_steps_data, sub_step_order
 
 
 def increase_stage(session_hash):
@@ -178,3 +200,10 @@ def increase_stage(session_hash):
         where_statement=where_statement,
         stage_id=stage_num)
     return is_norm_finish
+
+
+def is_invalid(check_dict):
+    """ проверяет является ли словарь словарем вида {"name": "nan"} """
+    if check_dict == {"name": "nan"}:
+        return True
+    return False

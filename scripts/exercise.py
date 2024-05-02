@@ -6,6 +6,8 @@
 
 import scripts.dbconnection as db
 import scripts.map_parser as map_parser
+import scripts.validator as validator
+import scripts.db_fast_scripts as db_script
 
 
 def choose_exercise_type(message_dict):
@@ -67,7 +69,7 @@ def training_exercise(message_dict):
     answer["session_id"] = session_hash
 
     # получаем эталонные данные по шагу и исправляем флаги в словаре ответа answer
-    status_flags = validate_step(message_dict, table_step)
+    status_flags = validator.validate_step(message_dict, table_step)
     answer["finish"] = status_flags["stage_finish"]
     answer["status"] = status_flags["status"]
     answer["validation"] = status_flags["step_finish"]
@@ -85,7 +87,7 @@ def training_exercise(message_dict):
 def write_substeps(session_hash, cur_step):
     """ пишет все подшаги из текущего подшага в бд """
     # получаем id группы подшагов
-    step_id = get_step_id(session_hash)
+    step_id = db_script.get_step_id(session_hash)
 
     # проверяем, нужно ли записывать новые подшаги (если еще есть подшаги, то не надо)
     db_con_var = db.DbConnection()
@@ -191,33 +193,3 @@ def create_default_answer(cur_step):
     return_json["fail"] = False             # провалена ли попытка
     return_json["is_norm_finish"] = False   # закончился ли норматив
     return return_json
-
-
-def is_invalid(check_dict):
-    """ проверяет является ли словарь словарем вида {"name": "nan"} """
-    if check_dict == {"name": "nan"}:
-        return True
-    return False
-
-
-def get_sub_steps(session_hash):
-    """ получает массив подшагов для этого шага """
-    # получаем id группы шагов
-    step_id = get_step_id(session_hash)
-
-    db_con_var = db.DbConnection()
-
-    # получаем текущий номер шага (если порядок ообще важен)
-    where_statement = f"id={step_id}"
-    step_data = db_con_var.get_data_with_where_statement(
-        table_name="step_group_status", where_statement=where_statement)
-    
-    sub_step_order = step_data["sub_step_order"]
-
-    # получаем все данные про подшаги из текущего шага
-    where_statement = f"step_id={step_id}"
-    sub_steps_data = db_con_var.get_data_with_where_statement(
-        table_name="sub_steps", where_statement=where_statement, is_return_arr=True)
-    print("\t[LOG] sub_steps_data = ", sub_steps_data)
-
-    return sub_steps_data, sub_step_order
