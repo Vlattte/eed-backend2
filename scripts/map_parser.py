@@ -91,3 +91,4 @@ def map_from_id(norm_id):
     map_file = open(map_file_name, encoding='utf-8')
     map_dict = json.load(map_file)
     return map_dict, last_stage_num
+    print("aaaa")
