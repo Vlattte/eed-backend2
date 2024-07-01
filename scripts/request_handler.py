@@ -59,8 +59,8 @@ def choose_equipment_operation(message_dict):
         adding_positions_status = elements_handler.add_positions_to_condition(message_dict)
         return adding_positions_status
     elif message_dict["opetation"] == "getApparatConfig":
-        aparat_config = norm_creation.get_aparat_config(message_dict["apparat_name"])
-        return aparat_config
+        apparat_config = norm_creation.get_apparat_config(message_dict["apparat_name"])
+        return apparat_config
 
     else:
         print("UNKNOWN OPERATION")
