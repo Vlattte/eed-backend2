@@ -9,7 +9,7 @@ import scripts.equipment_creator as equipment_creator
 
 # elements scripts
 import scripts.elements_handler as elements_handler
-from scripts import norm_creation
+from scripts import editor_scripts
 
 
 # TODO вынести в сервер ??
@@ -58,8 +58,8 @@ def choose_equipment_operation(message_dict):
     elif message_dict["operation"] == "addConditionPositions":
         adding_positions_status = elements_handler.add_positions_to_condition(message_dict)
         return adding_positions_status
-    elif message_dict["opetation"] == "getApparatConfig":
-        apparat_config = norm_creation.get_apparat_config(message_dict["apparat_name"])
+    elif message_dict["operation"] == "getApparatConfig":
+        apparat_config = editor_scripts.get_apparat_config(message_dict["apparat_name"])
         return apparat_config
 
     else:

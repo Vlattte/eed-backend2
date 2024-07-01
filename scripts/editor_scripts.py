@@ -12,3 +12,6 @@ def get_apparat_config(apparat_name: str):
         apparat_config =  json.load(f)
     
     return apparat_config
+
+def get_norms():
+    pass
