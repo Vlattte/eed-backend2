@@ -9,6 +9,7 @@ import scripts.equipment_creator as equipment_creator
 
 # elements scripts
 import scripts.elements_handler as elements_handler
+from scripts import norm_creation
 
 
 # TODO вынести в сервер ??
@@ -30,7 +31,6 @@ def request_handler(message_dict):
     if "operation" in message_dict:
         answer = choose_equipment_operation(message_dict)
         return answer
-
 
 def choose_equipment_operation(message_dict):
     """ define equipment operation """
@@ -58,6 +58,10 @@ def choose_equipment_operation(message_dict):
     elif message_dict["operation"] == "addConditionPositions":
         adding_positions_status = elements_handler.add_positions_to_condition(message_dict)
         return adding_positions_status
+    elif message_dict["opetation"] == "getApparatConfig":
+        aparat_config = norm_creation.get_aparat_config(message_dict["apparat_name"])
+        return aparat_config
+
     else:
         print("UNKNOWN OPERATION")
         return {"error": "unknown-operation"}
