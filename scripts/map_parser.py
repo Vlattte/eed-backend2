@@ -72,7 +72,7 @@ def get_current_step(map_dict, step_order):
 def map_from_id(norm_id, session_hash):
     """ получаем карту в формате словаря по id норматива (TODO потом переделать под БД) """
     # получаем название файла для текущей карты норматива
-    id_json_file = open("configs/id_json.json", encoding='utf-8')        
+    id_json_file = open("normative_configs/id_json_1.json", encoding='utf-8')        
     id_to_json = json.load(id_json_file)
     
     # номер последнего stage в нормативе

@@ -13,5 +13,13 @@ def get_apparat_config(apparat_name: str):
     
     return apparat_config
 
-def get_norms():
-    pass
+def get_list_apparats():    
+    apparats_normative_config_path = "./configs/apparat_config.json"
+    with open(apparats_normative_config_path, encoding='utf-8') as f:
+        apparats_normative_config = json.load(f)
+
+    for apparat in apparats_normative_config_path["apparats"]:
+        pass
+
+if __name__ == "__main__":
+    get_list_apparats()

@@ -1,0 +1,10 @@
+{
+    "apparats": [
+        {
+            "id": 1,
+            "name": "P302O",
+            "description": "ХЗ",
+            "normatives_path": "./normative_configs/id_json_1.json"
+        }
+    ]
+}

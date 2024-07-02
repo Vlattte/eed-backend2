@@ -121,7 +121,11 @@ async def main(websocket: WebSocket):
         # преобразуем json к словарю для удобной обработки
         request = dict(message)
         print("\n\n\t[DATA FROM FRONT] ", request)
-        answer = req.request_handler(request)
+        answer = {}
+        try:
+            answer = req.request_handler(request)
+        except Exception as E:
+            pass
         print("\t[DATA FOR FRONT] ", answer)
 
         await websocket.send_json(answer)

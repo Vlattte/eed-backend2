@@ -1,8 +1,12 @@
 {
     "ex_test": "ex_test.json",
-    "last_stage_num":{
+    "last_stage_num": {
         "norm_1": "17",
         "norm_2": "26"
+    },
+    "normatives_names": {
+        "11": "Приведение в первоначальное состояние",
+        "12": "Настройка"
     },
     "11": "norm_1/ex_1.2.0.json",
     "12": "norm_1/ex_1.2.1.json",
