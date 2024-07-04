@@ -63,9 +63,10 @@ def choose_equipment_operation(message_dict):
         apparat_config = editor_scripts.get_apparat_config(message_dict["apparat_name"])
         return apparat_config
     # TODO протестить
-    elif message_dict["operation"] == "getListApparats":
-        pass
-
+    elif message_dict["operation"] == "getListApparatsNormatives":
+        list_apparats_normatives = editor_scripts.get_list_apparats_normatives()
+        return list_apparats_normatives
+    
     else:
         print("UNKNOWN OPERATION")
         return {"error": "unknown-operation"}
