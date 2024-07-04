@@ -59,13 +59,13 @@ def choose_equipment_operation(message_dict):
         adding_positions_status = elements_handler.add_positions_to_condition(message_dict)
         return adding_positions_status
     # TODO протестить
-    elif message_dict["operation"] == "getApparatConfig":
-        apparat_config = editor_scripts.get_apparat_config(message_dict["apparat_name"])
-        return apparat_config
+    elif message_dict["operation"] == "getEquipmentConfig":
+        equipment_config = editor_scripts.get_equipment_config(message_dict["equipment_name"])
+        return equipment_config
     # TODO протестить
-    elif message_dict["operation"] == "getListApparatsNormatives":
-        list_apparats_normatives = editor_scripts.get_list_apparats_normatives()
-        return list_apparats_normatives
+    elif message_dict["operation"] == "getListEquipmentsNormatives":
+        list_equipments_normatives = editor_scripts.get_list_equipments_normatives()
+        return list_equipments_normatives
     
     else:
         print("UNKNOWN OPERATION")

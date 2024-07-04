@@ -1,21 +1,21 @@
 import json
 import os
 
-def get_apparat_config(apparat_name: str):
+def get_equipment_config(equipment_name: str):
     """
-    :param apparat_name: назваие аппаратуры
+    :param equipment_name: назваие аппаратуры
     """
-    apparat_configs_folder = './apparat_configs/'
-    apparat_name = apparat_name + '.json'
-    apparat_config_path = os.path.join(apparat_configs_folder, apparat_name)
-    with open(apparat_config_path, encoding='utf-8') as f:
-        apparat_config =  json.load(f)
+    equipment_configs_folder = './equipment_configs/'
+    equipment_name = equipment_name + '.json'
+    equipment_config_path = os.path.join(equipment_configs_folder, equipment_name)
+    with open(equipment_config_path, encoding='utf-8') as f:
+        equipment_config =  json.load(f)
     
-    return apparat_config
+    return equipment_config
 
-def get_list_apparats_normatives():    
-    apparats_normative_config_path = "./configs/apparat_config.json"
-    with open(apparats_normative_config_path, encoding='utf-8') as f:
-        apparats_normative_config = json.load(f)
+def get_list_equipments_normatives():    
+    equipments_normative_config_path = "./configs/equipment_config.json"
+    with open(equipments_normative_config_path, encoding='utf-8') as f:
+        equipments_normative_config = json.load(f)
 
-    return apparats_normative_config
+    return equipments_normative_config
