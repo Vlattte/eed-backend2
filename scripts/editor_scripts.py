@@ -5,6 +5,8 @@ def get_equipment_config(equipment_name: str):
     """
     :param equipment_name: назваие аппаратуры
     """
+    equipment_name = equipment_name.replace('-', '').replace('_', '').capitalize()
+
     equipment_configs_folder = './equipment_configs/'
     equipment_name = equipment_name + '.json'
     equipment_config_path = os.path.join(equipment_configs_folder, equipment_name)
