@@ -20,6 +20,7 @@ def get_list_equipments_normatives():
     with open(equipments_normative_config_path, encoding='utf-8') as f:
         equipments_normative_config = json.load(f)
 
+    equipments_normative_config['isAdmin'] = True
     return equipments_normative_config
 
 def get_id_to_type_config(path):
@@ -64,7 +65,6 @@ def get_id_to_type_config(path):
                 id_to_type_config['button']['ids'].append(component_id)
             elif "lever" in component_tag and sorted(component_values) == ['off', 'on']:
                 id_to_type_config['tumbler']['ids'].append(component_id)
-
 
     print(set(tags))
     print()
