@@ -59,7 +59,7 @@ def create_formated_id_type_values_data(id_type_values_data):
     id_type_values_data_formated = {}
 
     for tag in id_type_values_data:  
-        if tag == 'cabel': 
+        if tag in ['cabel', 'arrow']: 
             continue
 
         tag_values = id_type_values_data[tag]
@@ -68,7 +68,13 @@ def create_formated_id_type_values_data(id_type_values_data):
         # например, для всех тумблеров положения только on и off => all_values == True, 
         # а в случае ротаторов - для каждого id могут быть свои положения
         if tag_values["all_values"]:
-            values = tag_values['values']
+            try:
+                values = tag_values['values']
+            except Exception as e:
+                print('Я ОБОСРАЛСЯ')
+                print(tag)
+                print('ОБСЕР:', e)
+
 
             tag_values_formated = {'all_values': False, 
                                    'elements': []}

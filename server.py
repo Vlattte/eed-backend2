@@ -125,6 +125,7 @@ async def main(websocket: WebSocket):
         try:
             answer = req.request_handler(request)
         except Exception as E:
+            answer = {'error', E}
             pass
         print("\t[DATA FOR FRONT] ", answer)
 
