@@ -1,0 +1,25 @@
+{
+    "step_0": {
+        "array_actions": [
+            {
+                "apparat_id": 2,
+                "action_id": 4401,
+                "action_value": "up",
+                "tag": "lever"
+            },
+            {
+                "apparat_id": 3,
+                "action_id": 7047,
+                "action_value": "down",
+                "tag": "lever"
+            },
+            {
+                "apparat_id": 4,
+                "action_id": 4401,
+                "action_value": "up",
+                "tag": "lever"
+            }
+        ],
+        "count_action": 3
+    }
+}

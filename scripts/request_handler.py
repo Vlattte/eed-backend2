@@ -11,6 +11,8 @@ import scripts.equipment_creator as equipment_creator
 import scripts.elements_handler as elements_handler
 from scripts import editor_scripts
 
+from scripts import json_generator
+
 
 # TODO вынести в сервер ??
 def request_handler(message_dict):
@@ -66,6 +68,12 @@ def choose_equipment_operation(message_dict):
     elif message_dict["operation"] == "getListEquipmentsNormatives":
         list_equipments_normatives = editor_scripts.get_list_equipments_normatives()
         return list_equipments_normatives
+    elif message_dict["operation"] == "setInitNormConfig":
+        init_config_status = json_generator.set_init_norm_config(message_dict)
+        return init_config_status
+    # elif message_dict["operation"] == "addNewStep":
+    #     json_generator.add_new_step(message_dict)
+        
     
     else:
         print("UNKNOWN OPERATION")
