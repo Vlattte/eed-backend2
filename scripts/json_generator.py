@@ -36,15 +36,18 @@ def add_new_step(message):
     #  проверка всех нужных для добавления шага элементов
     try:        
         step = message["step"]
+        equipment_id = message["equipment_id"]
+        norm_id = message["norm_id"]        
         order = message["order"]
         sub_steps = message["sub_steps"]
         array_actions = message["array_actions"]
         annotation = message["annotation"]
     except KeyError:
-        print("\t\t[KeyError] один из ключей equipment_id, step, order, sub_steps, array_actions, annotation не был указан в входящем сообщении")
+        print("\t[KeyError] один из ключей equipment_id, step, order, sub_steps, array_actions, annotation не был указан в входящем сообщении")
 
     # получаем данные по уже существующему нормативу
     normative_path = get_normative_path(message)
+    print("Normative path = ", normative_path)
     normative_data = {}
 
     # если файла нет, то создаем
@@ -52,15 +55,35 @@ def add_new_step(message):
         with open(normative_path, encoding='utf-8', mode="w"):
             pass
     
+    # читаем все данные по выбранному нормативу
     with open(normative_path, encoding='utf-8', mode="r") as norm_file:
         normative_data = json.load(norm_file)
 
+    print("[DEBUG] norm norm \n\t", normative_data)
+    prev_step_num = f"step_{step-1}"
     step_num = f"step_{step}"
     
-    # если меняем уже добавленный шаг
-    # if step_num in normative_data:
-    #         ...
+    # если есть шаг до этого, надо ему добавить массив next_actions и поле count_next
+    if step-1 >= 0:        
+        normative_data[prev_step_num]["next_actions"] = get_next_actions(array_actions)
 
+    # TODO есть штука next_stage_num, она содержит id следующего stage
+    # TODO надо понять нужна ли она тут, так как предполагается только 1 stage
+
+    # меняем/добавляем новый шаг
+    editing_step = {}    
+    editing_step["step"] = step     
+    editing_step["count_action"] = len(array_actions)
+    editing_step["array_actions"] = array_actions
+    editing_step["actions_for_step"] = len(sub_steps)
+    editing_step["sub_steps"] = sub_steps
+    editing_step["count_acions"] = 0
+    editing_step["next_actions"] = [ { "name": "nan" } ]
+    editing_step["annotation"] = annotation
+    normative_data[step_num] = editing_step
+
+    with open(normative_path, encoding='utf-8', mode="w") as norm_file:
+        json.dump(normative_data, norm_file)
 
 
 def get_normative_path(message):
@@ -79,6 +102,18 @@ def get_normative_path(message):
     normative_path = os.path.join(equipment_folder, f"norm_{norm_id}")
     return normative_path
 
+
+def get_next_actions(array_actions):
+    """ получаем массив следующих шагов (тех что надо подсветить) """
+    next_actions = []
+    for action in array_actions:
+        cur_action = {}
+        cur_action["apparat_id"] = action["apparat_id"]
+        cur_action["next_id"] = action["action_id"]
+        cur_action["tag"] = action["tag"]
+        next_actions.append(cur_action)
+
+    return next_actions
 
 if __name__ == "__main__":    
     msg = {
@@ -106,6 +141,79 @@ if __name__ == "__main__":
             }
     ]
     }
-    set_init_norm_config(msg)
+    
+    msg_new_step = {
+        "equipment_id": 2,       
+        "norm_id": 2,
+        "step": 0,
+        "order": True,
+        "sub_steps": [
+        {
+            "sub_step": 0,
+            "action_id": 11012,
+            "current_value": "on",
+            "tag": "lever",
+            "array_actions": [ ]
+        },
+        {
+            "sub_step": 1,
+            "action_id": 1019,
+            "current_value": "on",
+            "tag": "lever",
+            "array_actions": [ ]
+        },
+        {
+            "sub_step": 2,
+            "action_id": 9010,
+            "current_value": "on",
+            "tag": "lever",
+            "array_actions":[
+                {
+                "action_id": 9018,
+                "action_value": "on",
+                "apparat_id": 9,
+                "tag": "lamp"
+                }
+            ]
+        },
+        {
+            "sub_step": 3,
+            "action_id": 4000,
+            "current_value": "on",
+            "tag": "lever",
+            "array_actions": [ ]
+        },
+        {
+            "sub_step": 4,
+            "action_id": 4001,
+            "current_value": "on",
+            "tag": "lever",
+            "array_actions": [ ]
+        }
+        ],    
+        "array_actions": [
+            {
+                "apparat_id": 2,
+                "action_id": 4401,
+                "action_value": "up",
+                "tag": "lever"
+            },
+            {
+                "apparat_id": 3,
+                "action_id": 7047,
+                "action_value": "down",
+                "tag": "lever"
+            },
+            {
+                "apparat_id": 4,
+                "action_id": 4401,
+                "action_value": "up",
+                "tag": "lever"
+            }
+        ],
+        "annotation": ""
+    }
+    # set_init_norm_config(msg)
+    add_new_step(msg_new_step)
     
 
