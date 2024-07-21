@@ -4,7 +4,61 @@ import os.path
 import json
 
 
-def set_init_norm_config(message):
+def add_new_norm(message: dict):
+    """ добавляем новый норматив """
+    if not check_keys(message, "equipment_id", "name"):
+        return False
+    
+    equipment_id = message["equipment_id"]    
+    name = message["name"]
+    
+    equipments = {}
+    # читаем конфиг с нормативами и добавляем/меняем нужный
+    with open("configs\equipment_config.json", encoding="utf-8", mode="r") as equipment_config:
+        equipments = json.load(equipment_config)["equipments"]        
+        
+        for equip in equipments:            
+            if equip["id"] == equipment_id:
+                equip_idx = equipments.index(equip)                
+                last_norm_id = equip["normatives"][-1]["id"]
+                new_norm = {"id": last_norm_id+1, "name": name}
+                equipments[equip_idx]["normatives"].append(new_norm)
+                break
+
+    # записываем с добавленным нормативом
+    with open("configs\equipment_config_test.json", encoding="utf-8", mode="w") as equipment_config:        
+        equipments = {"equipments": equipments}
+        json.dump(equipments, equipment_config, ensure_ascii=False)
+
+
+def edit_normative(message: dict):
+    """ меняем норматив по ему id на выбранной аппаратуре """
+    if not check_keys(message, "equipment_id", "norm_id", "name"):
+        return False
+    
+    equipment_id = message["equipment_id"]
+    norm_id = message["norm_id"]
+    name = message["name"]   
+    edited_norm = {"id": norm_id, "name": name}
+    
+    equipments = {}
+    # читаем конфиг с нормативами и добавляем/меняем нужный
+    with open("configs\equipment_config.json", encoding="utf-8", mode="r") as equipment_config:
+        equipments = json.load(equipment_config)["equipments"]        
+        for equip in equipments:            
+            if equip["id"] == equipment_id:
+                equip_idx = equipments.index(equip)
+                normatives_update = [norm for norm in equip["normatives"] if norm["id"] != norm_id]
+                normatives_update.append(edited_norm)
+                equipments[equip_idx]["normatives"] = normatives_update                    
+
+    # записываем с добавленным нормативом
+    with open("configs\equipment_config_test.json", encoding="utf-8", mode="w") as equipment_config:        
+        equipments = {"equipments": equipments}
+        json.dump(equipments, equipment_config, ensure_ascii=False)
+        
+
+def set_init_norm_config(message: dict):
     """ принимаем массив элементов и их положений для задания начальной конфигурации """    
     # TODO подумать, надо ли вообще как-то тут так извращаться или всегда переписывать в нулевом шаге array_actions
     if "array_actions" not in message:
@@ -18,7 +72,7 @@ def set_init_norm_config(message):
     if not os.path.exists(normative_path):
         norm_config = {"step_0": {
                        "array_actions": array_actions,
-                       "count_action": len(array_actions)}}    
+                       "count_action": len(array_actions)}}  
     else:
         read_config = open(normative_path, encoding='utf-8', mode="r")
         norm_config = json.load(read_config)
@@ -31,23 +85,24 @@ def set_init_norm_config(message):
     return {"status": "OK"}
 
 
-def add_new_step(message):
+def add_new_step(message: dict):
     """ добавление нового шага в норматив, а также добавление списка next_actions в предыдущий шаг """
     #  проверка всех нужных для добавления шага элементов
-    try:        
-        step = message["step"]
-        equipment_id = message["equipment_id"]
-        norm_id = message["norm_id"]        
-        order = message["order"]
-        sub_steps = message["sub_steps"]
-        array_actions = message["array_actions"]
-        annotation = message["annotation"]
-    except KeyError:
-        print("\t[KeyError] один из ключей equipment_id, step, order, sub_steps, array_actions, annotation не был указан в входящем сообщении")
+    if not check_keys(message, "step", "order", "sub_steps", "array_actions", "annotation"):
+        return {"status": "ERROR"}
+    # try:                  
+    step = message["step"]
+    order = message["order"]
+    sub_steps = message["sub_steps"]
+    array_actions = message["array_actions"]
+    annotation = message["annotation"]
+    # except KeyError:
+    #     print("\t[KeyError] один из ключей step, order, sub_steps, array_actions, annotation не был указан в входящем сообщении")
 
     # получаем данные по уже существующему нормативу
     normative_path = get_normative_path(message)
-    print("Normative path = ", normative_path)
+    if normative_path == False:
+        return {"status": "ERROR"}
     normative_data = {}
 
     # если файла нет, то создаем
@@ -58,8 +113,7 @@ def add_new_step(message):
     # читаем все данные по выбранному нормативу
     with open(normative_path, encoding='utf-8', mode="r") as norm_file:
         normative_data = json.load(norm_file)
-
-    print("[DEBUG] norm norm \n\t", normative_data)
+    
     prev_step_num = f"step_{step-1}"
     step_num = f"step_{step}"
     
@@ -72,7 +126,8 @@ def add_new_step(message):
 
     # меняем/добавляем новый шаг
     editing_step = {}    
-    editing_step["step"] = step     
+    editing_step["step"] = step 
+    editing_step["order"] = order 
     editing_step["count_action"] = len(array_actions)
     editing_step["array_actions"] = array_actions
     editing_step["actions_for_step"] = len(sub_steps)
@@ -86,16 +141,17 @@ def add_new_step(message):
         json.dump(normative_data, norm_file)
 
 
-def get_normative_path(message):
-    try:
-        equipment_id = message["equipment_id"]
-        norm_id = message["norm_id"]        
-    except KeyError:
-        print("\t\t[KeyError] один из ключей equipment_id, norm_id не был указан в входящем сообщении")
+def get_normative_path(message: dict):
+    if not check_keys(message, "equipment_id", "norm_id"):
+        return False
+    
+    equipment_id = message["equipment_id"]
+    norm_id = message["norm_id"] 
     
     # посмотрим есть ли уже такой json, если есть, то обновляем, а не создаем TODO(????)
     equipment_folder = f"normatives\\equipment_{equipment_id}"
 
+    # если нет папки с нормативами, то создаем
     if not os.path.isdir(equipment_folder):
         os.mkdir(equipment_folder)
 
@@ -114,6 +170,16 @@ def get_next_actions(array_actions):
         next_actions.append(cur_action)
 
     return next_actions
+
+
+def check_keys(message: dict, *args):
+    """ проверяет, все ли ключи из списка есть в полученном сообщении """
+    for key in args:
+        if key not in message:
+            print(f"\t\t[KeyError] {key} не был указан во входящем сообщении")
+            return False
+    return True
+
 
 if __name__ == "__main__":    
     msg = {
@@ -213,7 +279,14 @@ if __name__ == "__main__":
         ],
         "annotation": ""
     }
+   
+    msg_new_norm = {
+        "equipment_id": 1,
+        "norm_id": 11,
+        "name": "AAAAA"
+    }
     # set_init_norm_config(msg)
-    add_new_step(msg_new_step)
+    # add_new_step(msg_new_step)
+    add_new_norm(msg_new_norm)
     
 

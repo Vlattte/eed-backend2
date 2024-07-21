@@ -3,7 +3,7 @@ import os
 
 def get_equipment_config(equipment_name: str):
     """
-    :param equipment_name: назваие аппаратуры
+    :param equipment_name: название аппаратуры
     """
     equipment_name = equipment_name.replace('-', '').replace('_', '').capitalize()
 
