@@ -71,10 +71,15 @@ def choose_equipment_operation(message_dict):
     elif message_dict["operation"] == "setInitNormConfig":
         init_config_status = json_generator.set_init_norm_config(message_dict)
         return init_config_status
-    # elif message_dict["operation"] == "addNewStep":
-    #     json_generator.add_new_step(message_dict)
-        
-    
+    elif message_dict["operation"] == "addNewStep" or message_dict["operation"] == "editNorm":
+        step_status = json_generator.add_new_step(message_dict)
+        return step_status
+    elif message_dict["operation"] == "addNewNorm":
+        norm_status = json_generator.add_new_norm(message_dict)
+        return norm_status
+    elif message_dict["operation"] == "editNormName":
+        norm_name_status = json_generator.edit_normative_name(message_dict)
+        return norm_name_status    
     else:
         print("UNKNOWN OPERATION")
         return {"error": "unknown-operation"}

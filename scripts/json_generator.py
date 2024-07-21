@@ -9,7 +9,7 @@ def add_new_norm(message: dict):
     if not check_keys(message, "equipment_id", "name"):
         return False
     
-    equipment_id = message["equipment_id"]    
+    equipment_id = message["equipment_id"]
     name = message["name"]
     
     equipments = {}
@@ -26,12 +26,14 @@ def add_new_norm(message: dict):
                 break
 
     # записываем с добавленным нормативом
-    with open("configs\equipment_config_test.json", encoding="utf-8", mode="w") as equipment_config:        
+    with open("configs\equipment_config.json", encoding="utf-8", mode="w") as equipment_config:        
         equipments = {"equipments": equipments}
         json.dump(equipments, equipment_config, ensure_ascii=False)
+    
+    return {"norm_id": last_norm_id+1, "status": "OK"}
 
 
-def edit_normative(message: dict):
+def edit_normative_name(message: dict):
     """ меняем норматив по ему id на выбранной аппаратуре """
     if not check_keys(message, "equipment_id", "norm_id", "name"):
         return False
@@ -53,10 +55,10 @@ def edit_normative(message: dict):
                 equipments[equip_idx]["normatives"] = normatives_update                    
 
     # записываем с добавленным нормативом
-    with open("configs\equipment_config_test.json", encoding="utf-8", mode="w") as equipment_config:        
+    with open("configs\equipment_config.json", encoding="utf-8", mode="w") as equipment_config:        
         equipments = {"equipments": equipments}
         json.dump(equipments, equipment_config, ensure_ascii=False)
-        
+
 
 def set_init_norm_config(message: dict):
     """ принимаем массив элементов и их положений для задания начальной конфигурации """    
@@ -90,18 +92,16 @@ def add_new_step(message: dict):
     #  проверка всех нужных для добавления шага элементов
     if not check_keys(message, "step", "order", "sub_steps", "array_actions", "annotation"):
         return {"status": "ERROR"}
-    # try:                  
+        
     step = message["step"]
     order = message["order"]
     sub_steps = message["sub_steps"]
     array_actions = message["array_actions"]
-    annotation = message["annotation"]
-    # except KeyError:
-    #     print("\t[KeyError] один из ключей step, order, sub_steps, array_actions, annotation не был указан в входящем сообщении")
+    annotation = message["annotation"]    
 
     # получаем данные по уже существующему нормативу
     normative_path = get_normative_path(message)
-    if normative_path == False:
+    if normative_path == False: # если такого норматива нет, то не с чем работать
         return {"status": "ERROR"}
     normative_data = {}
 
@@ -282,11 +282,17 @@ if __name__ == "__main__":
    
     msg_new_norm = {
         "equipment_id": 1,
-        "norm_id": 11,
         "name": "AAAAA"
+    }
+
+    msg_edit_norm_name = {
+        "equipment_id": 1,
+        "norm_id": 13,
+        "name": "Другое что-то"
     }
     # set_init_norm_config(msg)
     # add_new_step(msg_new_step)
-    add_new_norm(msg_new_norm)
+    # add_new_norm(msg_new_norm)
+    edit_normative_name(msg_edit_norm_name)
     
 

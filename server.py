@@ -7,7 +7,7 @@ import json
 
 # handlers
 import scripts.request_handler as req
-
+import scripts.config_scripts as config_scripts
 
 from fastapi import FastAPI, WebSocket
 import uvicorn
@@ -123,6 +123,8 @@ async def main(websocket: WebSocket):
         print("\n\n\t[DATA FROM FRONT] ", request)
         answer = {}
         try:
+            # проверяем наличие нужных конфиг файлов
+            config_scripts.config_checker()
             answer = req.request_handler(request)
         except Exception as E:
             answer = {'error', E}
