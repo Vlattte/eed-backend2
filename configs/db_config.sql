@@ -85,7 +85,7 @@ CREATE TABLE types (
 CREATE TABLE maps (
 	id serial, -- --> map_id
 	apparat_id integer,
-	name text, -- --> ПР: УПРАЖНЕНИЕ N. Настройка очка тов. полковника КАЛАЧА на частоту УКВ радиосети
+	name text, -- --> ПР: УПРАЖНЕНИЕ N. 
 	CONSTRAINT maps_pkey PRIMARY KEY (id)
 );
 
