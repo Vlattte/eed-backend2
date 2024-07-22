@@ -1,5 +1,5 @@
-create database vuc;
-create user vuc with encrypted password '123456';
+-- create database vuc;
+-- create user vuc with encrypted password '123456';
 
 ----------------------------------
 -- ТАБЛИЦЫ ДЛЯ ХРАНЕНИЯ АППАРАТУРЫ:
